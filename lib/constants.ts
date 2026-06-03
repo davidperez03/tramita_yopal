@@ -175,10 +175,6 @@ export const FAQS = [
     answer: 'Depende del tipo de trámite y del historial del vehículo. Escríbenos por WhatsApp con los datos de tu caso y te decimos exactamente qué necesitas — sin que tengas que adivinar ni llegar con documentos de más o de menos.',
   },
   {
-    question: '¿Qué es el certificado de tradición y libertad y dónde lo consigo?',
-    answer: 'Es un documento que certifica el historial del vehículo: propietarios anteriores, prendas activas o canceladas y cualquier anotación registrada. Lo expide el organismo de tránsito donde está matriculado el vehículo. Si no sabes cómo obtenerlo, cuéntanos y te orientamos.',
-  },
-  {
     question: '¿Qué medios de pago aceptan?',
     answer: 'Aceptamos transferencia bancaria, Nequi, Daviplata, Bancolombia y efectivo. No cobramos comisiones adicionales por el medio de pago que elijas. Te indicamos las opciones en tu cotización personalizada.',
   },
