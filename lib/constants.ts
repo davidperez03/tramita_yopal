@@ -175,8 +175,8 @@ export const FAQS = [
     answer: 'Para un traspaso de propiedad en Yopal necesitas: SOAT vigente, revisión técnico-mecánica vigente, cédula original del comprador y del vendedor, tarjeta de propiedad original y certificado de tradición y libertad. Sin embargo, antes de confirmar la lista hacemos validación previa para verificar que no haya impedimentos adicionales.',
   },
   {
-    question: '¿Cuánto cuesta el envío de la tarjeta de propiedad?',
-    answer: 'El envío de la tarjeta de propiedad a tu domicilio en cualquier lugar de Colombia es completamente gratis. No cobramos ningún costo adicional por este envío.',
+    question: '¿Qué es el certificado de tradición y libertad y dónde lo consigo?',
+    answer: 'Es un documento que certifica el historial del vehículo: propietarios anteriores, prendas activas o canceladas y cualquier anotación registrada. Lo expide el organismo de tránsito donde está matriculado el vehículo. Si no sabes cómo obtenerlo, cuéntanos y te orientamos.',
   },
   {
     question: '¿Qué medios de pago aceptan?',
@@ -195,12 +195,12 @@ export const FAQS = [
     answer: 'Sí. Durante todo el proceso puedes escribirnos por el mismo WhatsApp donde iniciaste el trámite y te decimos en qué estado está. No necesitas llamar al tránsito ni hacer filas — nosotros hacemos ese seguimiento por ti y te mantenemos informado.',
   },
   {
-    question: '¿Qué pasa si descubren un problema con el vehículo después de empezar?',
-    answer: 'Precisamente por eso hacemos la validación previa antes de cobrar. Si durante el trámite surge un impedimento inesperado, te avisamos de inmediato, te explicamos qué pasó y qué opciones tienes. Nunca avanzamos en un trámite bloqueado sin informarte primero.',
+    question: '¿Puedo hacer el trámite aunque el vendedor viva en otra ciudad?',
+    answer: 'Sí. Es uno de los casos más comunes. Coordinamos con el vendedor qué documentos debe firmar y cómo enviarlos. Tú y el vendedor envían sus documentos por separado y nosotros gestionamos todo ante el tránsito de Yopal. No es necesario que estén presentes al mismo tiempo.',
   },
   {
     question: '¿Cuánto cuesta un traspaso de vehículo en Yopal?',
-    answer: 'El costo total tiene dos componentes: las tasas del organismo de tránsito (que varían según el tipo y valor del vehículo) y nuestros honorarios de gestión. Para un traspaso básico, los honorarios oscilan entre $150.000 y $350.000 COP. Te damos el precio exacto en tu cotización personalizada, sin rangos ni letras pequeñas.',
+    answer: 'El costo depende del tipo de vehículo, el organismo de tránsito y si hay pasos adicionales como levantamiento de prenda o resolución de multas. Escríbenos con los datos del vehículo y te damos el precio exacto en menos de 30 minutos — sin rangos ni letras pequeñas.',
   },
 ];
 
