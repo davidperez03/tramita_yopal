@@ -171,8 +171,8 @@ export const FAQS = [
     answer: 'Puedes enviar tus documentos originales por Interrapidísimo o Servientrega a nuestra dirección en Yopal. Una vez terminado el trámite, enviamos la tarjeta de propiedad directamente a tu domicilio en cualquier municipio de Colombia — sin costo adicional.',
   },
   {
-    question: '¿Qué documentos necesito para un traspaso de vehículo en Yopal?',
-    answer: 'Para un traspaso de propiedad en Yopal necesitas: SOAT vigente, revisión técnico-mecánica vigente, cédula original del comprador y del vendedor, tarjeta de propiedad original y certificado de tradición y libertad. Sin embargo, antes de confirmar la lista hacemos validación previa para verificar que no haya impedimentos adicionales.',
+    question: '¿Qué documentos necesito para mi trámite?',
+    answer: 'Depende del tipo de trámite y del historial del vehículo. Escríbenos por WhatsApp con los datos de tu caso y te decimos exactamente qué necesitas — sin que tengas que adivinar ni llegar con documentos de más o de menos.',
   },
   {
     question: '¿Qué es el certificado de tradición y libertad y dónde lo consigo?',
