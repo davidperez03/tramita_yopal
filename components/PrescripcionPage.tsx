@@ -33,36 +33,32 @@ const steps = [
 
 const faqs = [
   {
-    q: '¿Cuándo prescribe un comparendo de tránsito en Colombia?',
-    a: 'Según el Código Nacional de Tránsito (Ley 769 de 2002), las infracciones de tránsito prescriben a los 3 años desde la fecha del comparendo, siempre que la autoridad no haya iniciado cobro coactivo en ese plazo. Si pasaron más de 3 años y no has recibido mandamiento de pago, muy posiblemente ya prescribió.',
+    q: '¿Qué significa que un comparendo esté prescrito?',
+    a: 'Significa que por el paso del tiempo ya no puedes ser obligado a pagarlo. En Colombia las multas de tránsito prescriben a los 3 años desde la fecha de la infracción. Pero que estén prescritas no las elimina solas del sistema — hay que tramitar la declaración para que desaparezcan del SIMIT.',
   },
   {
-    q: '¿Por qué hay que tramitarlo si "ya no lo debo"?',
-    a: 'Sin la declaración formal de prescripción, la multa sigue apareciendo en el SIMIT y puede bloquear un traspaso, un traslado de cuenta o la expedición del paz y salvo vehicular. Tramitar la prescripción la elimina definitivamente del sistema — sin eso, el comparendo sigue generando problemas aunque legalmente ya no exista.',
+    q: '¿Por qué tengo que tramitarlo si ya no lo debo?',
+    a: 'Porque el SIMIT no las borra automáticamente. Mientras no se declare la prescripción formalmente, la multa sigue bloqueando traspasos, traslados de cuenta y la obtención del paz y salvo vehicular — aunque legalmente ya no exista.',
   },
   {
-    q: '¿Cuánto tiempo tarda el proceso de prescripción?',
-    a: 'Entre 15 y 30 días hábiles en el organismo de tránsito de Yopal, dependiendo del volumen de casos y la complejidad del expediente. Te indicamos el tiempo estimado exacto en la cotización.',
+    q: '¿También prescriben los comparendos en cobro coactivo?',
+    a: 'Sí. El proceso de cobro coactivo también prescribe si la autoridad no lo impulsa dentro de los términos legales. Cuéntanos tu caso — verificamos el estado real del comparendo y te decimos si aplica prescripción.',
   },
   {
-    q: '¿Se puede prescribir un comparendo que está en cobro coactivo?',
-    a: 'No. Si la autoridad ya inició el proceso de cobro coactivo (mandamiento de pago notificado), la prescripción se interrumpe y el comparendo ya no puede prescribir por esa vía. Por eso es importante verificar el estado antes de asumir que está prescrito.',
+    q: '¿Cuánto tarda el proceso?',
+    a: 'Entre 15 y 30 días hábiles una vez radicada la solicitud ante el organismo de tránsito. Te decimos el tiempo estimado exacto cuando revisamos tu caso.',
   },
   {
-    q: '¿La prescripción aplica para cualquier tipo de comparendo?',
-    a: 'Aplica para la mayoría de infracciones de tránsito registradas en el SIMIT. Sin embargo, hay casos especiales — como comparendos vinculados a accidentes con víctimas — que pueden tener tratamiento diferente. En la verificación gratuita te decimos exactamente qué aplica a tu caso.',
+    q: '¿La verificación tiene algún costo?',
+    a: 'No. Revisamos tus comparendos en el SIMIT con tu número de cédula completamente gratis. Solo cotizamos el trámite si aplica prescripción y tú decides seguir adelante.',
   },
   {
-    q: '¿Mi vehículo no está matriculado en Yopal, pueden ayudarme?',
-    a: 'Cuéntanos tu caso. La prescripción se tramita ante el organismo donde quedó registrado el comparendo, que no necesariamente es donde está matriculado el vehículo. Revisamos tu situación y te decimos si podemos gestionarlo.',
+    q: '¿Aplica aunque mi vehículo no esté matriculado en Yopal?',
+    a: 'Cuéntanos tu caso. La prescripción depende de dónde quedó registrado el comparendo, no de dónde está matriculado el vehículo. Revisamos y te decimos si podemos gestionarlo.',
   },
   {
-    q: '¿Cuánto cuesta tramitar la prescripción de comparendos?',
-    a: 'La verificación inicial es completamente gratuita. Si aplica prescripción, te cotizamos el proceso sin compromiso — el costo depende del número de comparendos y la complejidad del caso. Escríbenos con tu cédula y te damos el precio exacto.',
-  },
-  {
-    q: '¿Qué pasa si no tramito la prescripción?',
-    a: 'Los comparendos prescritos que no se declaran formalmente siguen bloqueando traspasos, traslados de cuenta y la obtención del paz y salvo vehicular. Además, si el sistema no los elimina, pueden seguir generando intereses en algunos casos. Tramitarlos es la única forma de limpiar el historial definitivamente.',
+    q: '¿Qué pasa si no hago nada?',
+    a: 'El comparendo sigue apareciendo en el sistema y bloqueando cualquier trámite vehicular. No desaparece solo con el tiempo — hay que declarar la prescripción formalmente para que el SIMIT lo elimine.',
   },
 ];
 
