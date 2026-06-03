@@ -159,24 +159,48 @@ export const FAQS = [
     answer: 'Nuestro servicio está enfocado en trámites para vehículos matriculados en Yopal. Si tu vehículo está en otra ciudad, escríbenos al WhatsApp y consultamos si hay posibilidad de apoyarte — dependiendo del caso podemos orientarte.',
   },
   {
-    question: '¿Cuánto tiempo tarda un trámite?',
-    answer: 'El tiempo promedio es de 3 a 8 días hábiles dependiendo del tipo de trámite y del organismo de tránsito. Te informamos el tiempo estimado exacto en tu cotización.',
+    question: '¿Cuánto tiempo tarda un traspaso de vehículo en Yopal?',
+    answer: 'El tiempo promedio de un traspaso de propiedad en el organismo de tránsito de Yopal es de 3 a 8 días hábiles, contados desde que recibimos todos los documentos en orden. El tiempo varía según la carga del organismo y si hay algún impedimento previo que resolver. Te informamos el tiempo estimado exacto en tu cotización.',
   },
   {
     question: '¿Cómo funciona la validación previa?',
-    answer: 'Antes de iniciar verificamos que el propietario, el comprador y el vehículo no tengan impedimentos — multas, prendas activas, restricciones en el RUNT — que puedan bloquear el proceso a mitad de camino. Así evitamos sorpresas costosas.',
+    answer: 'Antes de iniciar verificamos que el propietario, el comprador y el vehículo no tengan impedimentos — multas, prendas activas, restricciones en el RUNT — que puedan bloquear el proceso a mitad de camino. Así evitamos sorpresas costosas. Esta revisión es completamente gratuita.',
   },
   {
     question: '¿Cómo envío mis documentos si vivo lejos?',
-    answer: 'Puedes enviar tus documentos originales por Interrapidísimo o Servientrega. Una vez terminado el trámite, enviamos la tarjeta de propiedad a tu domicilio sin costo.',
+    answer: 'Puedes enviar tus documentos originales por Interrapidísimo o Servientrega a nuestra dirección en Yopal. Una vez terminado el trámite, enviamos la tarjeta de propiedad directamente a tu domicilio en cualquier municipio de Colombia — sin costo adicional.',
+  },
+  {
+    question: '¿Qué documentos necesito para un traspaso de vehículo en Yopal?',
+    answer: 'Para un traspaso de propiedad en Yopal necesitas: SOAT vigente, revisión técnico-mecánica vigente, cédula original del comprador y del vendedor, tarjeta de propiedad original y certificado de tradición y libertad. Sin embargo, antes de confirmar la lista hacemos validación previa para verificar que no haya impedimentos adicionales.',
   },
   {
     question: '¿Cuánto cuesta el envío de la tarjeta de propiedad?',
-    answer: 'El envío de la tarjeta de propiedad a tu domicilio en cualquier lugar de Colombia es completamente gratis.',
+    answer: 'El envío de la tarjeta de propiedad a tu domicilio en cualquier lugar de Colombia es completamente gratis. No cobramos ningún costo adicional por este envío.',
   },
   {
     question: '¿Qué medios de pago aceptan?',
-    answer: 'Aceptamos transferencia bancaria, Nequi, Daviplata, Bancolombia y efectivo. Te indicamos las opciones de pago en tu cotización personalizada.',
+    answer: 'Aceptamos transferencia bancaria, Nequi, Daviplata, Bancolombia y efectivo. No cobramos comisiones adicionales por el medio de pago que elijas. Te indicamos las opciones en tu cotización personalizada.',
+  },
+  {
+    question: '¿Cómo sé si mis comparendos de tránsito están prescritos?',
+    answer: 'En Colombia, los comparendos prescriben a los 3 años desde la fecha de la infracción, si no han sido notificados ni cobrados en ese tiempo. Si tienes multas de antes de 2022, es probable que estén prescritas. Envíanos tu número de cédula por WhatsApp y consultamos gratis en el SIMIT qué comparendos tienes y cuáles pueden estar prescritos.',
+  },
+  {
+    question: '¿El servicio sirve para motos o solo para carros?',
+    answer: 'Tramita Yopal gestiona trámites para todo tipo de vehículos automotores matriculados en el organismo de tránsito de Yopal: automóviles, motos, camperos, camionetas, camiones y microbuses. Si tienes duda sobre si tu vehículo aplica, escríbenos por WhatsApp y te confirmamos en minutos.',
+  },
+  {
+    question: '¿Puedo hacer seguimiento a mi trámite mientras está en proceso?',
+    answer: 'Sí. Durante todo el proceso puedes escribirnos por el mismo WhatsApp donde iniciaste el trámite y te decimos en qué estado está. No necesitas llamar al tránsito ni hacer filas — nosotros hacemos ese seguimiento por ti y te mantenemos informado.',
+  },
+  {
+    question: '¿Qué pasa si descubren un problema con el vehículo después de empezar?',
+    answer: 'Precisamente por eso hacemos la validación previa antes de cobrar. Si durante el trámite surge un impedimento inesperado, te avisamos de inmediato, te explicamos qué pasó y qué opciones tienes. Nunca avanzamos en un trámite bloqueado sin informarte primero.',
+  },
+  {
+    question: '¿Cuánto cuesta un traspaso de vehículo en Yopal?',
+    answer: 'El costo total tiene dos componentes: las tasas del organismo de tránsito (que varían según el tipo y valor del vehículo) y nuestros honorarios de gestión. Para un traspaso básico, los honorarios oscilan entre $150.000 y $350.000 COP. Te damos el precio exacto en tu cotización personalizada, sin rangos ni letras pequeñas.',
   },
 ];
 

@@ -9,9 +9,9 @@ const siteUrl = `https://${BUSINESS.domain}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Tramita Yopal | Trámites Vehiculares en Yopal, Casanare',
+  title: 'Trámites Vehiculares en Yopal | Tramita Yopal',
   description:
-    'Gestiona tus trámites vehiculares desde casa en Yopal, Casanare. Traspasos, levantamiento de prenda, duplicado de placas y más. ✓ Validación previa ✓ Envío gratis ✓ Respuesta en 30 min',
+    'Traspaso, levantamiento de prenda y duplicado de placas en Yopal, Casanare. ✓ Validación previa gratis ✓ Gestión remota ✓ Envío de tarjeta a domicilio ✓ Respuesta en 30 min.',
   keywords: [
     'trámites vehiculares Yopal',
     'traspaso vehículo Yopal',
@@ -25,6 +25,10 @@ export const metadata: Metadata = {
     'gestor vehicular Yopal',
     'tramitador vehicular Casanare',
     'traspaso de moto Yopal',
+    'prescripción comparendos Yopal',
+    'comparendos prescritos Casanare',
+    'multas tránsito prescritas Colombia',
+    'traspaso carro sin ir al tránsito Yopal',
     'tramitayopal',
   ],
   authors: [{ name: 'Tramita Yopal' }],
@@ -34,9 +38,9 @@ export const metadata: Metadata = {
     languages: { 'es-CO': siteUrl },
   },
   openGraph: {
-    title: 'Tramita Yopal | Trámites Vehiculares en Yopal, Casanare',
+    title: 'Trámites Vehiculares en Yopal | Tramita Yopal',
     description:
-      'Tu gestor de confianza para trámites vehiculares en Yopal. Validación previa, envío gratis a todo Colombia, respuesta en 30 min.',
+      'Gestor de trámites vehiculares en Yopal, Casanare. Validación previa gratuita, gestión 100% remota y envío de tarjeta de propiedad a domicilio. Cotiza en 30 min.',
     url: siteUrl,
     siteName: 'Tramita Yopal',
     locale: 'es_CO',
@@ -63,15 +67,24 @@ export const metadata: Metadata = {
   },
 };
 
+const AREA_SERVED = [
+  'Yopal', 'Aguazul', 'Villanueva', 'Paz de Ariporo', 'Tauramena',
+  'Trinidad', 'Monterrey', 'Sabanalarga', 'Nunchía', 'Pore',
+  'Orocué', 'San Luis de Palenque', 'Hato Corozal', 'Maní',
+  'Recetor', 'Chámeza', 'La Salina', 'Sácama', 'Támara',
+];
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: BUSINESS.name,
     description:
-      'Gestión de trámites vehiculares en Yopal, Casanare. Traspasos, levantamiento de prenda, duplicado de placas y más. Validación previa incluida.',
+      'Gestión de trámites vehiculares en Yopal, Casanare. Traspaso de propiedad, levantamiento de prenda, duplicado de placas, traslado de cuenta, cambio de servicio y prescripción de comparendos. Validación previa gratuita. Envío de tarjeta de propiedad a domicilio sin costo.',
     url: siteUrl,
     telephone: `+${BUSINESS.whatsapp}`,
+    currenciesAccepted: 'COP',
+    paymentAccepted: 'Nequi, Daviplata, Bancolombia, Transferencia bancaria, Efectivo',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Yopal',
@@ -83,6 +96,11 @@ const jsonLd = [
       latitude: 5.3394,
       longitude: -72.3957,
     },
+    areaServed: AREA_SERVED.map((city) => ({
+      '@type': 'City',
+      name: city,
+      containedInPlace: { '@type': 'State', name: 'Casanare' },
+    })),
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
@@ -98,9 +116,20 @@ const jsonLd = [
       },
     ],
     priceRange: '$$',
+    knowsAbout: [
+      'Trámites vehiculares Colombia',
+      'Traspaso de propiedad vehicular',
+      'Levantamiento de prenda vehicular',
+      'Traslado de cuenta vehicular',
+      'Duplicado de placas',
+      'Cambio de servicio vehicular',
+      'Prescripción de comparendos de tránsito',
+      'RUNT Colombia',
+      'SIMIT Colombia',
+    ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Trámites Vehiculares',
+      name: 'Trámites Vehiculares Yopal',
       itemListElement: SERVICES.filter((s) => s.id !== 'otros').map((s) => ({
         '@type': 'Offer',
         itemOffered: {
