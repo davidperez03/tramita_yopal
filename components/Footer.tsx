@@ -91,7 +91,7 @@ export default function Footer() {
           <div className="flex items-center gap-4">
             <p>Hecho con ♥ en Colombia · {BUSINESS.location}</p>
             <a
-              href="mailto:d12mcdavo@gmail.com?subject=Quiero%20un%20sitio%20web%20como%20el%20de%20Tramita%20Yopal"
+              href="mailto:lambdaeta.x@gmail.com?subject=Quiero%20un%20sitio%20web%20como%20el%20de%20Tramita%20Yopal"
               className="flex items-center gap-1.5 text-slate-500 hover:text-white transition-colors group"
             >
               <span className="inline-flex items-center px-1 h-4 bg-brand-700 group-hover:bg-brand-500 rounded transition-colors text-white font-bold tracking-tight" style={{ fontSize: '9px' }}>λe</span>

@@ -11,7 +11,7 @@ export const BUSINESS = {
     saturday: 'Sáb 8am–1pm',
   },
   responseTime: '30 min',
-  domain: 'tramitayopal.vercel.app',
+  domain: 'tramitayopal.com',
 };
 
 const WHATSAPP_BASE = `https://wa.me/${BUSINESS.whatsapp}`;

@@ -28,7 +28,7 @@ export default function PoliticaPrivacidad() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">1. Responsable del tratamiento</h2>
               <p>
                 <strong>Tramita Yopal</strong> es el responsable del tratamiento de datos personales
-                que se recojan a través del sitio web <strong>tramitayopal.vercel.app</strong>.
+                que se recojan a través del sitio web <strong>tramitayopal.com</strong>.
               </p>
               <p className="mt-2">
                 Correo de contacto para asuntos de privacidad:{' '}
