@@ -160,7 +160,7 @@ export const FAQS = [
   },
   {
     question: '¿Cuánto tiempo tarda un traspaso de vehículo en Yopal?',
-    answer: 'El tiempo promedio de un traspaso de propiedad en el organismo de tránsito de Yopal es de 3 a 8 días hábiles, contados desde que recibimos todos los documentos en orden. El tiempo varía según la carga del organismo y si hay algún impedimento previo que resolver. Te informamos el tiempo estimado exacto en tu cotización.',
+    answer: 'Una vez recibidos los documentos en orden, el traspaso puede quedar listo el mismo día — en la mayoría de los casos toma 1 a 2 días hábiles. El tiempo puede extenderse si hay inconsistencias o situaciones imprevistas, pero te informamos el estado en todo momento por WhatsApp.',
   },
   {
     question: '¿Cómo funciona la validación previa?',
@@ -229,7 +229,7 @@ También existe el Validador en el sitio web donde el usuario puede describir su
 
 SERVICIOS Y DOCUMENTOS:
 
-1. TRASPASO DE PROPIEDAD — 3-8 días hábiles
+1. TRASPASO DE PROPIEDAD — 1-2 días hábiles
    Documentos: SOAT vigente, Revisión técnico-mecánica vigente, Cédula comprador y vendedor, Tarjeta de propiedad original, Certificado de tradición y libertad
 
 2. LEVANTAMIENTO DE PRENDA — 3-5 días hábiles

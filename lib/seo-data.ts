@@ -100,7 +100,7 @@ export const SEO_SERVICES: SeoService[] = [
     name:        'Traspaso de Propiedad',
     keyword:     'traspaso vehículo',
     description: 'Formaliza el cambio de propietario de tu vehículo. Revisamos el historial antes de empezar para evitar sorpresas.',
-    duration:    '3 a 8 días hábiles',
+    duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un traspaso de propiedad.',
   },
   {
