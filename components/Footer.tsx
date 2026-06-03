@@ -12,8 +12,8 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-9 h-9 bg-brand-700 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-sm">TY</span>
+              <div className="w-9 h-9 bg-brand-700 rounded-xl flex items-center justify-center" role="img" aria-label="Logo Tramita Yopal">
+                <span className="text-white font-bold text-sm" aria-hidden="true">TY</span>
               </div>
               <span className="text-white font-bold text-lg">{BUSINESS.name}</span>
             </div>

@@ -33,20 +33,36 @@ const steps = [
 
 const faqs = [
   {
-    q: '¿Cuándo prescribe un comparendo?',
-    a: 'Las infracciones de tránsito prescriben a los 3 años desde la fecha del comparendo, siempre que la autoridad no haya iniciado cobro coactivo en ese plazo. Si pasaron más de 3 años y no has recibido mandamiento de pago, muy posiblemente ya prescribió.',
+    q: '¿Cuándo prescribe un comparendo de tránsito en Colombia?',
+    a: 'Según el Código Nacional de Tránsito (Ley 769 de 2002), las infracciones de tránsito prescriben a los 3 años desde la fecha del comparendo, siempre que la autoridad no haya iniciado cobro coactivo en ese plazo. Si pasaron más de 3 años y no has recibido mandamiento de pago, muy posiblemente ya prescribió.',
   },
   {
     q: '¿Por qué hay que tramitarlo si "ya no lo debo"?',
-    a: 'Sin la declaración formal, la multa sigue apareciendo en el SIMIT y puede bloquear un traspaso, un traslado de cuenta o la expedición del paz y salvo vehicular. Tramitar la prescripción la elimina definitivamente del sistema.',
+    a: 'Sin la declaración formal de prescripción, la multa sigue apareciendo en el SIMIT y puede bloquear un traspaso, un traslado de cuenta o la expedición del paz y salvo vehicular. Tramitar la prescripción la elimina definitivamente del sistema — sin eso, el comparendo sigue generando problemas aunque legalmente ya no exista.',
   },
   {
-    q: '¿Cuánto tiempo tarda el proceso?',
-    a: 'Entre 5 y 15 días hábiles en el organismo de tránsito de Yopal, dependiendo del volumen de casos. Te indicamos el tiempo exacto en la cotización.',
+    q: '¿Cuánto tiempo tarda el proceso de prescripción?',
+    a: 'Entre 15 y 30 días hábiles en el organismo de tránsito de Yopal, dependiendo del volumen de casos y la complejidad del expediente. Te indicamos el tiempo estimado exacto en la cotización.',
   },
   {
-    q: '¿Aplica solo para vehículos matriculados en Yopal?',
-    a: 'La prescripción se tramita ante el organismo de tránsito donde está registrado el comparendo. Nos especializamos en Yopal; si tu infracción es de otra ciudad, escríbenos y consultamos si podemos apoyarte.',
+    q: '¿Se puede prescribir un comparendo que está en cobro coactivo?',
+    a: 'No. Si la autoridad ya inició el proceso de cobro coactivo (mandamiento de pago notificado), la prescripción se interrumpe y el comparendo ya no puede prescribir por esa vía. Por eso es importante verificar el estado antes de asumir que está prescrito.',
+  },
+  {
+    q: '¿La prescripción aplica para cualquier tipo de comparendo?',
+    a: 'Aplica para la mayoría de infracciones de tránsito registradas en el SIMIT. Sin embargo, hay casos especiales — como comparendos vinculados a accidentes con víctimas — que pueden tener tratamiento diferente. En la verificación gratuita te decimos exactamente qué aplica a tu caso.',
+  },
+  {
+    q: '¿Mi vehículo no está matriculado en Yopal, pueden ayudarme?',
+    a: 'Cuéntanos tu caso. La prescripción se tramita ante el organismo donde quedó registrado el comparendo, que no necesariamente es donde está matriculado el vehículo. Revisamos tu situación y te decimos si podemos gestionarlo.',
+  },
+  {
+    q: '¿Cuánto cuesta tramitar la prescripción de comparendos?',
+    a: 'La verificación inicial es completamente gratuita. Si aplica prescripción, te cotizamos el proceso sin compromiso — el costo depende del número de comparendos y la complejidad del caso. Escríbenos con tu cédula y te damos el precio exacto.',
+  },
+  {
+    q: '¿Qué pasa si no tramito la prescripción?',
+    a: 'Los comparendos prescritos que no se declaran formalmente siguen bloqueando traspasos, traslados de cuenta y la obtención del paz y salvo vehicular. Además, si el sistema no los elimina, pueden seguir generando intereses en algunos casos. Tramitarlos es la única forma de limpiar el historial definitivamente.',
   },
 ];
 
@@ -195,6 +211,36 @@ export default function PrescripcionPage() {
                 </FadeInItem>
               ))}
             </FadeInStagger>
+          </div>
+        </div>
+      </section>
+
+      {/* Base legal */}
+      <section className="py-12 bg-white border-y border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid sm:grid-cols-3 gap-6">
+            {[
+              {
+                label: 'Fundamento legal',
+                text: 'Ley 769 de 2002 — Código Nacional de Tránsito. Las infracciones prescriben a los 3 años si no hay cobro coactivo iniciado.',
+              },
+              {
+                label: '¿Qué elimina el trámite?',
+                text: 'La declaración de prescripción elimina el comparendo del SIMIT y levanta cualquier bloqueo que esté generando sobre traspasos o traslados.',
+              },
+              {
+                label: 'Verificación gratuita',
+                text: 'Consultamos en el SIMIT con tu número de cédula. Si hay comparendos prescritos, te lo decimos antes de cobrar cualquier honorario.',
+              },
+            ].map((item) => (
+              <div key={item.label} className="flex gap-4">
+                <div className="w-1 flex-shrink-0 bg-brand-700 rounded-full" />
+                <div>
+                  <p className="text-xs font-bold text-brand-700 uppercase tracking-widest mb-1">{item.label}</p>
+                  <p className="text-sm text-slate-600 leading-relaxed">{item.text}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

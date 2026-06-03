@@ -36,9 +36,9 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
 
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 bg-brand-700 rounded-xl flex items-center justify-center flex-shrink-0">
-              <span className="text-white font-black text-sm">TY</span>
+          <a href="#" aria-label="Tramita Yopal — Inicio" className="flex items-center gap-2.5">
+            <div className="w-9 h-9 bg-brand-700 rounded-xl flex items-center justify-center flex-shrink-0" role="img" aria-label="Logo Tramita Yopal">
+              <span className="text-white font-black text-sm" aria-hidden="true">TY</span>
             </div>
             <div>
               <div className="font-extrabold text-white text-base leading-tight">{BUSINESS.name}</div>
