@@ -156,7 +156,7 @@ export const REVIEWS = [
 export const FAQS = [
   {
     question: '¿Mi vehículo no está matriculado en Yopal, pueden ayudarme?',
-    answer: 'Sí. Atendemos trámites vehiculares sin importar dónde esté matriculado el vehículo. Cuéntanos tu caso por WhatsApp y te decimos exactamente cómo proceder.',
+    answer: 'Cuéntanos tu caso por WhatsApp. Revisamos la situación y te decimos si podemos gestionarlo — sin compromiso y sin costo.',
   },
   {
     question: '¿Cuánto tiempo tarda un traspaso de vehículo en Yopal?',
