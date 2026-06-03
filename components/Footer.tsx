@@ -1,5 +1,6 @@
 import { BUSINESS, SERVICES, waLink, WA_MESSAGES } from '@/lib/constants';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { LogoMark } from './LogoMark';
 
 const waUrl = waLink(WA_MESSAGES.cotizar);
 
@@ -12,9 +13,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-9 h-9 bg-brand-700 rounded-xl flex items-center justify-center" role="img" aria-label="Logo Tramita Yopal">
-                <span className="text-white font-bold text-sm" aria-hidden="true">TY</span>
-              </div>
+              <LogoMark size={36} />
               <span className="text-white font-bold text-lg">{BUSINESS.name}</span>
             </div>
             <p className="text-sm leading-relaxed">
