@@ -130,7 +130,7 @@ export default function ServiceCityPage({ service, city }: Props) {
                   ¿Tu vehículo está matriculado en otra ciudad?
                 </p>
                 <p className="text-slate-500 text-sm">
-                  No importa — atendemos cualquier trámite sin importar dónde esté matriculado el vehículo. Escríbenos y evaluamos tu caso.
+                  Atendemos trámites vehiculares sin importar dónde esté matriculado el vehículo. Cuéntanos tu caso y te orientamos.
                 </p>
               </div>
               <a

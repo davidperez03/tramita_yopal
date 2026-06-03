@@ -21,7 +21,7 @@ export const waLink = (msg: string) =>
 
 export const WA_MESSAGES = {
   cotizar:     'Hola, me interesa cotizar un trámite vehicular.',
-  noMatricula: 'Hola, mi vehículo no está matriculado en Yopal. ¿Me pueden ayudar de todas formas?',
+  noMatricula: 'Hola, mi vehículo no está matriculado en Yopal. ¿Pueden ayudarme?',
 };
 
 export const SERVICES = [
@@ -156,7 +156,7 @@ export const REVIEWS = [
 export const FAQS = [
   {
     question: '¿Mi vehículo no está matriculado en Yopal, pueden ayudarme?',
-    answer: 'Sí, escríbenos de todas formas. Atendemos cualquier trámite vehicular sin importar dónde esté matriculado el vehículo — evaluamos tu caso y te decimos cómo proceder. No descartes el servicio antes de consultar.',
+    answer: 'Sí. Atendemos trámites vehiculares sin importar dónde esté matriculado el vehículo. Cuéntanos tu caso por WhatsApp y te decimos exactamente cómo proceder.',
   },
   {
     question: '¿Cuánto tiempo tarda un traspaso de vehículo en Yopal?',
