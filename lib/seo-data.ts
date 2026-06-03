@@ -108,7 +108,7 @@ export const SEO_SERVICES: SeoService[] = [
     name:        'Levantamiento de Prenda',
     keyword:     'levantamiento prenda vehicular',
     description: 'Libera tu vehículo de gravámenes financieros una vez cancelado el crédito. Gestionamos el trámite ante el organismo de tránsito.',
-    duration:    '3 a 5 días hábiles',
+    duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un levantamiento de prenda.',
   },
   {
@@ -116,7 +116,7 @@ export const SEO_SERVICES: SeoService[] = [
     name:        'Traslado de Cuenta',
     keyword:     'traslado cuenta vehículo',
     description: 'Mueve el expediente de tu vehículo entre organismos de tránsito de cualquier ciudad de Colombia.',
-    duration:    '5 a 10 días hábiles',
+    duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un traslado de cuenta.',
   },
   {
@@ -124,7 +124,7 @@ export const SEO_SERVICES: SeoService[] = [
     name:        'Duplicado de Placas',
     keyword:     'duplicado placas vehículo',
     description: 'Repón tus placas en caso de pérdida, robo o daño de forma ágil y sin complicaciones.',
-    duration:    '3 a 5 días hábiles',
+    duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un duplicado de placas.',
   },
   {
@@ -132,7 +132,7 @@ export const SEO_SERVICES: SeoService[] = [
     name:        'Cambio de Servicio',
     keyword:     'cambio servicio vehículo',
     description: 'Cambia la naturaleza de tu vehículo entre particular y público de forma ágil.',
-    duration:    '5 a 10 días hábiles',
+    duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un cambio de servicio.',
   },
   {
@@ -140,7 +140,7 @@ export const SEO_SERVICES: SeoService[] = [
     name:        'Prescripción de Comparendos',
     keyword:     'prescripción comparendos tránsito',
     description: 'Las multas de más de 3 años pueden estar prescritas. Revisamos gratis y tramitamos la declaración para eliminarlas del sistema.',
-    duration:    '5 a 15 días hábiles',
+    duration:    '15 a 30 días hábiles',
     waMessage:   'Hola, quiero verificar si tengo comparendos prescritos.',
   },
 ];
