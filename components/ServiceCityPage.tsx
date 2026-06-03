@@ -8,7 +8,7 @@ type Props = { service: SeoService; city: City };
 export default function ServiceCityPage({ service, city }: Props) {
   const waUrl = waLink(`${service.waMessage} Mi vehículo está en ${city.name}, ${city.department}.`);
   const otherServices = SEO_SERVICES.filter((s) => s.slug !== service.slug).slice(0, 4);
-  const nearbyCities = CITIES.filter((c) => c.slug !== city.slug).slice(0, 6);
+  const nearbyCities  = CITIES.filter((c) => c.slug !== city.slug).slice(0, 6);
 
   return (
     <>
@@ -20,7 +20,6 @@ export default function ServiceCityPage({ service, city }: Props) {
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            {/* Breadcrumb visual */}
             <nav className="flex items-center gap-1.5 text-xs text-brand-400 mb-5">
               <Link href="/" className="hover:text-white transition-colors">Tramita Yopal</Link>
               <span>/</span>
@@ -37,11 +36,8 @@ export default function ServiceCityPage({ service, city }: Props) {
               <span className="text-gold-400">en {city.name}</span>
             </h1>
 
-            <p className="text-lg text-brand-200 leading-relaxed mb-6 max-w-xl">
-              {city.isOfficeCity
-                ? `${service.description} Tramitamos directamente en el organismo de tránsito de ${city.name}.`
-                : `${service.description} Gestionamos trámites para vehículos de ${city.name} y todo ${city.department}.`
-              }
+            <p className="text-lg text-brand-200 leading-relaxed mb-8 max-w-xl">
+              {city.note}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
@@ -73,46 +69,37 @@ export default function ServiceCityPage({ service, city }: Props) {
         </div>
       </section>
 
-      {/* Documentos + info */}
+      {/* Ficha del servicio */}
       <section className="py-14 sm:py-20 bg-[#fafaf7]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
-            {/* Documentos */}
             <div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6">
-                Documentos requeridos
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4">
+                {service.name} en {city.name}
               </h2>
-              <ul className="space-y-3">
-                {service.documents.map((doc) => (
-                  <li key={doc} className="flex items-start gap-3">
-                    <span className="w-5 h-5 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-3 h-3 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </span>
-                    <span className="text-slate-700 text-sm leading-relaxed">{doc}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 text-sm text-slate-500 leading-relaxed">
-                Antes de pedirte los documentos{' '}
-                <strong className="text-slate-700">revisamos el vehículo y al propietario</strong>{' '}
-                para detectar impedimentos que puedan bloquear el proceso.
+              <p className="text-slate-600 leading-relaxed mb-6">
+                {service.description}
+              </p>
+              <p className="text-slate-500 text-sm leading-relaxed">
+                Antes de iniciar{' '}
+                <strong className="text-slate-700">revisamos el vehículo, al propietario y al comprador</strong>{' '}
+                para detectar prendas activas, multas o restricciones en el RUNT que puedan
+                bloquear el proceso. Solo arrancamos cuando todo está despejado — o te decimos
+                exactamente qué resolver primero.
               </p>
             </div>
 
-            {/* Ficha de servicio */}
             <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm">
               {[
-                { label: 'Tiempo estimado',    value: service.duration },
-                { label: 'Validación previa',  value: 'Incluida, sin costo' },
-                { label: 'Cotización',         value: 'Gratis, sin compromiso' },
-                { label: 'Envío',              value: 'Gratis a tu domicilio' },
-                { label: 'Horario',            value: `${BUSINESS.hours.weekdays} · ${BUSINESS.hours.saturday}` },
-                { label: 'Dónde tramitamos',   value: `Organismo de tránsito de ${BUSINESS.city}` },
+                { label: 'Tiempo estimado',   value: service.duration },
+                { label: 'Validación previa', value: 'Incluida, sin costo' },
+                { label: 'Cotización',        value: 'Gratis, sin compromiso' },
+                { label: 'Envío tarjeta',     value: `Gratis a ${city.name}` },
+                { label: 'Horario',           value: `${BUSINESS.hours.weekdays} · ${BUSINESS.hours.saturday}` },
+                { label: 'Tramitamos en',     value: `Tránsito de ${BUSINESS.city}, Casanare` },
               ].map((item) => (
-                <div key={item.label} className="flex justify-between items-start gap-4 px-6 py-3.5 border-b border-slate-100 last:border-0">
+                <div key={item.label} className="flex justify-between items-center gap-4 px-6 py-3.5 border-b border-slate-100 last:border-0">
                   <span className="text-slate-400 text-sm flex-shrink-0">{item.label}</span>
                   <span className="text-slate-900 font-semibold text-sm text-right">{item.value}</span>
                 </div>
@@ -133,30 +120,31 @@ export default function ServiceCityPage({ service, city }: Props) {
         </div>
       </section>
 
-      {/* Cómo funciona */}
-      <section className="py-14 sm:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-10">
-            Cómo tramitamos tu {service.name.toLowerCase()} en {city.name}
-          </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { n: '01', t: 'Nos escribes', d: `Cuéntanos tu caso por WhatsApp o formulario. Cotizamos en menos de ${BUSINESS.responseTime}.` },
-              { n: '02', t: 'Validamos', d: 'Revisamos el vehículo y al propietario para detectar prendas, multas o restricciones antes de empezar.' },
-              { n: '03', t: 'Envías documentos', d: 'Remites los originales por Interrapidísimo o Servientrega. Nos encargamos del trámite en ventanilla.' },
-              { n: '04', t: 'Recibes en casa', d: 'Te enviamos la tarjeta de propiedad a tu domicilio en cualquier parte de Colombia. Sin costo adicional.' },
-            ].map((step) => (
-              <div key={step.n} className="relative">
-                <div className="w-10 h-10 bg-brand-950 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">
-                  {step.n}
-                </div>
-                <h3 className="text-base font-bold text-slate-900 mb-1.5">{step.t}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{step.d}</p>
+      {/* ¿Vehículo matriculado en otra ciudad? */}
+      {!city.isOfficeCity && (
+        <section className="py-10 bg-white border-y border-slate-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <p className="font-semibold text-slate-900 text-sm mb-1">
+                  ¿Tu vehículo está matriculado en {city.name} u otra ciudad?
+                </p>
+                <p className="text-slate-500 text-sm">
+                  Escríbenos de todas formas — evaluamos tu caso y te decimos si podemos ayudarte.
+                </p>
               </div>
-            ))}
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 text-sm font-semibold text-brand-700 hover:text-brand-900 transition-colors whitespace-nowrap"
+              >
+                Consultar →
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Otros trámites en esta ciudad */}
       <section className="py-14 sm:py-20 bg-[#fafaf7]">

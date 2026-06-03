@@ -156,7 +156,7 @@ export const REVIEWS = [
 export const FAQS = [
   {
     question: '¿Mi vehículo no está matriculado en Yopal, pueden ayudarme?',
-    answer: 'Nuestro servicio está enfocado en trámites para vehículos matriculados en Yopal. Si tu vehículo está en otra ciudad, escríbenos al WhatsApp y consultamos si hay posibilidad de apoyarte — dependiendo del caso podemos orientarte.',
+    answer: 'Sí, escríbenos de todas formas. Dependiendo del caso podemos gestionar el traslado de cuenta al tránsito de Yopal o simplemente orientarte sobre los pasos a seguir. No descartes el servicio antes de consultar — evaluamos cada situación.',
   },
   {
     question: '¿Cuánto tiempo tarda un traspaso de vehículo en Yopal?',
