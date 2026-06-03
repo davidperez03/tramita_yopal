@@ -127,10 +127,10 @@ export default function ServiceCityPage({ service, city }: Props) {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <p className="font-semibold text-slate-900 text-sm mb-1">
-                  ¿Tu vehículo está matriculado en {city.name} u otra ciudad?
+                  ¿Tu vehículo está matriculado en otra ciudad?
                 </p>
                 <p className="text-slate-500 text-sm">
-                  Escríbenos de todas formas — evaluamos tu caso y te decimos si podemos ayudarte.
+                  No importa — atendemos cualquier trámite sin importar dónde esté matriculado el vehículo. Escríbenos y evaluamos tu caso.
                 </p>
               </div>
               <a

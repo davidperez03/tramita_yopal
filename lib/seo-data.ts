@@ -26,7 +26,7 @@ export const CITIES: City[] = [
   },
   {
     name: 'Villanueva', slug: 'villanueva', department: 'Casanare',
-    note: 'Municipio del piedemonte casanareño a unos 70 km de Yopal. Si tu vehículo está matriculado en Villanueva y quieres hacer el traslado de cuenta a Yopal, también lo gestionamos — escríbenos y evaluamos tu caso.',
+    note: 'Municipio del piedemonte casanareño a unos 70 km de Yopal. Atendemos cualquier trámite vehicular para propietarios en Villanueva sin importar dónde esté matriculado el vehículo — escríbenos y evaluamos tu caso.',
   },
   {
     name: 'Paz de Ariporo', slug: 'paz-de-ariporo', department: 'Casanare',

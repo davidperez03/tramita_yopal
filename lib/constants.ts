@@ -156,7 +156,7 @@ export const REVIEWS = [
 export const FAQS = [
   {
     question: '¿Mi vehículo no está matriculado en Yopal, pueden ayudarme?',
-    answer: 'Sí, escríbenos de todas formas. Dependiendo del caso podemos gestionar el traslado de cuenta al tránsito de Yopal o simplemente orientarte sobre los pasos a seguir. No descartes el servicio antes de consultar — evaluamos cada situación.',
+    answer: 'Sí, escríbenos de todas formas. Atendemos cualquier trámite vehicular sin importar dónde esté matriculado el vehículo — evaluamos tu caso y te decimos cómo proceder. No descartes el servicio antes de consultar.',
   },
   {
     question: '¿Cuánto tiempo tarda un traspaso de vehículo en Yopal?',
