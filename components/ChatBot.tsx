@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, KeyboardEvent } from 'react';
+import { BUSINESS } from '@/lib/constants';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -92,7 +93,7 @@ export default function ChatBot() {
         updated[updated.length - 1] = {
           ...updated[updated.length - 1],
           content:
-            'Lo siento, ocurrió un error. Por favor contáctanos directamente al WhatsApp 300 123 4567.',
+            `Lo siento, ocurrió un error. Por favor contáctanos directamente al WhatsApp ${BUSINESS.phone}.`,
         };
         return updated;
       });
