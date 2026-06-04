@@ -33,6 +33,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Tramita Yopal' }],
   creator: 'Tramita Yopal',
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
   alternates: {
     canonical: siteUrl,
     languages: { 'es-CO': siteUrl },
