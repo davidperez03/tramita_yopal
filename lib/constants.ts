@@ -9,6 +9,7 @@ export const BUSINESS = {
   hours: {
     weekdays: 'Lun–Vie 8am–5pm',
     saturday: 'Sáb 8am–1pm',
+    get full() { return `${this.weekdays} · ${this.saturday}`; },
   },
   responseTime: '30 min',
   domain: 'tramitayopal.com',

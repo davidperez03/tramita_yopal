@@ -146,7 +146,7 @@ export default function PoliticaPrivacidad() {
               <p className="mt-2">
                 📧 <a href="mailto:info@tramitayopal.com" className="text-brand-700 hover:underline">info@tramitayopal.com</a><br />
                 📍 {BUSINESS.location}, Colombia<br />
-                🕐 {BUSINESS.hours.weekdays}
+                🕐 {BUSINESS.hours.full}
               </p>
             </section>
 

@@ -20,54 +20,51 @@ export default function Services() {
 
         <FadeInStagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {SERVICES.map((s) => {
-            const waUrl   = waLink(s.whatsappMessage);
+            const waUrl = waLink(s.whatsappMessage);
+            const isPrescripcion = s.id === 'prescripcion';
+            const isOtros = s.id === 'otros';
             const seoSlug = SEO_SERVICES.find((ss) => ss.name === s.name)?.slug;
-            const href    = seoSlug ? `/tramites/${seoSlug}/yopal` : waUrl;
-            const isExt   = !seoSlug;
+            const href = isPrescripcion
+              ? '/prescripcion-comparendos'
+              : seoSlug ? `/tramites/${seoSlug}/yopal` : waUrl;
+            const isExt = !isPrescripcion && !seoSlug;
+
             return (
               <FadeInItem key={s.id}>
-                <a
+                <Link
                   href={href}
                   target={isExt ? '_blank' : undefined}
                   rel={isExt ? 'noopener noreferrer' : undefined}
-                  className="group bg-white rounded-2xl border border-slate-100 p-6 hover:border-brand-300 hover:shadow-md transition-all flex flex-col h-full"
+                  className={`group rounded-2xl border p-6 hover:shadow-md transition-all flex flex-col h-full ${
+                    isPrescripcion
+                      ? 'bg-brand-950 border-brand-800 hover:border-gold-500/50'
+                      : 'bg-white border-slate-100 hover:border-brand-300'
+                  }`}
                 >
-                  <span className="text-xs font-bold text-slate-300 tracking-widest mb-3">
+                  <span className={`text-xs font-bold tracking-widest mb-3 ${isPrescripcion ? 'text-brand-600' : 'text-slate-300'}`}>
                     {s.number}
                   </span>
-                  <h3 className="text-base font-bold text-slate-900 group-hover:text-brand-700 transition-colors mb-2 flex-1">
+                  <h3 className={`text-base font-bold transition-colors mb-2 flex-1 ${
+                    isPrescripcion
+                      ? 'text-white group-hover:text-gold-400'
+                      : 'text-slate-900 group-hover:text-brand-700'
+                  }`}>
                     {s.name}
                   </h3>
-                  <p className="text-sm text-slate-500 leading-relaxed mb-4">
+                  <p className={`text-sm leading-relaxed mb-4 ${isPrescripcion ? 'text-brand-300' : 'text-slate-500'}`}>
                     {s.description}
                   </p>
-                  <span className="text-sm font-semibold text-wa group-hover:text-wa-hover transition-colors flex items-center gap-1">
-                    {s.id === 'otros' ? 'Preguntar por WhatsApp →' : 'Ver trámite →'}
+                  <span className={`text-sm font-semibold transition-colors flex items-center gap-1 ${
+                    isPrescripcion
+                      ? 'text-gold-400 group-hover:text-gold-300'
+                      : 'text-wa group-hover:text-wa-hover'
+                  }`}>
+                    {isOtros ? 'Preguntar por WhatsApp →' : 'Ver trámite →'}
                   </span>
-                </a>
+                </Link>
               </FadeInItem>
             );
           })}
-
-          {/* Tarjeta prescripción — enlaza a página dedicada */}
-          <FadeInItem>
-            <Link
-              href="/prescripcion-comparendos"
-              className="group bg-brand-950 rounded-2xl border border-brand-800 p-6 hover:border-gold-500/50 hover:shadow-md transition-all flex flex-col h-full"
-            >
-              <span className="text-xs font-bold text-brand-600 tracking-widest mb-3">007</span>
-              <h3 className="text-base font-bold text-white group-hover:text-gold-400 transition-colors mb-2 flex-1">
-                Prescripción de Comparendos
-              </h3>
-              <p className="text-sm text-brand-300 leading-relaxed mb-4">
-                ¿Tienes multas de más de 3 años sin pagar? Pueden estar prescritas.
-                Revisamos gratis y tramitamos la declaración.
-              </p>
-              <span className="text-sm font-semibold text-gold-400 group-hover:text-gold-300 transition-colors flex items-center gap-1">
-                Ver servicio →
-              </span>
-            </Link>
-          </FadeInItem>
         </FadeInStagger>
 
         {/* Puerta abierta */}

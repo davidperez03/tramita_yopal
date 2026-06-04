@@ -7,7 +7,7 @@ import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
 import { Tag, Zap, Truck, MapPin } from 'lucide-react';
 
 const tramiteOptions = [
-  ...SERVICES.map((s) => s.name),
+  ...SERVICES.filter((s) => s.id !== 'otros').map((s) => s.name),
   'Otro / No estoy seguro',
 ];
 
