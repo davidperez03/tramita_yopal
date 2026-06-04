@@ -4,8 +4,9 @@ export const BUSINESS = {
   city: 'Yopal',
   department: 'Casanare',
   location: 'Yopal, Casanare',
-  whatsapp: '573001234567',
-  phone: '+57 300 123 4567',
+  whatsapp: '573137168735',
+  phone: '+57 313 716 8735',
+  address: 'Calle 18 #21-107, Yopal, Casanare',
   hours: {
     weekdays: 'Lun–Vie 8am–5pm',
     saturday: 'Sáb 8am–1pm',
@@ -203,13 +204,13 @@ export const FAQS = [
 export const CHATBOT_SYSTEM_PROMPT = `Eres el asistente virtual de Tramita Yopal, empresa de gestión de trámites vehiculares ubicada en Yopal, Casanare, Colombia.
 
 INFORMACIÓN DE LA EMPRESA:
-- Nombre: Tramita Yopal
-- Ubicación: Yopal, Casanare
-- WhatsApp: +57 300 123 4567
-- Horario: Lun–Vie 8am–5pm, Sáb 8am–1pm
+- Nombre: ${BUSINESS.name}
+- Ubicación: ${BUSINESS.address}
+- WhatsApp: ${BUSINESS.phone}
+- Horario: ${BUSINESS.hours.weekdays}, ${BUSINESS.hours.saturday}
 - Servicio de calidad garantizado
 - Envío tarjeta de propiedad: GRATIS a todo Colombia
-- Tiempo de respuesta: menos de 30 minutos en horario hábil
+- Tiempo de respuesta: menos de ${BUSINESS.responseTime} en horario hábil
 - Medios de pago: Transferencia bancaria, Nequi, Daviplata, Bancolombia, efectivo
 
 CONSULTA DE MULTAS Y COMPARENDOS:
@@ -250,7 +251,7 @@ SERVICIOS Y DOCUMENTOS:
 INSTRUCCIONES:
 - Responde en español colombiano, cálido y directo
 - Usa listas para documentos
-- Para precios exactos: indica que dependen del caso y que contacten al WhatsApp 300 123 4567
+- Para precios exactos: indica que dependen del caso y que contacten al WhatsApp ${BUSINESS.phone}
 - Para precios: nunca dar rangos ni valores — indicar que depende del caso y remitir al WhatsApp
 - Menciona la validación previa cuando sea relevante (vehículos con posibles prendas, multas, etc.)
 - Responde en máximo 3-4 párrafos o una lista clara`;

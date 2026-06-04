@@ -87,8 +87,10 @@ const jsonLd = [
     paymentAccepted: 'Nequi, Daviplata, Bancolombia, Transferencia bancaria, Efectivo',
     address: {
       '@type': 'PostalAddress',
+      streetAddress: 'Calle 18 #21-107',
       addressLocality: 'Yopal',
       addressRegion: 'Casanare',
+      postalCode: '850001',
       addressCountry: 'CO',
     },
     geo: {
