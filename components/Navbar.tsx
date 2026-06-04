@@ -37,13 +37,13 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
 
           {/* Logo */}
-          <a href="#" aria-label="Tramita Yopal — Inicio" className="flex items-center bg-white rounded-xl px-3 py-1.5">
+          <a href="#" aria-label="Tramita Yopal — Inicio" className="flex items-center bg-white rounded-xl px-3 py-2">
             <Image
               src="/logo.png"
               alt="Logo Tramita Yopal — Trámites vehiculares en Yopal, Casanare"
-              width={140}
-              height={50}
-              className="h-8 w-auto"
+              width={180}
+              height={64}
+              className="h-11 w-auto"
               priority
             />
           </a>

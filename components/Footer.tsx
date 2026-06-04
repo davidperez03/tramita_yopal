@@ -13,13 +13,13 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="mb-3">
-              <div className="inline-flex bg-white rounded-xl px-3 py-1.5">
+              <div className="inline-flex bg-white rounded-xl px-3 py-2">
                 <Image
                   src="/logo.png"
                   alt="Logo Tramita Yopal"
-                  width={140}
-                  height={50}
-                  className="h-8 w-auto"
+                  width={180}
+                  height={64}
+                  className="h-11 w-auto"
                 />
               </div>
             </div>
