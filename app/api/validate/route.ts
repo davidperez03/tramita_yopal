@@ -1,44 +1,43 @@
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
+import { BUSINESS } from '@/lib/constants';
 
-const client = new Anthropic();
+const client = new OpenAI();
 
 export async function POST(req: Request) {
   try {
     const { tramite, descripcion } = await req.json();
 
-    if (!process.env.ANTHROPIC_API_KEY) {
+    if (!process.env.OPENAI_API_KEY) {
       return new Response(
         JSON.stringify({ error: 'Validador no configurado.' }),
         { status: 503, headers: { 'Content-Type': 'application/json' } },
       );
     }
 
-    const userMessage = `Trámite que necesita: ${tramite}
-
-Descripción del caso: ${descripcion}
-
-Por favor analiza este caso y dame el diagnóstico completo en el formato indicado.`;
+    const userMessage = `Trámite que necesita: ${tramite}\n\nDescripción del caso: ${descripcion}\n\nAnaliza este caso y dame el diagnóstico: qué documentos necesita, qué posibles impedimentos puede haber y qué pasos seguir.`;
 
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
       async start(controller) {
         try {
-          const stream = client.messages.stream({
-            model: 'claude-haiku-4-5',
+          const stream = await client.chat.completions.create({
+            model: 'gpt-4o-mini',
             max_tokens: 1500,
-            system: 'Eres un experto en trámites vehiculares colombianos.',
-            messages: [{ role: 'user', content: userMessage }],
+            stream: true,
+            messages: [
+              {
+                role: 'system',
+                content: 'Eres un experto en trámites vehiculares colombianos. Responde en español colombiano, de forma clara y práctica.',
+              },
+              { role: 'user', content: userMessage },
+            ],
           });
 
-          for await (const event of stream) {
-            if (
-              event.type === 'content_block_delta' &&
-              event.delta.type === 'text_delta'
-            ) {
+          for await (const chunk of stream) {
+            const text = chunk.choices[0]?.delta?.content ?? '';
+            if (text) {
               controller.enqueue(
-                encoder.encode(
-                  `data: ${JSON.stringify({ text: event.delta.text })}\n\n`,
-                ),
+                encoder.encode(`data: ${JSON.stringify({ text })}\n\n`),
               );
             }
           }
@@ -48,7 +47,7 @@ Por favor analiza este caso y dame el diagnóstico completo en el formato indica
         } catch {
           controller.enqueue(
             encoder.encode(
-              `data: ${JSON.stringify({ text: 'Error al analizar el caso. Contáctanos directamente al WhatsApp 300 123 4567.' })}\n\n`,
+              `data: ${JSON.stringify({ text: `Error al analizar el caso. Contáctanos por WhatsApp al ${BUSINESS.phone}.` })}\n\n`,
             ),
           );
           controller.enqueue(encoder.encode('data: [DONE]\n\n'));
