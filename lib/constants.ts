@@ -111,29 +111,8 @@ export const PROCESS_STEPS = [
   },
 ];
 
-export const REVIEWS = [
-  {
-    name: 'Carlos M.',
-    year: '2024',
-    type: 'Cliente verificado',
-    text: 'Nunca pensé que un trámite podía ser tan fácil. No tuve que salir de casa y en menos de una semana tenía mi tarjeta de propiedad en mano.',
-    rating: 5,
-  },
-  {
-    name: 'Laura G.',
-    year: '2024',
-    type: 'Cliente frecuente',
-    text: 'Lo que más me gustó fue que antes de empezar me dijeron exactamente qué documentos necesitaba y qué podía fallar. Llegué preparada y todo salió perfecto.',
-    rating: 5,
-  },
-  {
-    name: 'Miguel R.',
-    year: '2024',
-    type: 'Concesionario',
-    text: 'Como concesionario necesito un aliado confiable para traspasos. Tramita Yopal revisa cada caso antes de empezar. Precio justo, rapidez y cero problemas.',
-    rating: 5,
-  },
-];
+// Se activa cuando haya reseñas reales de clientes
+export const REVIEWS: { name: string; year: string; type: string; text: string; rating: number }[] = [];
 
 export const FAQS = [
   {
