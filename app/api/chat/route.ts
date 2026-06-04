@@ -1,8 +1,6 @@
 import OpenAI from 'openai';
 import { BUSINESS, CHATBOT_SYSTEM_PROMPT } from '@/lib/constants';
 
-const client = new OpenAI();
-
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
@@ -14,6 +12,7 @@ export async function POST(req: Request) {
       );
     }
 
+    const client = new OpenAI();
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
       async start(controller) {

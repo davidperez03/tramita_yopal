@@ -1,8 +1,6 @@
 import OpenAI from 'openai';
 import { BUSINESS } from '@/lib/constants';
 
-const client = new OpenAI();
-
 export async function POST(req: Request) {
   try {
     const { tramite, descripcion } = await req.json();
@@ -14,6 +12,7 @@ export async function POST(req: Request) {
       );
     }
 
+    const client = new OpenAI();
     const userMessage = `Trámite que necesita: ${tramite}\n\nDescripción del caso: ${descripcion}\n\nAnaliza este caso y dame el diagnóstico: qué documentos necesita, qué posibles impedimentos puede haber y qué pasos seguir.`;
 
     const encoder = new TextEncoder();
