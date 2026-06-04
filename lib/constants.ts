@@ -1,9 +1,8 @@
 export const BUSINESS = {
   name: 'Tramita Yopal',
-  tagline: 'Tu gestor de trámites vehiculares en Yopal',
   city: 'Yopal',
   department: 'Casanare',
-  location: 'Yopal, Casanare',
+  get location() { return `${this.city}, ${this.department}`; },
   whatsapp: '573137168735',
   phone: '+57 313 716 8735',
   address: 'Calle 18 #21-107, Yopal, Casanare',
@@ -31,13 +30,7 @@ export const SERVICES = [
     number: '001',
     name: 'Traspaso de Propiedad',
     description: 'Formaliza el cambio de propietario de tu vehículo. Te decimos exactamente qué necesitas.',
-    documents: [
-      'SOAT vigente',
-      'Revisión técnico-mecánica vigente',
-      'Cédula del comprador y vendedor',
-      'Tarjeta de propiedad original',
-      'Certificado de tradición y libertad',
-    ],
+    duration: '1 a 2 días hábiles',
     whatsappMessage: 'Hola, necesito información sobre un Traspaso de Propiedad de mi vehículo.',
   },
   {
@@ -45,11 +38,7 @@ export const SERVICES = [
     number: '002',
     name: 'Levantamiento de Prenda',
     description: 'Libera tu vehículo de gravámenes financieros una vez cancelado el crédito.',
-    documents: [
-      'Carta de levantamiento del banco o entidad financiera',
-      'Tarjeta de propiedad original',
-      'Cédula del propietario',
-    ],
+    duration: '1 a 2 días hábiles',
     whatsappMessage: 'Hola, necesito información sobre Levantamiento de Prenda de mi vehículo.',
   },
   {
@@ -57,12 +46,7 @@ export const SERVICES = [
     number: '003',
     name: 'Traslado de Cuenta',
     description: 'Mueve el expediente de tu vehículo entre organismos de tránsito de todo el país.',
-    documents: [
-      'Tarjeta de propiedad original',
-      'SOAT vigente',
-      'Revisión técnico-mecánica vigente',
-      'Cédula del propietario',
-    ],
+    duration: '1 a 2 días hábiles',
     whatsappMessage: 'Hola, necesito información sobre un Traslado de Cuenta de mi vehículo.',
   },
   {
@@ -70,12 +54,7 @@ export const SERVICES = [
     number: '004',
     name: 'Duplicado de Placas',
     description: 'Repón tus placas en caso de pérdida, robo o daño de forma ágil.',
-    documents: [
-      'Denuncia policial (robo o pérdida)',
-      'Tarjeta de propiedad original',
-      'SOAT vigente',
-      'Cédula del propietario',
-    ],
+    duration: '1 a 2 días hábiles',
     whatsappMessage: 'Hola, necesito información sobre Duplicado de Placas para mi vehículo.',
   },
   {
@@ -83,21 +62,23 @@ export const SERVICES = [
     number: '005',
     name: 'Cambio de Servicio',
     description: 'Cambia la naturaleza de tu vehículo entre particular y público fácilmente.',
-    documents: [
-      'Tarjeta de propiedad original',
-      'SOAT vigente',
-      'Revisión técnico-mecánica vigente',
-      'Cédula del propietario',
-      'Documentos adicionales según el cambio',
-    ],
+    duration: '1 a 2 días hábiles',
     whatsappMessage: 'Hola, necesito información sobre Cambio de Servicio de mi vehículo.',
   },
   {
-    id: 'otros',
+    id: 'prescripcion',
     number: '006',
+    name: 'Prescripción de Comparendos',
+    description: '¿Multas de más de 3 años? Pueden estar prescritas. Revisamos gratis y tramitamos la declaración.',
+    duration: '15 a 30 días hábiles',
+    whatsappMessage: 'Hola, quiero verificar si tengo comparendos prescritos.',
+  },
+  {
+    id: 'otros',
+    number: '007',
     name: 'Otros trámites',
     description: '¿Tu trámite no está en la lista o tienes una duda? Escríbenos — te orientamos sin compromiso.',
-    documents: [],
+    duration: null,
     whatsappMessage: 'Hola, tengo una consulta sobre un trámite vehicular y quiero saber si me pueden ayudar.',
   },
 ];
@@ -112,7 +93,7 @@ export const PROCESS_STEPS = [
   {
     step: '02',
     title: 'Cotizamos gratis',
-    description: 'Escríbenos por WhatsApp o formulario. Respondemos con precio y tiempo exactos en menos de 30 min.',
+    description: `Escríbenos por WhatsApp o formulario. Respondemos con precio y tiempo exactos en menos de ${BUSINESS.responseTime}.`,
     icon: '📋',
   },
   {
@@ -128,7 +109,6 @@ export const PROCESS_STEPS = [
     icon: '🏠',
   },
 ];
-
 
 export const REVIEWS = [
   {
@@ -208,7 +188,6 @@ INFORMACIÓN DE LA EMPRESA:
 - Ubicación: ${BUSINESS.address}
 - WhatsApp: ${BUSINESS.phone}
 - Horario: ${BUSINESS.hours.weekdays}, ${BUSINESS.hours.saturday}
-- Servicio de calidad garantizado
 - Envío tarjeta de propiedad: GRATIS a todo Colombia
 - Tiempo de respuesta: menos de ${BUSINESS.responseTime} en horario hábil
 - Medios de pago: Transferencia bancaria, Nequi, Daviplata, Bancolombia, efectivo
@@ -218,41 +197,19 @@ Tramita Yopal ofrece consulta gratuita de multas por número de cédula. Revisan
 - Multas pendientes registradas en el SIMIT
 - Comparendos prescritos (en Colombia prescriben a los 3 años desde la infracción)
 - Bloqueos que puedan afectar un trámite vehicular
-Si el usuario pregunta por multas, comparendos o prescripción, indícale que puede consultar gratis enviando su cédula por WhatsApp o usando el formulario en la sección "Multas" del sitio.
 
 SERVICIO DIFERENCIADOR — VALIDACIÓN PREVIA:
-Tramita Yopal valida al comprador, al vendedor y al vehículo ANTES de iniciar el trámite. Esto incluye:
-- Verificar si el vehículo tiene prendas activas no levantadas
-- Verificar si hay multas o restricciones en el RUNT
-- Verificar que los documentos del propietario/comprador estén en orden
-- Identificar impedimentos que puedan bloquear el trámite a mitad de proceso
-También existe el Validador en el sitio web donde el usuario puede describir su caso y recibir un diagnóstico instantáneo de qué documentos tiene y qué le puede faltar.
+Tramita Yopal valida al comprador, al vendedor y al vehículo ANTES de iniciar el trámite:
+- Prendas activas no levantadas
+- Multas o restricciones en el RUNT
+- Documentos del propietario/comprador en orden
+- Impedimentos que puedan bloquear el trámite a mitad de proceso
 
-SERVICIOS Y DOCUMENTOS:
-
-1. TRASPASO DE PROPIEDAD — 1-2 días hábiles
-   Documentos: SOAT vigente, Revisión técnico-mecánica vigente, Cédula comprador y vendedor, Tarjeta de propiedad original, Certificado de tradición y libertad
-
-2. LEVANTAMIENTO DE PRENDA — 1-2 días hábiles
-   Documentos: Carta de levantamiento del banco, Tarjeta de propiedad original, Cédula del propietario
-
-3. TRASLADO DE CUENTA — 1-2 días hábiles
-   Documentos: Tarjeta de propiedad, SOAT vigente, Revisión técnico-mecánica, Cédula del propietario
-
-4. DUPLICADO DE PLACAS — 1-2 días hábiles
-   Documentos: Denuncia policial (si aplica), Tarjeta de propiedad, SOAT vigente, Cédula del propietario
-
-5. CAMBIO DE SERVICIO — 1-2 días hábiles
-   Documentos: Tarjeta de propiedad, SOAT, Revisión técnico-mecánica, Cédula, docs adicionales según el cambio
-
-6. TRASPASO A PERSONA INDETERMINADA — 1-2 días hábiles
-   Documentos: Declaración juramentada, Cédula comprador, Tarjeta de propiedad si existe
+SERVICIOS:
+${SERVICES.filter(s => s.id !== 'otros').map(s => `- ${s.name}${s.duration ? ` — ${s.duration}` : ''}: ${s.description}`).join('\n')}
 
 INSTRUCCIONES:
 - Responde en español colombiano, cálido y directo
-- Usa listas para documentos
-- Para precios exactos: indica que dependen del caso y que contacten al WhatsApp ${BUSINESS.phone}
-- Para precios: nunca dar rangos ni valores — indicar que depende del caso y remitir al WhatsApp
-- Menciona la validación previa cuando sea relevante (vehículos con posibles prendas, multas, etc.)
+- Para precios: nunca dar valores — dependen del caso, remitir al WhatsApp ${BUSINESS.phone}
+- Menciona la validación previa cuando sea relevante
 - Responde en máximo 3-4 párrafos o una lista clara`;
-
