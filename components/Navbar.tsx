@@ -41,9 +41,9 @@ export default function Navbar() {
             <Image
               src="/logo.png"
               alt="Logo Tramita Yopal — Trámites vehiculares en Yopal, Casanare"
-              width={200}
-              height={70}
-              className="h-12 w-auto rounded-xl"
+              width={220}
+              height={80}
+              className="h-14 w-auto rounded-2xl"
               priority
             />
           </a>
