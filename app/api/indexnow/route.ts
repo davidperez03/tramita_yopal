@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { BUSINESS } from '@/lib/constants';
 import { CITIES, SEO_SERVICES } from '@/lib/seo-data';
 
-const KEY = 'tramitayopal2024';
+const KEY  = process.env.INDEXNOW_KEY ?? 'tramitayopal2024';
 const HOST = BUSINESS.domain;
 
 export async function GET() {

@@ -1,15 +1,20 @@
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+
+// Componentes above-fold — carga inmediata
 import AboutUs from '@/components/AboutUs';
 import Validator from '@/components/Validator';
 import Services from '@/components/Services';
-import Process from '@/components/Process';
-import QuoteForm from '@/components/QuoteForm';
-import WhyUs from '@/components/WhyUs';
-import FAQ from '@/components/FAQ';
-import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
-import ChatBot from '@/components/ChatBot';
+
+// Componentes below-fold — carga diferida
+const Process   = dynamic(() => import('@/components/Process'));
+const QuoteForm = dynamic(() => import('@/components/QuoteForm'));
+const WhyUs     = dynamic(() => import('@/components/WhyUs'));
+const FAQ       = dynamic(() => import('@/components/FAQ'));
+const Contact   = dynamic(() => import('@/components/Contact'));
+const Footer    = dynamic(() => import('@/components/Footer'));
+const ChatBot   = dynamic(() => import('@/components/ChatBot'));
 
 export default function Home() {
   return (
