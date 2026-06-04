@@ -37,7 +37,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
 
           {/* Logo */}
-          <a href="#" aria-label="Tramita Yopal — Inicio">
+          <a href="/" aria-label="Tramita Yopal — Inicio">
             <Image
               src="/logo.png"
               alt="Logo Tramita Yopal — Trámites vehiculares en Yopal, Casanare"

@@ -222,7 +222,8 @@ export default function ChatBot() {
       <button
         onClick={() => setOpen(!open)}
         className="fixed bottom-6 right-4 sm:right-6 z-50 w-14 h-14 bg-brand-800 hover:bg-brand-900 text-white rounded-2xl shadow-xl shadow-brand-900/30 flex items-center justify-center transition-all hover:scale-110 active:scale-95"
-        aria-label="Abrir chat de ayuda"
+        aria-label={open ? 'Cerrar chat' : 'Abrir chat de ayuda'}
+        aria-expanded={open}
       >
         {open ? (
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

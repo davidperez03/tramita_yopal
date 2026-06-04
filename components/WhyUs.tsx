@@ -5,10 +5,10 @@ import { PackageCheck, Truck, CheckCircle2 } from 'lucide-react';
 const waUrl = waLink('Hola, quiero más información sobre sus servicios.');
 
 const listItems = [
-  { title: 'Gestión 100% remota',            desc: 'Nos encargamos del trámite en el organismo de tránsito. Tú solo envías los documentos.' },
-  { title: 'Tramitamos en ventanilla por ti', desc: 'Gestionamos tu trámite de forma presencial en el organismo de tránsito de Yopal — sin que tengas que aparecer tú.' },
-  { title: 'Trámites en Yopal, Casanare',     desc: 'Especializados en el organismo de tránsito de Yopal. ¿Vehículo de otra ciudad? Pregúntanos.' },
-  { title: 'Sin letra pequeña',               desc: 'Te decimos exactamente qué necesitas, cuánto cuesta y cuánto tarda.' },
+  { title: 'Tramitamos en ventanilla por ti', desc: 'Gestionamos tu trámite de forma presencial en el organismo de tránsito de Yopal. Tú solo envías los documentos por mensajería.' },
+  { title: 'Validación previa sin costo',     desc: 'Antes de cobrar revisamos el vehículo, el propietario y el comprador para detectar prendas, multas o restricciones.' },
+  { title: 'Trámites en Yopal, Casanare',     desc: 'Especializados en el organismo de tránsito de Yopal. ¿Vehículo de otra ciudad? Cuéntanos tu caso.' },
+  { title: 'Sin letra pequeña',               desc: 'Te decimos exactamente qué necesitas, cuánto cuesta y cuánto tarda — antes de empezar.' },
 ];
 
 export default function WhyUs() {

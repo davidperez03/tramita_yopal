@@ -3,9 +3,10 @@
 import { motion } from 'framer-motion';
 import { BUSINESS, waLink, WA_MESSAGES, SERVICES } from '@/lib/constants';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { EASE_OUT } from '@/lib/animations';
 
 const waUrl = waLink(WA_MESSAGES.cotizar);
-const ease = [0.21, 0.47, 0.32, 0.98] as const;
+const ease = EASE_OUT;
 
 const trustPills = [
   { text: 'Cotización gratis' },

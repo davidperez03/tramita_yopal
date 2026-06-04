@@ -23,7 +23,7 @@ export default function Contact() {
               <WhatsAppIcon className="w-7 h-7 text-wa" />
             </div>
             <h3 className="font-bold text-white text-lg mb-1">WhatsApp</h3>
-            <p className="text-wa font-semibold">{BUSINESS.phone}</p>
+            <a href={`tel:+${BUSINESS.whatsapp}`} className="text-wa font-semibold hover:underline">{BUSINESS.phone}</a>
             <p className="text-brand-400 text-xs mt-2">Respuesta en &lt;{BUSINESS.responseTime}</p>
           </div>
 

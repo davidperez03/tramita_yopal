@@ -5,10 +5,13 @@ import { WhatsAppIcon } from './WhatsAppIcon';
 
 type Props = { service: SeoService; city: City };
 
+const RELATED_SERVICES_COUNT = 4;
+const NEARBY_CITIES_COUNT    = 6;
+
 export default function ServiceCityPage({ service, city }: Props) {
   const waUrl = waLink(`${service.waMessage} Mi vehículo está en ${city.name}, ${city.department}.`);
-  const otherServices = SEO_SERVICES.filter((s) => s.slug !== service.slug).slice(0, 4);
-  const nearbyCities  = CITIES.filter((c) => c.slug !== city.slug).slice(0, 6);
+  const otherServices = SEO_SERVICES.filter((s) => s.slug !== service.slug).slice(0, RELATED_SERVICES_COUNT);
+  const nearbyCities  = CITIES.filter((c) => c.slug !== city.slug).slice(0, NEARBY_CITIES_COUNT);
 
   return (
     <>
