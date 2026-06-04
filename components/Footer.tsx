@@ -57,7 +57,7 @@ export default function Footer() {
               {[
                 { href: '#nosotros', label: 'Quiénes somos' },
                 { href: '#validar',  label: 'Validar mi caso' },
-                { href: '#multas',   label: 'Consultar multas' },
+                { href: '/prescripcion-comparendos', label: 'Consultar multas' },
                 { href: '#proceso',  label: 'Cómo trabajamos' },
                 { href: '#faq',      label: 'Preguntas frecuentes' },
                 { href: '#cotizar',  label: 'Cotizar' },
