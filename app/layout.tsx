@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { BUSINESS, FAQS, SERVICES } from '@/lib/constants';
+import { CITIES } from '@/lib/seo-data';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -49,6 +50,7 @@ export const metadata: Metadata = {
     siteName: 'Tramita Yopal',
     locale: 'es_CO',
     type: 'website',
+    images: [{ url: `${siteUrl}/logo.png`, width: 800, height: 800, alt: 'Tramita Yopal — Trámites vehiculares en Yopal, Casanare' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -71,12 +73,6 @@ export const metadata: Metadata = {
   },
 };
 
-const AREA_SERVED = [
-  'Yopal', 'Aguazul', 'Villanueva', 'Paz de Ariporo', 'Tauramena',
-  'Trinidad', 'Monterrey', 'Sabanalarga', 'Nunchía', 'Pore',
-  'Orocué', 'San Luis de Palenque', 'Hato Corozal', 'Maní',
-  'Recetor', 'Chámeza', 'La Salina', 'Sácama', 'Támara',
-];
 
 const jsonLd = [
   {
@@ -102,10 +98,10 @@ const jsonLd = [
       latitude: 5.3394,
       longitude: -72.3957,
     },
-    areaServed: AREA_SERVED.map((city) => ({
+    areaServed: CITIES.map((city) => ({
       '@type': 'City',
-      name: city,
-      containedInPlace: { '@type': 'State', name: 'Casanare' },
+      name: city.name,
+      containedInPlace: { '@type': 'State', name: city.department },
     })),
     openingHoursSpecification: [
       {

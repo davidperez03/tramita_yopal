@@ -3,7 +3,14 @@ import { BUSINESS } from '@/lib/constants';
 
 export async function POST(req: Request) {
   try {
-    const { tramite, descripcion } = await req.json();
+    const body = await req.json();
+    const { tramite, descripcion } = body ?? {};
+
+    if (!tramite || typeof tramite !== 'string' || !descripcion || typeof descripcion !== 'string') {
+      return new Response(JSON.stringify({ error: 'Datos incompletos.' }), {
+        status: 400, headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
     if (!process.env.OPENAI_API_KEY) {
       return new Response(

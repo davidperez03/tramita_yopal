@@ -3,7 +3,14 @@ import { BUSINESS, CHATBOT_SYSTEM_PROMPT } from '@/lib/constants';
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+    const messages = body?.messages;
+
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(JSON.stringify({ error: 'Mensajes inválidos.' }), {
+        status: 400, headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
     if (!process.env.OPENAI_API_KEY) {
       return new Response(

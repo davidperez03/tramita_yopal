@@ -70,7 +70,7 @@ export default function Page({ params }: { params: Params }) {
         '@type': 'LocalBusiness',
         name: BUSINESS.name,
         telephone: `+${BUSINESS.whatsapp}`,
-        address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, addressRegion: 'Casanare', addressCountry: 'CO' },
+        address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, addressRegion: BUSINESS.department, addressCountry: 'CO' },
       },
       areaServed: { '@type': 'City', name: city.name, containedInPlace: { '@type': 'State', name: city.department } },
       serviceType: service.name,

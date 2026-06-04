@@ -1,0 +1,32 @@
+import type { MetadataRoute } from 'next';
+import { BUSINESS } from '@/lib/constants';
+import { CITIES, SEO_SERVICES } from '@/lib/seo-data';
+
+const base = `https://${BUSINESS.domain}`;
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const cityServicePages = SEO_SERVICES.flatMap((service) =>
+    CITIES.map((city) => ({
+      url: `${base}/tramites/${service.slug}/${city.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: city.isOfficeCity ? 0.85 : 0.75,
+    }))
+  );
+
+  return [
+    {
+      url: base,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 1.0,
+    },
+    {
+      url: `${base}/prescripcion-comparendos`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    ...cityServicePages,
+  ];
+}
