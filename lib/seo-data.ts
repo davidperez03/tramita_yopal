@@ -22,75 +22,75 @@ export const CITIES: City[] = [
   },
   {
     name: 'Aguazul', slug: 'aguazul', department: 'Casanare',
-    note: 'Municipio petrolero a unos 50 km de Yopal, con una flota vehicular importante por la actividad de la industria. Recibimos tus documentos por mensajería y gestionamos el trámite en el tránsito de Yopal — la tarjeta llega a tu puerta en Aguazul.',
+    note: 'Atendemos propietarios de vehículos en Aguazul. Envías los documentos por mensajería, tramitamos en el tránsito de Yopal y te enviamos la tarjeta de propiedad a tu puerta en Aguazul.',
   },
   {
     name: 'Villanueva', slug: 'villanueva', department: 'Casanare',
-    note: 'Municipio del piedemonte casanareño a unos 70 km de Yopal. Atendemos cualquier trámite vehicular para propietarios en Villanueva sin importar dónde esté matriculado el vehículo — escríbenos y evaluamos tu caso.',
+    note: 'Atendemos trámites vehiculares para propietarios en Villanueva sin importar dónde esté matriculado el vehículo. Cuéntanos tu caso y evaluamos cómo ayudarte.',
   },
   {
     name: 'Paz de Ariporo', slug: 'paz-de-ariporo', department: 'Casanare',
-    note: 'Uno de los municipios más extensos de Casanare, al norte del departamento. La distancia no es problema: recibimos tus documentos por mensajería desde Paz de Ariporo y te enviamos la tarjeta de propiedad a tu dirección.',
+    note: 'Atendemos propietarios en Paz de Ariporo. Recibimos tus documentos por mensajería y te enviamos la tarjeta de propiedad a tu dirección — sin que tengas que viajar a Yopal.',
   },
   {
     name: 'Tauramena', slug: 'tauramena', department: 'Casanare',
-    note: 'Municipio petrolero a unos 100 km de Yopal. Gestionamos tu trámite vehicular en el tránsito de Yopal sin que tengas que desplazarte — todo por WhatsApp y mensajería.',
+    note: 'Gestionamos trámites vehiculares para propietarios en Tauramena. Todo por WhatsApp y mensajería — sin desplazamientos.',
   },
   {
     name: 'Trinidad', slug: 'trinidad', department: 'Casanare',
-    note: 'Municipio llanero en el oriente de Casanare. Para propietarios de vehículos en Trinidad, recibimos documentos por mensajería desde cualquier punto del departamento y gestionamos el proceso completo en Yopal.',
+    note: 'Atendemos propietarios de vehículos en Trinidad, Casanare. Recibimos documentos por mensajería y gestionamos el proceso completo en Yopal.',
   },
   {
     name: 'Monterrey', slug: 'monterrey', department: 'Casanare',
-    note: 'Municipio del piedemonte casanareño. Si compraste un vehículo en Monterrey y necesitas el traspaso, o tienes una prenda que levantar, lo gestionamos en el tránsito de Yopal y te enviamos la tarjeta a tu domicilio.',
+    note: 'Gestionamos trámites vehiculares para propietarios en Monterrey. Enviamos la tarjeta de propiedad directamente a tu domicilio sin costo adicional.',
   },
   {
     name: 'Sabanalarga', slug: 'sabanalarga', department: 'Casanare',
-    note: 'Municipio de Casanare con vías de conexión hacia el piedemonte. Recibimos tus documentos por Interrapidísimo o Servientrega y tramitamos en Yopal sin que tengas que viajar.',
+    note: 'Atendemos propietarios en Sabanalarga, Casanare. Recibimos tus documentos por Interrapidísimo o Servientrega y tramitamos en Yopal.',
   },
   {
     name: 'Nunchía', slug: 'nunchia', department: 'Casanare',
-    note: 'Municipio del piedemonte a unos 80 km de Yopal. Coordinamos todo por WhatsApp y gestionamos el trámite en ventanilla — solo envías los documentos y recibes la tarjeta de propiedad en Nunchía.',
+    note: 'Gestionamos trámites vehiculares para propietarios en Nunchía. Solo envías los documentos y recibes la tarjeta de propiedad en tu puerta.',
   },
   {
     name: 'Pore', slug: 'pore', department: 'Casanare',
-    note: 'Municipio histórico de Casanare, antigua capital de la provincia. Gestionamos tu trámite vehicular en el tránsito de Yopal y te enviamos la tarjeta a Pore sin costo adicional de envío.',
+    note: 'Atendemos propietarios de vehículos en Pore, Casanare. Tramitamos en el tránsito de Yopal y enviamos la tarjeta a tu domicilio sin costo.',
   },
   {
     name: 'Orocué', slug: 'orocue', department: 'Casanare',
-    note: 'Puerto sobre el Río Meta en el oriente de Casanare. La lejanía no es un obstáculo: recibimos documentos por mensajería y gestionamos el trámite en Yopal, enviando la tarjeta de vuelta a Orocué.',
+    note: 'Atendemos propietarios en Orocué, Casanare. Recibimos documentos por mensajería y gestionamos el trámite en Yopal — la tarjeta llega a tu puerta.',
   },
   {
     name: 'San Luis de Palenque', slug: 'san-luis-de-palenque', department: 'Casanare',
-    note: 'Municipio ganadero del oriente casanareño. Para propietarios con vehículos en San Luis de Palenque, gestionamos el trámite completo en Yopal y enviamos la tarjeta de propiedad a tu domicilio.',
+    note: 'Gestionamos trámites vehiculares para propietarios en San Luis de Palenque. Proceso completo en Yopal, tarjeta de propiedad enviada a tu domicilio.',
   },
   {
     name: 'Hato Corozal', slug: 'hato-corozal', department: 'Casanare',
-    note: 'Municipio del norte de Casanare, limítrofe con Arauca. Coordinamos el trámite por WhatsApp desde Hato Corozal — documentos por mensajería, gestión en Yopal, tarjeta a tu puerta.',
+    note: 'Atendemos propietarios en Hato Corozal, Casanare. Coordinamos por WhatsApp — documentos por mensajería, gestión en Yopal, tarjeta a tu puerta.',
   },
   {
     name: 'Maní', slug: 'mani', department: 'Casanare',
-    note: 'Municipio del centro-oriente de Casanare con importante actividad agropecuaria. Gestionamos tu trámite vehicular en el tránsito de Yopal y enviamos el resultado a Maní sin desplazamiento.',
+    note: 'Gestionamos trámites vehiculares para propietarios en Maní, Casanare. Todo el proceso en Yopal sin que tengas que desplazarte.',
   },
   {
     name: 'Recetor', slug: 'recetor', department: 'Casanare',
-    note: 'Municipio del piedemonte casanareño. Recibimos tus documentos por mensajería desde Recetor y tramitamos en ventanilla en Yopal, ahorrándote el viaje hasta la capital del departamento.',
+    note: 'Atendemos propietarios en Recetor, Casanare. Recibimos tus documentos por mensajería y tramitamos en ventanilla en Yopal.',
   },
   {
     name: 'Chámeza', slug: 'chameza', department: 'Casanare',
-    note: 'Municipio del piedemonte con actividad petrolera. Coordinamos todo el proceso por WhatsApp desde Chámeza — documentos por mensajería, trámite en Yopal, tarjeta a tu domicilio.',
+    note: 'Gestionamos trámites vehiculares para propietarios en Chámeza, Casanare. Documentos por mensajería, trámite en Yopal, tarjeta a tu domicilio.',
   },
   {
     name: 'La Salina', slug: 'la-salina', department: 'Casanare',
-    note: 'Municipio en la zona andina de Casanare. Gestionamos tu trámite vehicular en el tránsito de Yopal y te enviamos la tarjeta a La Salina sin costo adicional de mensajería.',
+    note: 'Atendemos propietarios en La Salina, Casanare. Gestionamos tu trámite vehicular en el tránsito de Yopal y te enviamos la tarjeta sin costo adicional.',
   },
   {
     name: 'Sácama', slug: 'sacama', department: 'Casanare',
-    note: 'Municipio del piedemonte casanareño. Para vehículos de propietarios en Sácama que necesitan tramitar en Yopal, recibimos los documentos por mensajería y gestionamos el proceso completo.',
+    note: 'Gestionamos trámites vehiculares para propietarios en Sácama, Casanare. Recibimos los documentos por mensajería y gestionamos el proceso completo en Yopal.',
   },
   {
     name: 'Támara', slug: 'tamara', department: 'Casanare',
-    note: 'Municipio andino de Casanare con vías de acceso al piedemonte. Coordinamos tu trámite por WhatsApp — envías los documentos desde Támara y recibes la tarjeta de propiedad en tu puerta.',
+    note: 'Atendemos propietarios en Támara, Casanare. Envías los documentos por mensajería y recibes la tarjeta de propiedad directamente en tu puerta.',
   },
 ];
 
