@@ -18,79 +18,79 @@ export type SeoService = {
 export const CITIES: City[] = [
   {
     name: 'Yopal', slug: 'yopal', department: 'Casanare', isOfficeCity: true,
-    note: 'Capital de Casanare y sede del organismo de tránsito donde operamos. Gestionamos tu trámite directamente en ventanilla, sin que tengas que hacer fila ni perder el día.',
+    note: 'Capital de Casanare y sede del organismo de tránsito donde operamos. Ciudad petrolera — hogar de los campos Cusiana y Cupiagua, los más grandes del país. Gestionamos tu trámite directamente en ventanilla, sin que tengas que hacer fila ni perder el día.',
   },
   {
     name: 'Aguazul', slug: 'aguazul', department: 'Casanare',
-    note: 'Atendemos propietarios de vehículos en Aguazul. Envías los documentos por mensajería, tramitamos en el tránsito de Yopal y te enviamos la tarjeta de propiedad a tu puerta en Aguazul.',
+    note: 'Municipio sede del campo petrolero Cupiagua, uno de los de mayor producción en Colombia. Con una flota vehicular importante por la actividad industrial, atendemos propietarios en Aguazul — documentos por mensajería, trámite en Yopal, tarjeta a tu puerta.',
   },
   {
     name: 'Villanueva', slug: 'villanueva', department: 'Casanare',
-    note: 'Atendemos trámites vehiculares para propietarios en Villanueva sin importar dónde esté matriculado el vehículo. Cuéntanos tu caso y evaluamos cómo ayudarte.',
+    note: 'El municipio más joven de Casanare, erigido en 1982. Su economía gira en torno al cultivo de palma africana. Atendemos trámites vehiculares para propietarios en Villanueva sin importar dónde esté matriculado el vehículo.',
   },
   {
     name: 'Paz de Ariporo', slug: 'paz-de-ariporo', department: 'Casanare',
-    note: 'Atendemos propietarios en Paz de Ariporo. Recibimos tus documentos por mensajería y te enviamos la tarjeta de propiedad a tu dirección — sin que tengas que viajar a Yopal.',
+    note: 'Uno de los municipios más extensos de Colombia con cerca de 13.800 km², y el tercer municipio con mayor hato ganadero del país. Atendemos propietarios en Paz de Ariporo — recibimos documentos por mensajería y te enviamos la tarjeta a tu dirección.',
   },
   {
     name: 'Tauramena', slug: 'tauramena', department: 'Casanare',
-    note: 'Gestionamos trámites vehiculares para propietarios en Tauramena. Todo por WhatsApp y mensajería — sin desplazamientos.',
+    note: 'Municipio sede del campo Cusiana, uno de los mayores descubrimientos petroleros en la historia de Colombia. En 2013, sus ciudadanos votaron para proteger las zonas de recarga hídrica de la explotación. Gestionamos trámites vehiculares para propietarios en Tauramena — todo por WhatsApp y mensajería.',
   },
   {
     name: 'Trinidad', slug: 'trinidad', department: 'Casanare',
-    note: 'Atendemos propietarios de vehículos en Trinidad, Casanare. Recibimos documentos por mensajería y gestionamos el proceso completo en Yopal.',
+    note: 'Municipio llanero a orillas del río Pauto, con sabanas que se inundan estacionalmente y una vocación ganadera tradicional. Atendemos propietarios de vehículos en Trinidad — recibimos documentos por mensajería y tramitamos en Yopal.',
   },
   {
     name: 'Monterrey', slug: 'monterrey', department: 'Casanare',
-    note: 'Gestionamos trámites vehiculares para propietarios en Monterrey. Enviamos la tarjeta de propiedad directamente a tu domicilio sin costo adicional.',
+    note: 'Municipio del piedemonte con altitudes entre 300 y 2.000 m, lo que le da diversidad de climas y cultivos: café, cacao, caña de azúcar y plátano. Gestionamos trámites vehiculares para propietarios en Monterrey y enviamos la tarjeta directamente a tu domicilio.',
   },
   {
     name: 'Sabanalarga', slug: 'sabanalarga', department: 'Casanare',
-    note: 'Atendemos propietarios en Sabanalarga, Casanare. Recibimos tus documentos por Interrapidísimo o Servientrega y tramitamos en Yopal.',
+    note: 'Municipio fundado hacia 1890 por colonos boyacenses, enclavado en el piedemonte de la Cordillera Oriental. Su economía se basa en la citricultura y la ganadería. Atendemos propietarios en Sabanalarga — documentos por mensajería, trámite en Yopal.',
   },
   {
     name: 'Nunchía', slug: 'nunchia', department: 'Casanare',
-    note: 'Gestionamos trámites vehiculares para propietarios en Nunchía. Solo envías los documentos y recibes la tarjeta de propiedad en tu puerta.',
+    note: 'Municipio donde confluyen cuatro ríos: Tocaría, Payero, Nunchía y Pauto. Con más de 65.000 cabezas de ganado y 12.000 hectáreas de arroz cultivadas. Gestionamos trámites vehiculares para propietarios en Nunchía — solo envías los documentos y recibes la tarjeta en tu puerta.',
   },
   {
     name: 'Pore', slug: 'pore', department: 'Casanare',
-    note: 'Atendemos propietarios de vehículos en Pore, Casanare. Tramitamos en el tránsito de Yopal y enviamos la tarjeta a tu domicilio sin costo.',
+    note: 'Fundado en 1644, Pore fue declarado Pueblo Patrimonio de Colombia en 2021. Aquí se unieron Bolívar y Santander antes de la Batalla de Boyacá en 1819. Atendemos propietarios de vehículos en Pore — tramitamos en Yopal y enviamos la tarjeta a tu domicilio.',
   },
   {
     name: 'Orocué', slug: 'orocue', department: 'Casanare',
-    note: 'Atendemos propietarios en Orocué, Casanare. Recibimos documentos por mensajería y gestionamos el trámite en Yopal — la tarjeta llega a tu puerta.',
+    note: 'Municipio a orillas del río Meta, nominado por Colombia ante la ONU Turismo como "Mejor Aldea Turística". Combina ganadería, palma de aceite y pesca. Atendemos propietarios en Orocué — recibimos documentos por mensajería y la tarjeta llega a tu puerta.',
   },
   {
     name: 'San Luis de Palenque', slug: 'san-luis-de-palenque', department: 'Casanare',
-    note: 'Gestionamos trámites vehiculares para propietarios en San Luis de Palenque. Proceso completo en Yopal, tarjeta de propiedad enviada a tu domicilio.',
+    note: 'Municipio llanero de 3.052 km² con vocación ganadera extensiva, considerado apto para certificación de carne orgánica. Gestionamos trámites vehiculares para propietarios en San Luis de Palenque — proceso completo en Yopal, tarjeta enviada a tu domicilio.',
   },
   {
     name: 'Hato Corozal', slug: 'hato-corozal', department: 'Casanare',
-    note: 'Atendemos propietarios en Hato Corozal, Casanare. Coordinamos por WhatsApp — documentos por mensajería, gestión en Yopal, tarjeta a tu puerta.',
+    note: 'Municipio de las llanuras inundables del norte de Casanare, en las riberas de los ríos Chire, Aricaporo y Casanare. Economía basada casi exclusivamente en la ganadería extensiva. Atendemos propietarios en Hato Corozal — documentos por mensajería, tarjeta a tu puerta.',
   },
   {
     name: 'Maní', slug: 'mani', department: 'Casanare',
-    note: 'Gestionamos trámites vehiculares para propietarios en Maní, Casanare. Todo el proceso en Yopal sin que tengas que desplazarte.',
+    note: 'Fundado por los jesuitas en 1685 y reconocido como la capital turística de Casanare. Su economía combina ganadería, arroz y palma de aceite. Gestionamos trámites vehiculares para propietarios en Maní — sin necesidad de desplazarse a Yopal.',
   },
   {
     name: 'Recetor', slug: 'recetor', department: 'Casanare',
-    note: 'Atendemos propietarios en Recetor, Casanare. Recibimos tus documentos por mensajería y tramitamos en ventanilla en Yopal.',
+    note: 'Municipio fundado en 1740 por misioneros jesuitas, conocido por sus antiguos depósitos de sal. Con cerca de 1.400 habitantes, ganó el Premio Nacional de Superación de la Pobreza por sus modelos productivos comunitarios. Atendemos propietarios en Recetor — tramitamos en Yopal y la tarjeta llega a tu domicilio.',
   },
   {
     name: 'Chámeza', slug: 'chameza', department: 'Casanare',
-    note: 'Gestionamos trámites vehiculares para propietarios en Chámeza, Casanare. Documentos por mensajería, trámite en Yopal, tarjeta a tu domicilio.',
+    note: 'El municipio más antiguo de Casanare, fundado en 1538, ubicado a 1.100 m sobre el nivel del mar en el piedemonte de la Cordillera Oriental. Desarrolla el aviturismo como motor económico. Gestionamos trámites vehiculares para propietarios en Chámeza — documentos por mensajería, tarjeta a tu domicilio.',
   },
   {
     name: 'La Salina', slug: 'la-salina', department: 'Casanare',
-    note: 'Atendemos propietarios en La Salina, Casanare. Gestionamos tu trámite vehicular en el tránsito de Yopal y te enviamos la tarjeta sin costo adicional.',
+    note: 'Fundado hacia 1527, La Salina debe su nombre a la producción artesanal de sal que se practica desde tiempos indígenas en aproximadamente veinte hornos tradicionales. Altitudes entre 1.100 y 4.200 m. Atendemos propietarios en La Salina — tramitamos en Yopal y enviamos la tarjeta sin costo adicional.',
   },
   {
     name: 'Sácama', slug: 'sacama', department: 'Casanare',
-    note: 'Gestionamos trámites vehiculares para propietarios en Sácama, Casanare. Recibimos los documentos por mensajería y gestionamos el proceso completo en Yopal.',
+    note: 'Municipio andino con presencia del Resguardo Indígena U\'wa de Barronegro, de ancestral tradición en la región. Su economía es agrícola y cuenta con reservas de carbón y sal aún sin explotar. Gestionamos trámites vehiculares para propietarios en Sácama — proceso completo en Yopal.',
   },
   {
     name: 'Támara', slug: 'tamara', department: 'Casanare',
-    note: 'Atendemos propietarios en Támara, Casanare. Envías los documentos por mensajería y recibes la tarjeta de propiedad directamente en tu puerta.',
+    note: 'Fundado en 1628 y declarado Patrimonio Histórico Cultural y Arquitectónico de Casanare. A 1.156 m sobre el nivel del mar, el café es su cultivo principal desde tiempos coloniales. Atendemos propietarios en Támara — envías los documentos y recibes la tarjeta directamente en tu puerta.',
   },
 ];
 
