@@ -120,7 +120,7 @@ export default function Terminos() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">6. Chatbot e IA</h2>
               <p>
                 El asistente virtual y el validador de caso del sitio web utilizan inteligencia
-                artificial (Anthropic Claude) para orientar al usuario. Las respuestas son
+                artificial (OpenAI) para orientar al usuario. Las respuestas son
                 informativas y <strong>no constituyen asesoría jurídica ni garantía de resultado</strong>.
                 Para información vinculante, el usuario debe comunicarse directamente con un asesor
                 de Tramita Yopal.

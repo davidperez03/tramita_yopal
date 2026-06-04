@@ -62,7 +62,7 @@ export default function PoliticaPrivacidad() {
                 <li className="bg-slate-50 rounded-xl p-4 border border-slate-100">
                   <strong className="block text-slate-900 mb-1">Chatbot y Validador de caso</strong>
                   Los mensajes enviados al asistente virtual son procesados de forma temporal por
-                  nuestra función de servidor (Vercel) y enviados a la API de Anthropic Inc. para
+                  nuestra función de servidor (Vercel) y enviados a la API de OpenAI Inc. para
                   generar la respuesta. No se almacena ningún historial de conversación en nuestros
                   servidores. El procesamiento es estrictamente en tiempo real y transitorio.
                 </li>
@@ -78,8 +78,8 @@ export default function PoliticaPrivacidad() {
                   política de privacidad de WhatsApp.
                 </li>
                 <li>
-                  <strong>Anthropic Inc.</strong> — Proveedor del modelo de inteligencia artificial que
-                  procesa las conversaciones del chatbot. Anthropic procesa los mensajes conforme a sus
+                  <strong>OpenAI Inc.</strong> — Proveedor del modelo de inteligencia artificial que
+                  procesa las conversaciones del chatbot. OpenAI procesa los mensajes conforme a sus
                   propios términos de servicio y política de privacidad.
                 </li>
                 <li>

@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import { BUSINESS, SERVICES, waLink, WA_MESSAGES } from '@/lib/constants';
 import { WhatsAppIcon } from './WhatsAppIcon';
-import { LogoMark } from './LogoMark';
 
 const waUrl = waLink(WA_MESSAGES.cotizar);
 
@@ -12,9 +12,16 @@ export default function Footer() {
 
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <LogoMark size={36} />
-              <span className="text-white font-bold text-lg">{BUSINESS.name}</span>
+            <div className="mb-3">
+              <div className="inline-flex bg-white rounded-xl px-3 py-1.5">
+                <Image
+                  src="/logo.png"
+                  alt="Logo Tramita Yopal"
+                  width={140}
+                  height={50}
+                  className="h-8 w-auto"
+                />
+              </div>
             </div>
             <p className="text-sm leading-relaxed">
               Gestión de trámites vehiculares con validación previa de compradores,

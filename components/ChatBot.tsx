@@ -141,7 +141,7 @@ export default function ChatBot() {
           {/* Aviso privacidad */}
           <div className="px-4 py-1.5 bg-white border-b border-slate-100 text-center">
             <p className="text-[10px] text-slate-400">
-              Chat con IA (Anthropic) · Sin almacenamiento de historial ·{' '}
+              Chat con IA · Sin almacenamiento de historial ·{' '}
               <a href="/politica-privacidad" target="_blank" className="underline hover:text-slate-600">
                 Privacidad
               </a>
