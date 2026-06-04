@@ -188,6 +188,22 @@ Tramita Yopal valida al comprador, al vendedor y al vehículo ANTES de iniciar e
 SERVICIOS:
 ${SERVICES.filter(s => s.id !== 'otros').map(s => `- ${s.name}${s.duration ? ` — ${s.duration}` : ''}: ${s.description}`).join('\n')}
 
+DOCUMENTOS REQUERIDOS POR TRÁMITE:
+
+TRASPASO DE PROPIEDAD — documentos requeridos:
+1. Formulario único de solicitud de trámites (lo provee el organismo de tránsito)
+2. Documento de identidad del propietario (vendedor) y del comprador — originales
+3. Contrato de compraventa o documento que soporte la transferencia de dominio
+4. Contratos de mandato de ambas partes (vendedor y comprador)
+5. Paz y salvo y liquidación de impuesto vehicular — obligatorio para vehículos de más de 125cc
+6. Improntas de chasis y motor legibles
+7. SOAT vigente — indispensable
+8. Revisión técnico-mecánica (tecnomecánica) vigente
+9. Sin multas pendientes por parte del vendedor ni del comprador
+10. Todos los documentos sin tachones ni enmendaduras
+
+NOTA GENERAL — SOAT: Es indispensable para TODOS los trámites sin excepción.
+
 INSTRUCCIONES:
 - Responde en español colombiano, cálido y directo
 - Para precios: nunca dar valores — dependen del caso, remitir al WhatsApp ${BUSINESS.phone}
