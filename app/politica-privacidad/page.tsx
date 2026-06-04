@@ -32,8 +32,8 @@ export default function PoliticaPrivacidad() {
               </p>
               <p className="mt-2">
                 Correo de contacto para asuntos de privacidad:{' '}
-                <a href="mailto:info@tramitayopal.com" className="text-brand-700 hover:underline">
-                  info@tramitayopal.com
+                <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">
+                  {BUSINESS.email}
                 </a>
                 <br />
                 Ubicación: {BUSINESS.location}, Colombia.
@@ -115,7 +115,7 @@ export default function PoliticaPrivacidad() {
               <p className="mt-3">
                 Dado que Tramita Yopal no almacena bases de datos de usuarios, las solicitudes de
                 acceso, rectificación o supresión se atenderán en un plazo de <strong>10 días hábiles</strong>{' '}
-                a través del correo <strong>info@tramitayopal.com</strong>.
+                a través del correo <strong>{BUSINESS.email}</strong>.
               </p>
             </section>
 
@@ -144,7 +144,7 @@ export default function PoliticaPrivacidad() {
                 Para cualquier consulta relacionada con el tratamiento de sus datos personales:
               </p>
               <p className="mt-2">
-                📧 <a href="mailto:info@tramitayopal.com" className="text-brand-700 hover:underline">info@tramitayopal.com</a><br />
+                📧 <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">{BUSINESS.email}</a><br />
                 📍 {BUSINESS.location}, Colombia<br />
                 🕐 {BUSINESS.hours.full}
               </p>

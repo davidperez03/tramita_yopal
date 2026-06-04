@@ -147,7 +147,7 @@ export default function Terminos() {
             <section>
               <h2 className="text-xl font-bold text-slate-900 mb-3">9. Contacto</h2>
               <p>
-                📧 <a href="mailto:info@tramitayopal.com" className="text-brand-700 hover:underline">info@tramitayopal.com</a><br />
+                📧 <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">{BUSINESS.email}</a><br />
                 📱 {BUSINESS.phone}<br />
                 📍 {BUSINESS.location}, Colombia
               </p>

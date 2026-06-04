@@ -5,7 +5,9 @@ export const BUSINESS = {
   get location() { return `${this.city}, ${this.department}`; },
   whatsapp: '573137168735',
   phone: '+57 313 716 8735',
-  address: 'Calle 18 #21-107, Yopal, Casanare',
+  streetAddress: 'Calle 18 #21-107',
+  get address() { return `${this.streetAddress}, ${this.city}, ${this.department}`; },
+  email: 'info@tramitayopal.com',
   hours: {
     weekdays: 'Lun–Vie 8am–5pm',
     saturday: 'Sáb 8am–1pm',
@@ -89,29 +91,25 @@ export const PROCESS_STEPS = [
     step: '01',
     title: 'Revisa tu caso',
     description: 'Escríbenos y cuéntanos tu caso. Revisamos el vehículo y te decimos qué documentos necesitas y si hay algo que resolver primero.',
-    icon: '🔍',
   },
   {
     step: '02',
     title: 'Cotizamos gratis',
     description: `Escríbenos por WhatsApp o formulario. Respondemos con precio y tiempo exactos en menos de ${BUSINESS.responseTime}.`,
-    icon: '📋',
   },
   {
     step: '03',
     title: 'Envías documentos',
     description: 'Remites los originales por Interrapidísimo o Servientrega. Nos encargamos de todo el proceso.',
-    icon: '📦',
   },
   {
     step: '04',
     title: 'Recibes en casa',
     description: 'Te enviamos la tarjeta de propiedad directamente a tu puerta. Sin costo adicional.',
-    icon: '🏠',
   },
 ];
 
-// Se activa cuando haya reseñas reales de clientes
+// Agregar aquí cuando haya reseñas reales — activar <Reviews /> en app/page.tsx
 export const REVIEWS: { name: string; year: string; type: string; text: string; rating: number }[] = [];
 
 export const FAQS = [
