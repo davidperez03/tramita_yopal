@@ -19,6 +19,7 @@ export default function Footer() {
                 width={220}
                 height={80}
                 className="h-14 w-auto rounded-2xl"
+                sizes="220px"
               />
             </div>
             <p className="text-sm leading-relaxed">
@@ -55,12 +56,12 @@ export default function Footer() {
             <h4 className="text-white font-semibold text-sm mb-3">Empresa</h4>
             <ul className="space-y-2 text-sm">
               {[
-                { href: '#nosotros', label: 'Quiénes somos' },
-                { href: '#validar',  label: 'Validar mi caso' },
+                { href: '/#nosotros', label: 'Quiénes somos' },
+                { href: '/#validar',  label: 'Validar mi caso' },
                 { href: '/prescripcion-comparendos', label: 'Consultar multas' },
-                { href: '#proceso',  label: 'Cómo trabajamos' },
-                { href: '#faq',      label: 'Preguntas frecuentes' },
-                { href: '#cotizar',  label: 'Cotizar' },
+                { href: '/#proceso',  label: 'Cómo trabajamos' },
+                { href: '/#faq',      label: 'Preguntas frecuentes' },
+                { href: '/#cotizar',  label: 'Cotizar' },
               ].map((l) => (
                 <li key={l.href}>
                   <a href={l.href} className="hover:text-white transition-colors">

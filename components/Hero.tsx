@@ -9,9 +9,9 @@ const waUrl = waLink(WA_MESSAGES.cotizar);
 const ease = EASE_OUT;
 
 const trustPills = [
-  { text: 'Cotización gratis' },
-  { text: 'Envío gratis' },
+  { text: 'Validación previa gratuita' },
   { text: `Respuesta en ${BUSINESS.responseTime}` },
+  { text: 'Tarjeta a domicilio sin costo' },
 ];
 
 const messages = [

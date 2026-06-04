@@ -44,6 +44,7 @@ export default function Navbar() {
               width={220}
               height={80}
               className="h-14 w-auto rounded-2xl"
+              sizes="220px"
               priority
             />
           </a>
