@@ -37,7 +37,7 @@ export default function Contact() {
             <h3 className="font-bold text-white text-lg mb-1">Horario</h3>
             <p className="text-brand-200">{BUSINESS.hours.weekdays}</p>
             <p className="text-brand-200">{BUSINESS.hours.saturday}</p>
-            <p className="text-brand-500 text-xs mt-2">{BUSINESS.location}</p>
+            <p className="text-brand-500 text-xs mt-2">{BUSINESS.address}</p>
           </div>
         </div>
 

@@ -70,7 +70,7 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold text-sm mb-3">Contacto</h4>
             <div className="space-y-2 text-sm">
-              <p>{BUSINESS.location}</p>
+              <p>{BUSINESS.address}</p>
               <p>{BUSINESS.hours.weekdays}</p>
               <p>{BUSINESS.hours.saturday}</p>
               <p className="text-slate-500 text-xs mt-3">
