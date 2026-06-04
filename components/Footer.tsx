@@ -13,15 +13,13 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="mb-3">
-              <div className="inline-flex bg-white rounded-xl px-3 py-2">
-                <Image
-                  src="/logo.png"
-                  alt="Logo Tramita Yopal"
-                  width={180}
-                  height={64}
-                  className="h-11 w-auto"
-                />
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Logo Tramita Yopal"
+                width={200}
+                height={70}
+                className="h-12 w-auto rounded-xl"
+              />
             </div>
             <p className="text-sm leading-relaxed">
               Gestión de trámites vehiculares con validación previa de compradores,
