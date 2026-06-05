@@ -16,10 +16,10 @@ export default function Footer() {
               <Image
                 src="/logo.png"
                 alt="Logo Tramita Yopal"
-                width={220}
-                height={80}
-                className="h-14 w-auto rounded-2xl"
-                sizes="220px"
+                width={120}
+                height={44}
+                className="h-10 w-auto"
+                sizes="120px"
               />
             </div>
             <p className="text-sm leading-relaxed">
