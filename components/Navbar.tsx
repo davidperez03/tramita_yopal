@@ -43,7 +43,7 @@ export default function Navbar() {
               alt="Logo Tramita Yopal — Trámites vehiculares en Yopal, Casanare"
               width={220}
               height={80}
-              className="h-14 w-auto rounded-2xl"
+              className="h-16 w-auto rounded-2xl"
               sizes="220px"
               priority
             />
@@ -80,7 +80,7 @@ export default function Navbar() {
               href="#cotizar"
               className="bg-gold-500 hover:bg-gold-600 text-brand-950 text-sm font-bold px-4 py-2 rounded-lg transition-colors"
             >
-              Cotizar 🎉
+              Cotizar
             </a>
           </div>
 
@@ -126,7 +126,7 @@ export default function Navbar() {
               </a>
               <a href="#cotizar" onClick={() => setOpen(false)}
                 className="text-center bg-gold-500 text-brand-950 font-bold py-2.5 rounded-lg">
-                Cotizar 🎉
+                Cotizar
               </a>
             </div>
           </div>

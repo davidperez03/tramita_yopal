@@ -4,7 +4,7 @@ import { useState, FormEvent } from 'react';
 import { BUSINESS, SERVICES, waLink } from '@/lib/constants';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
-import { Tag, Zap, Truck, MapPin } from 'lucide-react';
+import { Tag, Zap, Truck, ShieldCheck } from 'lucide-react';
 
 const tramiteOptions = [
   ...SERVICES.filter((s) => s.id !== 'otros').map((s) => s.name),
@@ -15,10 +15,10 @@ const inputClass =
   'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent';
 
 const stats = [
-  { icon: Tag,    value: 'Gratis',    label: 'Cotización sin compromiso' },
-  { icon: Zap,    value: '< 30 min', label: 'Tiempo de respuesta'       },
-  { icon: Truck,  value: 'Gratis',   label: 'Envío a tu domicilio'      },
-  { icon: MapPin, value: 'Yopal',    label: 'Casanare, Colombia'        },
+  { icon: Tag,         value: 'Gratis',    label: 'Cotización sin compromiso' },
+  { icon: Zap,         value: '< 30 min', label: 'Tiempo de respuesta'       },
+  { icon: Truck,       value: 'Gratis',   label: 'Envío a tu domicilio'      },
+  { icon: ShieldCheck, value: '100%',     label: 'Validación previa incluida' },
 ];
 
 export default function QuoteForm() {
