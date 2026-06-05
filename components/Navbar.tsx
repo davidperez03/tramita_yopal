@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { BUSINESS, waLink, WA_MESSAGES } from '@/lib/constants';
-import Image from 'next/image';
+import { LogoMark } from './LogoMark';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
 const navLinks = [
@@ -38,15 +38,11 @@ export default function Navbar() {
 
           {/* Logo */}
           <a href="/" aria-label="Tramita Yopal — Inicio" className="flex items-center gap-2.5">
-            <Image
-              src="/logo.png"
-              alt="Logo Tramita Yopal"
-              width={120}
-              height={44}
-              className="h-10 w-auto"
-              sizes="120px"
-              priority
-            />
+            <LogoMark size={36} />
+            <div>
+              <div className="font-extrabold text-white text-base leading-tight">{BUSINESS.name}</div>
+              <div className="text-xs text-brand-400 leading-none hidden sm:block">{BUSINESS.location}</div>
+            </div>
           </a>
 
           {/* Desktop nav */}
