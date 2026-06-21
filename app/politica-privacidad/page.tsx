@@ -28,7 +28,7 @@ export default function PoliticaPrivacidad() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">1. Responsable del tratamiento</h2>
               <p>
                 <strong>Tramita Yopal</strong> es el responsable del tratamiento de datos personales
-                que se recojan a través del sitio web <strong>tramitayopal.com</strong>.
+                recopilados a través del sitio web <strong>tramitayopal.com</strong>.
               </p>
               <p className="mt-2">
                 Correo de contacto para asuntos de privacidad:{' '}
@@ -42,29 +42,51 @@ export default function PoliticaPrivacidad() {
 
             <section>
               <h2 className="text-xl font-bold text-slate-900 mb-3">2. Datos que recopilamos y cómo los usamos</h2>
-              <p>
-                Tramita Yopal <strong>no almacena datos personales en ninguna base de datos propia</strong>.
-                A continuación se describe cómo fluye la información que el usuario ingresa voluntariamente:
-              </p>
+
               <ul className="mt-3 space-y-3 list-none pl-0">
                 <li className="bg-slate-50 rounded-xl p-4 border border-slate-100">
                   <strong className="block text-slate-900 mb-1">Formulario de cotización</strong>
-                  Nombre, teléfono, tipo de trámite, ciudad y descripción del caso. Estos datos
-                  son procesados exclusivamente en el dispositivo del usuario y enviados directamente
-                  a WhatsApp mediante un enlace generado en el navegador. No transitan ni se almacenan
-                  en nuestros servidores.
+                  Nombre, tipo de trámite, ciudad y descripción del caso. Estos datos son procesados
+                  en el dispositivo del usuario y enviados directamente a WhatsApp mediante un enlace
+                  generado en el navegador. No transitan ni se almacenan en nuestros servidores.
                 </li>
-                <li className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                  <strong className="block text-slate-900 mb-1">Formulario de verificación de multas</strong>
-                  Número de cédula y placa del vehículo (opcional). Igual al anterior: el enlace
-                  se genera en el navegador y el dato va directamente a WhatsApp sin pasar por nuestros servidores.
-                </li>
+
                 <li className="bg-slate-50 rounded-xl p-4 border border-slate-100">
                   <strong className="block text-slate-900 mb-1">Chatbot y Validador de caso</strong>
                   Los mensajes enviados al asistente virtual son procesados de forma temporal por
-                  nuestra función de servidor (Vercel) y enviados a la API de OpenAI Inc. para
-                  generar la respuesta. No se almacena ningún historial de conversación en nuestros
-                  servidores. El procesamiento es estrictamente en tiempo real y transitorio.
+                  nuestra función de servidor y enviados a la API de OpenAI Inc. para generar la
+                  respuesta. No se almacena ningún historial de conversación. El procesamiento es
+                  estrictamente en tiempo real y transitorio.
+                </li>
+
+                <li className="bg-amber-50 rounded-xl p-4 border border-amber-100">
+                  <strong className="block text-slate-900 mb-1">Reseñas de clientes</strong>
+                  <p className="mb-2">
+                    Cuando un cliente envía una reseña a través del sitio, recopilamos su{' '}
+                    <strong>nombre</strong> y <strong>correo electrónico</strong>. Estos datos se
+                    almacenan en nuestra base de datos con el único propósito de publicar y gestionar
+                    las reseñas que aparecen en el sitio web.
+                  </p>
+                  <ul className="space-y-1 text-sm text-slate-600 list-disc pl-4">
+                    <li>El <strong>nombre</strong> puede aparecer visible en la reseña publicada.</li>
+                    <li>
+                      El <strong>correo electrónico nunca es visible</strong> para otros usuarios del
+                      sitio ni se muestra en ninguna parte pública — se mantiene de forma interna
+                      únicamente para verificación de identidad y contacto ante solicitudes de
+                      modificación o eliminación de la reseña.
+                    </li>
+                    <li>
+                      Estos datos <strong>no son distribuidos, cedidos, vendidos ni compartidos</strong>{' '}
+                      con terceros bajo ninguna circunstancia.
+                    </li>
+                    <li>
+                      El titular puede solicitar la modificación o eliminación de su reseña y sus
+                      datos en cualquier momento escribiendo a{' '}
+                      <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">
+                        {BUSINESS.email}
+                      </a>.
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </section>
@@ -73,30 +95,38 @@ export default function PoliticaPrivacidad() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">3. Terceros que intervienen</h2>
               <ul className="space-y-2 list-disc pl-5">
                 <li>
-                  <strong>WhatsApp / Meta Platforms Inc.</strong> — Plataforma de mensajería hacia la que
-                  se redirige la información de los formularios. Su tratamiento de datos se rige por la
-                  política de privacidad de WhatsApp.
+                  <strong>Supabase Inc.</strong> — Base de datos en la nube donde se almacenan
+                  exclusivamente las reseñas de clientes (nombre y correo). Los datos se almacenan
+                  en servidores ubicados en Estados Unidos bajo el estándar de seguridad SOC 2.
+                  Supabase actúa como encargado del tratamiento, sin acceso ni uso propio de los datos.
                 </li>
                 <li>
-                  <strong>OpenAI Inc.</strong> — Proveedor del modelo de inteligencia artificial que
-                  procesa las conversaciones del chatbot. OpenAI procesa los mensajes conforme a sus
-                  propios términos de servicio y política de privacidad.
+                  <strong>WhatsApp / Meta Platforms Inc.</strong> — Plataforma de mensajería hacia
+                  la que se redirige la información de los formularios de cotización. Su tratamiento
+                  se rige por la política de privacidad de WhatsApp.
                 </li>
                 <li>
-                  <strong>Vercel Inc.</strong> — Plataforma de alojamiento del sitio web. Vercel puede
-                  procesar datos de tráfico (IPs, user-agents) para el funcionamiento de la infraestructura,
-                  conforme a su política de privacidad.
+                  <strong>OpenAI Inc.</strong> — Proveedor del modelo de inteligencia artificial
+                  que procesa las conversaciones del chatbot. OpenAI procesa los mensajes conforme
+                  a sus propios términos de servicio.
+                </li>
+                <li>
+                  <strong>Vercel Inc.</strong> — Plataforma de alojamiento del sitio web. Vercel
+                  recopila métricas de uso anónimas (páginas visitadas, tiempos de carga) sin
+                  identificar personalmente al usuario, conforme a su política de privacidad.
                 </li>
               </ul>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-3">4. Cookies y tecnologías de rastreo</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">4. Cookies y análisis de tráfico</h2>
               <p>
-                Este sitio web <strong>no utiliza cookies propias de rastreo ni herramientas de análisis
-                como Google Analytics</strong>. Vercel puede utilizar cookies técnicas estrictamente
-                necesarias para el funcionamiento del sitio (caché, seguridad), que no identifican
-                personalmente al usuario.
+                Este sitio web no utiliza cookies propias de rastreo ni herramientas como
+                Google Analytics. Utilizamos <strong>Vercel Analytics</strong>, que recopila métricas
+                de rendimiento y tráfico de forma <strong>anónima y agregada</strong>, sin identificar
+                individualmente a los usuarios ni almacenar información personal.
+                Vercel puede utilizar cookies técnicas estrictamente necesarias para el funcionamiento
+                de la infraestructura (caché, seguridad).
               </p>
             </section>
 
@@ -113,19 +143,20 @@ export default function PoliticaPrivacidad() {
                 <li>Presentar quejas ante la Superintendencia de Industria y Comercio (SIC).</li>
               </ul>
               <p className="mt-3">
-                Dado que Tramita Yopal no almacena bases de datos de usuarios, las solicitudes de
-                acceso, rectificación o supresión se atenderán en un plazo de <strong>10 días hábiles</strong>{' '}
-                a través del correo <strong>{BUSINESS.email}</strong>.
+                Las solicitudes de acceso, rectificación o supresión serán atendidas en un plazo
+                de <strong>10 días hábiles</strong> a través del correo{' '}
+                <strong>{BUSINESS.email}</strong>.
               </p>
             </section>
 
             <section>
               <h2 className="text-xl font-bold text-slate-900 mb-3">6. Seguridad</h2>
               <p>
-                El sitio opera bajo protocolo HTTPS. Al no mantener bases de datos de usuarios,
-                el riesgo de exposición de datos personales almacenados es inexistente.
-                La comunicación entre el usuario y WhatsApp está protegida por el cifrado
-                extremo a extremo de esa plataforma.
+                El sitio opera bajo protocolo HTTPS. Los datos de reseñas almacenados en Supabase
+                están protegidos mediante cifrado en tránsito (TLS) y en reposo, con políticas de
+                acceso por fila (Row Level Security) que impiden el acceso no autorizado. El correo
+                electrónico de los autores de reseñas nunca se expone en las interfaces públicas
+                del sitio.
               </p>
             </section>
 
@@ -134,15 +165,13 @@ export default function PoliticaPrivacidad() {
               <p>
                 Tramita Yopal se reserva el derecho de actualizar esta política en cualquier momento.
                 Los cambios serán publicados en esta misma página con la fecha de actualización.
-                El uso continuado del sitio web implica la aceptación de la versión vigente.
+                El uso continuado del sitio implica la aceptación de la versión vigente.
               </p>
             </section>
 
             <section>
               <h2 className="text-xl font-bold text-slate-900 mb-3">8. Contacto</h2>
-              <p>
-                Para cualquier consulta relacionada con el tratamiento de sus datos personales:
-              </p>
+              <p>Para cualquier consulta relacionada con el tratamiento de sus datos personales:</p>
               <p className="mt-2">
                 📧 <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">{BUSINESS.email}</a><br />
                 📍 {BUSINESS.location}, Colombia<br />

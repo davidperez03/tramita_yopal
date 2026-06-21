@@ -87,6 +87,12 @@ export default function Terminos() {
                   cuales son variables y dependen del organismo de tránsito.
                 </li>
                 <li>
+                  <strong>Política de cobro en dos etapas:</strong> el cliente paga el 50% del
+                  valor total acordado al aprobar la cotización e iniciar el trámite. El 50%
+                  restante se cobra únicamente cuando el organismo de tránsito aprueba y expide
+                  el documento. No se cobra el total por adelantado bajo ninguna circunstancia.
+                </li>
+                <li>
                   El pago de honorarios se acuerda individualmente mediante WhatsApp antes de
                   iniciar cualquier gestión.
                 </li>
@@ -94,7 +100,6 @@ export default function Terminos() {
                   Medios de pago aceptados: Nequi, Daviplata, Bancolombia, transferencia bancaria
                   y efectivo.
                 </li>
-                <li>No se cobran anticipos sin autorización expresa del cliente.</li>
               </ul>
             </section>
 

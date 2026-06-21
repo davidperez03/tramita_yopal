@@ -62,6 +62,7 @@ export default function Footer() {
                 { href: '/#proceso',  label: 'Cómo trabajamos' },
                 { href: '/#faq',      label: 'Preguntas frecuentes' },
                 { href: '/#cotizar',  label: 'Cotizar' },
+                { href: '/dejar-resena', label: '⭐ Deja tu reseña' },
               ].map((l) => (
                 <li key={l.href}>
                   <a href={l.href} className="hover:text-white transition-colors">

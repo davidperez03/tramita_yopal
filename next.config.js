@@ -2,6 +2,13 @@
 const nextConfig = {
   trailingSlash: false,
 
+  experimental: {
+    serverActions: {
+      // Permite Server Actions desde el túnel de GitHub Codespaces
+      allowedOrigins: ['*.app.github.dev', 'localhost:3000'],
+    },
+  },
+
   images: {
     remotePatterns: [],
     formats: ['image/webp', 'image/avif'],

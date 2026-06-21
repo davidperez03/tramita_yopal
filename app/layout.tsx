@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { BUSINESS, FAQS, SERVICES } from '@/lib/constants';
 import { CITIES } from '@/lib/seo-data';
+import { supabase } from '@/lib/supabase';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -38,6 +40,7 @@ export const metadata: Metadata = {
     icon: '/logo.png',
     apple: '/logo.png',
   },
+  // OG image generada dinámicamente en app/opengraph-image.tsx (1200×630)
   alternates: {
     canonical: siteUrl,
     languages: { 'es-CO': siteUrl },
@@ -50,7 +53,7 @@ export const metadata: Metadata = {
     siteName: 'Tramita Yopal',
     locale: 'es_CO',
     type: 'website',
-    images: [{ url: `${siteUrl}/logo.png`, width: 800, height: 800, alt: 'Tramita Yopal — Trámites vehiculares en Yopal, Casanare' }],
+    // imagen generada por app/opengraph-image.tsx
   },
   twitter: {
     card: 'summary_large_image',
@@ -73,92 +76,150 @@ export const metadata: Metadata = {
   },
 };
 
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Fetch reviews for AggregateRating + Review schema (cached 1h)
+  const { data: reviews } = await supabase
+    .from('reviews')
+    .select('id, name, rating, text, type, created_at')
+    .eq('visible', true)
+    .order('rating', { ascending: false })
+    .limit(10);
 
-const jsonLd = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: BUSINESS.name,
-    description:
-      'Gestión de trámites vehiculares en Yopal, Casanare. Traspaso de propiedad, levantamiento de prenda, duplicado de placas, traslado de cuenta, cambio de servicio y prescripción de comparendos. Validación previa gratuita. Envío de tarjeta de propiedad a domicilio sin costo.',
-    url: siteUrl,
-    telephone: `+${BUSINESS.whatsapp}`,
-    currenciesAccepted: 'COP',
-    paymentAccepted: 'Nequi, Daviplata, Bancolombia, Transferencia bancaria, Efectivo',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: BUSINESS.streetAddress,
-      addressLocality: 'Yopal',
-      addressRegion: 'Casanare',
-      postalCode: '850001',
-      addressCountry: 'CO',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 5.3394,
-      longitude: -72.3957,
-    },
-    areaServed: CITIES.map((city) => ({
-      '@type': 'City',
-      name: city.name,
-      containedInPlace: { '@type': 'State', name: city.department },
-    })),
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        opens: '08:00',
-        closes: '17:00',
+  const reviewCount = reviews?.length ?? 0;
+  const avgRating =
+    reviewCount > 0
+      ? (reviews!.reduce((s, r) => s + r.rating, 0) / reviewCount).toFixed(1)
+      : null;
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'LocalBusiness',
+      name: BUSINESS.name,
+      description:
+        'Gestión de trámites vehiculares en Yopal, Casanare. Traspaso de propiedad, levantamiento de prenda, duplicado de placas, traslado de cuenta, cambio de servicio y prescripción de comparendos. Validación previa gratuita. Envío de tarjeta de propiedad a domicilio sin costo.',
+      url: siteUrl,
+      telephone: `+${BUSINESS.whatsapp}`,
+      currenciesAccepted: 'COP',
+      paymentAccepted: 'Nequi, Daviplata, Bancolombia, Transferencia bancaria, Efectivo',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: BUSINESS.streetAddress,
+        addressLocality: 'Yopal',
+        addressRegion: 'Casanare',
+        postalCode: '850001',
+        addressCountry: 'CO',
       },
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Saturday'],
-        opens: '08:00',
-        closes: '13:00',
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 5.3394,
+        longitude: -72.3957,
       },
-    ],
-    priceRange: '$$',
-    knowsAbout: [
-      'Trámites vehiculares Colombia',
-      'Traspaso de propiedad vehicular',
-      'Levantamiento de prenda vehicular',
-      'Traslado de cuenta vehicular',
-      'Duplicado de placas',
-      'Cambio de servicio vehicular',
-      'Prescripción de comparendos de tránsito',
-      'RUNT Colombia',
-      'SIMIT Colombia',
-    ],
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Trámites Vehiculares Yopal',
-      itemListElement: SERVICES.filter((s) => s.id !== 'otros').map((s) => ({
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: s.name,
-          description: s.description,
-          provider: { '@type': 'LocalBusiness', name: BUSINESS.name },
-          areaServed: { '@type': 'City', name: 'Yopal', containedInPlace: { '@type': 'State', name: 'Casanare' } },
+      ...(avgRating && reviewCount >= 3
+        ? {
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: avgRating,
+              reviewCount,
+              bestRating: 5,
+              worstRating: 1,
+            },
+            review: reviews!.slice(0, 5).map((r) => ({
+              '@type': 'Review',
+              author: { '@type': 'Person', name: r.name },
+              reviewRating: {
+                '@type': 'Rating',
+                ratingValue: r.rating,
+                bestRating: 5,
+                worstRating: 1,
+              },
+              reviewBody: r.text,
+              datePublished: r.created_at
+                ? new Date(r.created_at).toISOString().split('T')[0]
+                : undefined,
+            })),
+          }
+        : {}),
+      areaServed: CITIES.map((city) => ({
+        '@type': 'City',
+        name: city.name,
+        containedInPlace: { '@type': 'State', name: city.department },
+      })),
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '08:00',
+          closes: '17:00',
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Saturday'],
+          opens: '08:00',
+          closes: '13:00',
+        },
+      ],
+      priceRange: '$$',
+      knowsAbout: [
+        'Trámites vehiculares Colombia',
+        'Traspaso de propiedad vehicular',
+        'Levantamiento de prenda vehicular',
+        'Traslado de cuenta vehicular',
+        'Duplicado de placas',
+        'Cambio de servicio vehicular',
+        'Prescripción de comparendos de tránsito',
+        'RUNT Colombia',
+        'SIMIT Colombia',
+      ],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Trámites Vehiculares Yopal',
+        itemListElement: SERVICES.filter((s) => s.id !== 'otros').map((s) => ({
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: s.name,
+            description: s.description,
+            provider: { '@type': 'LocalBusiness', name: BUSINESS.name },
+            areaServed: {
+              '@type': 'City',
+              name: 'Yopal',
+              containedInPlace: { '@type': 'State', name: 'Casanare' },
+            },
+          },
+        })),
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: BUSINESS.name,
+      url: siteUrl,
+      description: 'Trámites vehiculares en Yopal, Casanare. Gestión remota, validación previa gratuita y envío a domicilio.',
+      inLanguage: 'es-CO',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${siteUrl}/?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: FAQS.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
         },
       })),
     },
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQS.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  },
-];
+  ];
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
       <head>
@@ -167,7 +228,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

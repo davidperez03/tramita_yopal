@@ -11,6 +11,7 @@ const ease = EASE_OUT;
 const trustPills = [
   { text: 'Validación previa gratuita' },
   { text: `Respuesta en ${BUSINESS.responseTime}` },
+  { text: '50% al iniciar · 50% al aprobar' },
   { text: 'Tarjeta a domicilio sin costo' },
 ];
 
@@ -142,7 +143,7 @@ export default function Hero() {
 
           {/* ── Captura WhatsApp ── */}
           <motion.div
-            className="hidden lg:block"
+            className="flex justify-center lg:justify-end"
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3, ease }}

@@ -95,22 +95,20 @@ export const PROCESS_STEPS = [
   {
     step: '02',
     title: 'Cotizamos gratis',
-    description: `Escríbenos por WhatsApp o formulario. Respondemos con precio y tiempo exactos en menos de ${BUSINESS.responseTime}.`,
+    description: `Respondemos con precio y tiempo exactos en menos de ${BUSINESS.responseTime}. Aprobada la cotización, pagas el 50% para iniciar — nada antes de eso.`,
   },
   {
     step: '03',
     title: 'Envías documentos',
-    description: 'Remites los originales por Interrapidísimo o Servientrega. Nos encargamos de todo el proceso.',
+    description: 'Remites los originales por Interrapidísimo o Servientrega. Nos encargamos de todo el proceso en ventanilla.',
   },
   {
     step: '04',
-    title: 'Recibes en casa',
-    description: 'Te enviamos la tarjeta de propiedad directamente a tu puerta. Sin costo adicional.',
+    title: 'Pagas y recibes',
+    description: 'Una vez que el tránsito aprueba tu trámite, pagas el 50% restante. Luego enviamos la tarjeta a tu puerta sin costo adicional.',
   },
 ];
 
-// Agregar aquí cuando haya reseñas reales — activar <Reviews /> en app/page.tsx
-export const REVIEWS: { name: string; year: string; type: string; text: string; rating: number }[] = [];
 
 export const FAQS = [
   {
@@ -152,6 +150,10 @@ export const FAQS = [
   {
     question: '¿Puedo hacer el trámite aunque el vendedor viva en otra ciudad?',
     answer: 'Sí. Es uno de los casos más comunes. Coordinamos con el vendedor qué documentos debe firmar y cómo enviarlos. Tú y el vendedor envían sus documentos por separado y nosotros gestionamos todo ante el tránsito de Yopal. No es necesario que estén presentes al mismo tiempo.',
+  },
+  {
+    question: '¿Cuánto debo pagar por adelantado?',
+    answer: 'Solo el 50% del valor total para iniciar tu trámite. El 50% restante lo pagas únicamente cuando el tránsito aprueba y expide tu documento — antes de enviarlo a tu domicilio. Nunca cobramos el total por adelantado.',
   },
   {
     question: '¿Cuánto cuesta un traspaso de vehículo en Yopal?',
@@ -202,8 +204,14 @@ TRASPASO DE PROPIEDAD — documentos requeridos:
 
 NOTA GENERAL — SOAT: Es indispensable para TODOS los trámites sin excepción.
 
+POLÍTICA DE COBRO (MUY IMPORTANTE):
+- Se cobra en DOS etapas: 50% al aprobar la cotización e iniciar el trámite, 50% restante una vez que el tránsito aprueba y expide el documento
+- NUNCA se cobra el total por adelantado
+- Si el trámite no puede completarse, se avisa de inmediato y se acuerdan los pasos con el cliente
+
 INSTRUCCIONES:
 - Responde en español colombiano, cálido y directo
 - Para precios: nunca dar valores — dependen del caso, remitir al WhatsApp ${BUSINESS.phone}
 - Menciona la validación previa cuando sea relevante
+- Menciona la política de cobro 50/50 cuando pregunten por pagos o costos
 - Responde en máximo 3-4 párrafos o una lista clara`;

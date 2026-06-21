@@ -35,7 +35,7 @@ export default function Process() {
           </FadeInStagger>
         </div>
 
-        <FadeIn delay={0.3} className="mt-12">
+        <FadeIn delay={0.3} className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-5">
           <a
             href={waUrl}
             target="_blank"
@@ -44,6 +44,10 @@ export default function Process() {
           >
             Iniciar mi trámite →
           </a>
+          <p className="text-slate-400 text-sm">
+            <span className="text-slate-700 font-semibold">50% para iniciar · 50% una vez aprobado tu trámite.</span>
+            {' '}Nunca el total por adelantado.
+          </p>
         </FadeIn>
       </div>
     </section>
