@@ -4,7 +4,6 @@ const nextConfig = {
 
   experimental: {
     serverActions: {
-      // Permite Server Actions desde el túnel de GitHub Codespaces
       allowedOrigins: ['*.app.github.dev', 'localhost:3000'],
     },
   },

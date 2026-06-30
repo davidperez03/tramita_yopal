@@ -5,7 +5,7 @@ import { PackageCheck, Truck, CheckCircle2 } from 'lucide-react';
 const waUrl = waLink('Hola, quiero más información sobre sus servicios.');
 
 const listItems = [
-  { title: 'Cobro justo en dos etapas',       desc: 'Pagas el 50% para iniciar y el otro 50% una vez que el tránsito aprueba tu trámite. Nunca el total por adelantado.' },
+  { title: 'Sin cobro total por adelantado',   desc: 'Honorarios y derechos de trámite se dividen en dos: mitad al iniciar, mitad al aprobar. El único cobro que no se divide es el avalúo en traspaso, que lo exige el tránsito completo.' },
   { title: 'Tramitamos en ventanilla por ti', desc: 'Gestionamos tu trámite de forma presencial en el organismo de tránsito de Yopal. Tú solo envías los documentos por mensajería.' },
   { title: 'Validación previa sin costo',     desc: 'Antes de cobrar revisamos el vehículo, el propietario y el comprador para detectar prendas, multas o restricciones.' },
   { title: 'Trámites en Yopal, Casanare',     desc: 'Especializados en el organismo de tránsito de Yopal. ¿Vehículo de otra ciudad? Cuéntanos tu caso.' },

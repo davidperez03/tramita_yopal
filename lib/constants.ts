@@ -95,7 +95,7 @@ export const PROCESS_STEPS = [
   {
     step: '02',
     title: 'Cotizamos gratis',
-    description: `Respondemos con precio y tiempo exactos en menos de ${BUSINESS.responseTime}. Aprobada la cotización, pagas el 50% para iniciar — nada antes de eso.`,
+    description: `Respondemos con precio y tiempo exactos en menos de ${BUSINESS.responseTime}. Aprobada la cotización, pagas el 50% para iniciar. Antes de eso no cobramos nada.`,
   },
   {
     step: '03',
@@ -153,11 +153,11 @@ export const FAQS = [
   },
   {
     question: '¿Cuánto debo pagar por adelantado?',
-    answer: 'Solo el 50% del valor total para iniciar tu trámite. El 50% restante lo pagas únicamente cuando el tránsito aprueba y expide tu documento — antes de enviarlo a tu domicilio. Nunca cobramos el total por adelantado.',
+    answer: 'El 50% del total al iniciar — eso incluye honorarios y derechos de trámite (RUNT y organismo de tránsito). El 50% restante lo pagas cuando el tránsito aprueba y expide tu documento. Nunca cobramos el total por adelantado. La única excepción es el avalúo vehicular en trámites de Traspaso: ese valor (1% del valor comercial del vehículo) se paga completo al iniciar porque así lo exige el organismo de tránsito.',
   },
   {
     question: '¿Cuánto cuesta un traspaso de vehículo en Yopal?',
-    answer: 'El costo depende del tipo de vehículo, el organismo de tránsito y si hay pasos adicionales como levantamiento de prenda o resolución de multas. Escríbenos con los datos del vehículo y te damos el precio exacto en menos de 30 minutos — sin rangos ni letras pequeñas.',
+    answer: 'El costo total tiene dos partes: (1) honorarios más derechos de trámite (RUNT y organismo de tránsito), que se dividen en 50% al iniciar y 50% al aprobar; y (2) el avalúo vehicular, que es el 1% del valor comercial del vehículo y se paga completo al iniciar — ese valor va directo al organismo de tránsito. Escríbenos con los datos del vehículo y te damos el desglose exacto en menos de 30 minutos.',
   },
 ];
 
@@ -206,8 +206,14 @@ NOTA GENERAL — SOAT: Es indispensable para TODOS los trámites sin excepción.
 
 POLÍTICA DE COBRO (MUY IMPORTANTE):
 - Se cobra en DOS etapas: 50% al aprobar la cotización e iniciar el trámite, 50% restante una vez que el tránsito aprueba y expide el documento
+- El 50/50 aplica sobre el TOTAL: honorarios de Tramita Yopal + derechos de trámite (RUNT y organismo de tránsito)
 - NUNCA se cobra el total por adelantado
 - Si el trámite no puede completarse, se avisa de inmediato y se acuerdan los pasos con el cliente
+
+AVALÚO EN TRASPASO DE PROPIEDAD (ÚNICA EXCEPCIÓN AL 50/50):
+- En los trámites de Traspaso, el organismo de tránsito exige el pago del avalúo vehicular
+- El avalúo equivale al 1% del valor comercial del vehículo y debe pagarse en su TOTALIDAD al iniciar el trámite
+- Es el ÚNICO cobro que no va en el 50/50 — todo lo demás (honorarios + derechos de trámite) sí se divide
 
 INSTRUCCIONES:
 - Responde en español colombiano, cálido y directo

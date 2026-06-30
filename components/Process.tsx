@@ -45,8 +45,8 @@ export default function Process() {
             Iniciar mi trámite →
           </a>
           <p className="text-slate-400 text-sm">
-            <span className="text-slate-700 font-semibold">50% para iniciar · 50% una vez aprobado tu trámite.</span>
-            {' '}Nunca el total por adelantado.
+            <span className="text-slate-700 font-semibold">Sin cobro total por adelantado.</span>
+            {' '}Pagas en dos momentos — al iniciar y al aprobar.
           </p>
         </FadeIn>
       </div>

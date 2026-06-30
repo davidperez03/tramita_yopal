@@ -11,7 +11,7 @@ const ease = EASE_OUT;
 const trustPills = [
   { text: 'Validación previa gratuita' },
   { text: `Respuesta en ${BUSINESS.responseTime}` },
-  { text: '50% al iniciar · 50% al aprobar' },
+  { text: 'Sin cobro total por adelantado' },
   { text: 'Tarjeta a domicilio sin costo' },
 ];
 

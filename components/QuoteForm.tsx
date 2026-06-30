@@ -125,9 +125,15 @@ export default function QuoteForm() {
               </button>
 
               <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3 text-center space-y-0.5">
-                <p className="text-xs font-semibold text-slate-700">50% para iniciar · 50% una vez aprobado tu trámite</p>
-                <p className="text-xs text-slate-400">Nunca cobraremos el total por adelantado.</p>
+                <p className="text-xs font-semibold text-slate-700">Sin cobro total por adelantado</p>
+                <p className="text-xs text-slate-400">Pagas al iniciar y cuando el tránsito aprueba — nada más.</p>
               </div>
+
+              {form.tramite === 'Traspaso de Propiedad' && (
+                <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-xs text-amber-800 leading-relaxed">
+                  <strong>Traspaso:</strong> el avalúo vehicular (1 % del valor comercial) se paga completo al organismo de tránsito al iniciar. Tu asesor te lo detalla en la cotización.
+                </div>
+              )}
 
               <p className="text-center text-xs text-slate-400">
                 🔒 Información segura · No compartimos con terceros
