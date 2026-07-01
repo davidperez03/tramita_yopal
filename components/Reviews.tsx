@@ -9,6 +9,7 @@ type Review = {
   type: string;
   year: string;
   source: string;
+  photos: string[] | null;
 };
 
 const AVATAR_COLORS = ['#4f46e5', '#0891b2', '#059669', '#d97706', '#7c3aed', '#be123c'];
@@ -40,7 +41,6 @@ function SourceBadge({ source }: { source: string }) {
       </svg>
     );
   }
-  // WhatsApp, Directo o cualquier otra fuente → verificado por Tramita Yopal
   return (
     <svg viewBox="0 0 20 20" className="w-4 h-4 flex-shrink-0 text-brand-500" fill="currentColor" aria-label="Verificado">
       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd"/>
@@ -51,7 +51,7 @@ function SourceBadge({ source }: { source: string }) {
 export default async function Reviews() {
   const { data: reviews } = await supabase
     .from('reviews')
-    .select('id, name, rating, text, type, year, source')
+    .select('id, name, rating, text, type, year, source, photos')
     .eq('visible', true)
     .order('created_at', { ascending: false });
 
@@ -102,6 +102,22 @@ export default async function Reviews() {
                 <blockquote className="mt-3 text-slate-600 text-sm leading-relaxed flex-1">
                   {r.text}
                 </blockquote>
+
+                {/* Fotos de la reseña */}
+                {r.photos && r.photos.length > 0 && (
+                  <div className="mt-3 flex gap-2 flex-wrap">
+                    {r.photos.map((url: string, i: number) => (
+                      <a key={i} href={url} target="_blank" rel="noopener noreferrer">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={url}
+                          alt={`Foto ${i + 1}`}
+                          className="w-16 h-16 object-cover rounded-xl border border-slate-200 hover:opacity-80 transition-opacity"
+                        />
+                      </a>
+                    ))}
+                  </div>
+                )}
 
                 <div className="mt-4 pt-4 border-t border-slate-100">
                   <span className="inline-flex items-center gap-1.5 text-xs text-brand-600 font-medium bg-brand-50 px-2.5 py-1 rounded-full">

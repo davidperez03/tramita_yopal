@@ -2,7 +2,24 @@
 
 import { useState, useTransition } from 'react';
 import { SERVICES } from '@/lib/constants';
-import { approveReview, hideReview, deleteReview, addReview, logout } from './actions';
+import { approveReview, hideReview, deleteReview, addReview, logout, updateComparendoEstado, deleteComparendo } from './actions';
+import TramitesPanel, { type Tramite } from './TramitesPanel';
+
+type EstadoComp = 'pendiente' | 'en_gestion' | 'atendido';
+
+type Comparendo = {
+  id: string;
+  created_at: string;
+  nombre: string;
+  cedula: string | null;
+  telefono: string;
+  tipo: 'fisico' | 'fotomulta';
+  fecha_comparendo: string;
+  numero_comparendo: string | null;
+  descuento_estimado: string | null;
+  fecha_curso: string | null;
+  estado: EstadoComp;
+};
 
 type Review = {
   id: string;
@@ -15,6 +32,7 @@ type Review = {
   source: string;
   visible: boolean;
   created_at: string;
+  photos: string[] | null;
 };
 
 const serviceOptions = SERVICES.filter(s => s.id !== 'otros').map(s => s.name);
@@ -52,6 +70,22 @@ function ReviewCard({ review }: { review: Review }) {
       </div>
 
       <p className="text-sm text-slate-600 leading-relaxed">{review.text}</p>
+
+      {/* Fotos */}
+      {review.photos && review.photos.length > 0 && (
+        <div className="flex gap-2 flex-wrap">
+          {review.photos.map((url, i) => (
+            <a key={i} href={url} target="_blank" rel="noopener noreferrer">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={url}
+                alt={`Foto ${i + 1}`}
+                className="w-20 h-20 object-cover rounded-xl border border-slate-200 hover:opacity-80 transition-opacity"
+              />
+            </a>
+          ))}
+        </div>
+      )}
 
       <div className="flex items-center justify-between pt-2 border-t border-slate-100">
         <span className="text-xs text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full">{review.type}</span>
@@ -191,9 +225,107 @@ function AddReviewForm() {
   );
 }
 
-export default function Panel({ reviews }: { reviews: Review[] }) {
-  const [filter, setFilter] = useState<'todas' | 'pendientes' | 'publicadas'>('pendientes');
+const ESTADO_COMP: Record<EstadoComp, { label: string; cls: string }> = {
+  pendiente:  { label: 'Pendiente',   cls: 'bg-amber-100 text-amber-800' },
+  en_gestion: { label: 'En gestión',  cls: 'bg-blue-100 text-blue-800'   },
+  atendido:   { label: 'Atendido',    cls: 'bg-emerald-100 text-emerald-800' },
+};
+
+const DESC_BADGE: Record<string, string> = {
+  '50%':    'bg-emerald-100 text-emerald-800',
+  '25%':    'bg-amber-100 text-amber-800',
+  'ninguno': 'bg-red-100 text-red-700',
+};
+
+function ComparendoCard({ c }: { c: Comparendo }) {
   const [isPending, startTransition] = useTransition();
+
+  const fechaComp  = new Date(c.fecha_comparendo + 'T12:00:00').toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' });
+  const fechaCurso = c.fecha_curso
+    ? new Date(c.fecha_curso).toLocaleString('es-CO', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' } as Intl.DateTimeFormatOptions)
+    : null;
+  const recibido   = new Date(c.created_at).toLocaleString('es-CO', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' } as Intl.DateTimeFormatOptions);
+
+  const estadoInfo = ESTADO_COMP[c.estado] ?? ESTADO_COMP.pendiente;
+
+  return (
+    <div className={`bg-white border rounded-2xl p-5 space-y-3 transition-opacity ${isPending ? 'opacity-50' : ''} ${c.estado === 'atendido' ? 'border-slate-100' : 'border-slate-200'}`}>
+
+      {/* Cabecera */}
+      <div className="flex items-start justify-between gap-3 flex-wrap">
+        <div>
+          <p className="font-bold text-slate-900 uppercase">{c.nombre}</p>
+          <p className="text-sm text-slate-500">{c.telefono}{c.cedula ? ` · CC ${c.cedula}` : ''}</p>
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${estadoInfo.cls}`}>{estadoInfo.label}</span>
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">
+            {c.tipo === 'fisico' ? 'Físico' : 'Fotomulta'}
+          </span>
+          {c.descuento_estimado && (
+            <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${DESC_BADGE[c.descuento_estimado] ?? 'bg-slate-100 text-slate-600'}`}>
+              {c.descuento_estimado === 'ninguno' ? 'Sin descuento' : c.descuento_estimado}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Datos */}
+      <div className="grid sm:grid-cols-2 gap-1.5 text-sm text-slate-600">
+        <p><span className="font-semibold text-slate-700">Fecha comparendo:</span> {fechaComp}</p>
+        {c.numero_comparendo && <p><span className="font-semibold text-slate-700">N° comparendo:</span> {c.numero_comparendo}</p>}
+        {fechaCurso && <p><span className="font-semibold text-slate-700">Fecha pref. curso:</span> {fechaCurso}</p>}
+        <p className="text-xs text-slate-400 sm:col-span-2">Recibido: {recibido}</p>
+      </div>
+
+      {/* Acciones */}
+      <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+        <div className="flex gap-2 flex-wrap">
+          {c.estado === 'pendiente' && (
+            <button disabled={isPending}
+              onClick={() => startTransition(() => updateComparendoEstado(c.id, 'en_gestion'))}
+              className="text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors">
+              Marcar en gestión
+            </button>
+          )}
+          {c.estado === 'en_gestion' && (
+            <button disabled={isPending}
+              onClick={() => startTransition(() => updateComparendoEstado(c.id, 'atendido'))}
+              className="text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg transition-colors">
+              Marcar atendido
+            </button>
+          )}
+          {c.estado === 'atendido' && (
+            <button disabled={isPending}
+              onClick={() => startTransition(() => updateComparendoEstado(c.id, 'pendiente'))}
+              className="text-xs font-semibold text-slate-500 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors">
+              Reabrir
+            </button>
+          )}
+        </div>
+        <button disabled={isPending}
+          onClick={() => { if (confirm('¿Eliminar esta solicitud?')) startTransition(() => deleteComparendo(c.id)); }}
+          className="text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition-colors">
+          Eliminar
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Panel principal ─── */
+export default function Panel({
+  reviews,
+  tramites,
+  comparendos,
+}: {
+  reviews: Review[];
+  tramites: Tramite[];
+  comparendos: Comparendo[];
+}) {
+  const [tab, setTab]             = useState<'resenas' | 'tramites' | 'comparendos'>('tramites');
+  const [filter, setFilter]       = useState<'todas' | 'pendientes' | 'publicadas'>('pendientes');
+  const [filterComp, setFilterComp] = useState<'pendiente' | 'en_gestion' | 'atendido' | 'todas'>('pendiente');
 
   const pending   = reviews.filter(r => !r.visible);
   const published = reviews.filter(r =>  r.visible);
@@ -201,12 +333,13 @@ export default function Panel({ reviews }: { reviews: Review[] }) {
 
   return (
     <div className="min-h-screen bg-slate-50">
+
       {/* Header */}
       <div className="bg-brand-950 text-white px-4 sm:px-6 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div>
             <p className="text-brand-400 text-xs font-bold tracking-widest uppercase">Tramita Yopal</p>
-            <h1 className="text-lg font-extrabold">Panel de reseñas</h1>
+            <h1 className="text-lg font-extrabold">Panel admin</h1>
           </div>
           <form action={logout}>
             <button type="submit" className="text-brand-300 hover:text-white text-sm font-medium transition-colors">
@@ -214,41 +347,21 @@ export default function Panel({ reviews }: { reviews: Review[] }) {
             </button>
           </form>
         </div>
-      </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
-
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-4">
-          {[
-            { label: 'Total',      value: reviews.length,   color: 'text-slate-900' },
-            { label: 'Pendientes', value: pending.length,   color: 'text-amber-600' },
-            { label: 'Publicadas', value: published.length, color: 'text-green-700' },
-          ].map(s => (
-            <div key={s.label} className="bg-white border border-slate-100 rounded-2xl p-4 text-center shadow-sm">
-              <p className={`text-3xl font-black ${s.color}`}>{s.value}</p>
-              <p className="text-xs text-slate-500 mt-1">{s.label}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Agregar */}
-        <AddReviewForm />
-
-        {/* Filtros */}
-        <div className="flex gap-2">
-          {(['pendientes', 'publicadas', 'todas'] as const).map(f => (
+        {/* Tabs */}
+        <div className="max-w-4xl mx-auto mt-4 flex gap-1 flex-wrap">
+          {(['tramites', 'comparendos', 'resenas'] as const).map(t => (
             <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`text-sm font-semibold px-4 py-2 rounded-xl capitalize transition-colors ${
-                filter === f
-                  ? 'bg-brand-950 text-white'
-                  : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300'
+              key={t}
+              onClick={() => setTab(t)}
+              className={`text-sm font-semibold px-4 py-2 rounded-xl transition-colors ${
+                tab === t
+                  ? 'bg-white text-brand-950'
+                  : 'text-brand-300 hover:text-white hover:bg-white/10'
               }`}
             >
-              {f}
-              {f === 'pendientes' && pending.length > 0 && (
+              {t === 'resenas' ? 'Reseñas' : t === 'tramites' ? 'Trámites' : 'Comparendos'}
+              {t === 'resenas' && pending.length > 0 && (
                 <span className="ml-1.5 bg-amber-400 text-brand-950 text-xs font-black px-1.5 py-0.5 rounded-full">
                   {pending.length}
                 </span>
@@ -256,17 +369,121 @@ export default function Panel({ reviews }: { reviews: Review[] }) {
             </button>
           ))}
         </div>
+      </div>
 
-        {/* Lista */}
-        {filtered.length === 0 ? (
-          <div className="bg-white border border-slate-100 rounded-2xl p-10 text-center">
-            <p className="text-slate-400 text-sm">No hay reseñas en esta categoría.</p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {filtered.map(r => <ReviewCard key={r.id} review={r} />)}
-          </div>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+
+        {/* ── Tab: Reseñas ── */}
+        {tab === 'resenas' && (
+          <>
+            <div className="grid grid-cols-3 gap-4">
+              {[
+                { label: 'Total',      value: reviews.length,   color: 'text-slate-900' },
+                { label: 'Pendientes', value: pending.length,   color: 'text-amber-600' },
+                { label: 'Publicadas', value: published.length, color: 'text-green-700' },
+              ].map(s => (
+                <div key={s.label} className="bg-white border border-slate-100 rounded-2xl p-4 text-center shadow-sm">
+                  <p className={`text-3xl font-black ${s.color}`}>{s.value}</p>
+                  <p className="text-xs text-slate-500 mt-1">{s.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <AddReviewForm />
+
+            <div className="flex gap-2">
+              {(['pendientes', 'publicadas', 'todas'] as const).map(f => (
+                <button
+                  key={f}
+                  onClick={() => setFilter(f)}
+                  className={`text-sm font-semibold px-4 py-2 rounded-xl capitalize transition-colors ${
+                    filter === f
+                      ? 'bg-brand-950 text-white'
+                      : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300'
+                  }`}
+                >
+                  {f}
+                  {f === 'pendientes' && pending.length > 0 && (
+                    <span className="ml-1.5 bg-amber-400 text-brand-950 text-xs font-black px-1.5 py-0.5 rounded-full">
+                      {pending.length}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {filtered.length === 0 ? (
+              <div className="bg-white border border-slate-100 rounded-2xl p-10 text-center">
+                <p className="text-slate-400 text-sm">No hay reseñas en esta categoría.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filtered.map(r => <ReviewCard key={r.id} review={r} />)}
+              </div>
+            )}
+          </>
         )}
+
+        {/* ── Tab: Trámites ── */}
+        {tab === 'tramites' && <TramitesPanel tramites={tramites} />}
+
+        {/* ── Tab: Comparendos ── */}
+        {tab === 'comparendos' && (() => {
+          const pendientes  = comparendos.filter(c => c.estado === 'pendiente');
+          const enGestion   = comparendos.filter(c => c.estado === 'en_gestion');
+          const atendidos   = comparendos.filter(c => c.estado === 'atendido');
+          const filtradas   = filterComp === 'todas' ? comparendos
+            : comparendos.filter(c => c.estado === filterComp);
+
+          return (
+            <>
+              <div className="grid grid-cols-4 gap-3">
+                {[
+                  { label: 'Total',       value: comparendos.length,  color: 'text-slate-900' },
+                  { label: 'Pendientes',  value: pendientes.length,   color: 'text-amber-600' },
+                  { label: 'En gestión',  value: enGestion.length,    color: 'text-blue-600'  },
+                  { label: 'Atendidos',   value: atendidos.length,    color: 'text-emerald-700' },
+                ].map(s => (
+                  <div key={s.label} className="bg-white border border-slate-100 rounded-2xl p-4 text-center shadow-sm">
+                    <p className={`text-3xl font-black ${s.color}`}>{s.value}</p>
+                    <p className="text-xs text-slate-500 mt-1">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-2 flex-wrap">
+                {([
+                  { key: 'pendiente',  label: 'Pendientes',  count: pendientes.length },
+                  { key: 'en_gestion', label: 'En gestión',  count: enGestion.length  },
+                  { key: 'atendido',   label: 'Atendidos',   count: null              },
+                  { key: 'todas',      label: 'Todas',       count: null              },
+                ] as const).map(f => (
+                  <button key={f.key} onClick={() => setFilterComp(f.key)}
+                    className={`text-sm font-semibold px-4 py-2 rounded-xl transition-colors ${
+                      filterComp === f.key
+                        ? 'bg-brand-950 text-white'
+                        : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300'
+                    }`}>
+                    {f.label}
+                    {f.count !== null && f.count > 0 && (
+                      <span className="ml-1.5 bg-amber-400 text-brand-950 text-xs font-black px-1.5 py-0.5 rounded-full">{f.count}</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {filtradas.length === 0 ? (
+                <div className="bg-white border border-slate-100 rounded-2xl p-10 text-center">
+                  <p className="text-slate-400 text-sm">No hay solicitudes en esta categoría.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {filtradas.map(c => <ComparendoCard key={c.id} c={c} />)}
+                </div>
+              )}
+            </>
+          );
+        })()}
 
       </div>
     </div>

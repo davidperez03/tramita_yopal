@@ -47,6 +47,7 @@ export default function Terminos() {
                 <li>Envío de la tarjeta de propiedad al domicilio del cliente en territorio colombiano.</li>
                 <li>Verificación gratuita de multas y comparendos por número de cédula.</li>
                 <li>Tramitación de prescripción de comparendos de tránsito cuando aplique.</li>
+                <li>Asesoría y gestión para el pago de comparendos con descuento del 50 % o 25 %, conforme a la Ley 769 de 2002 y sus modificaciones.</li>
               </ul>
             </section>
 
@@ -74,6 +75,14 @@ export default function Terminos() {
                   el resultado depende del historial real del usuario. La declaración de prescripción
                   tiene un costo separado que se cotiza individualmente.
                 </li>
+                <li>
+                  <strong>Descuento en comparendos:</strong> El porcentaje de descuento informado
+                  en el formulario web es una estimación basada en los días hábiles transcurridos
+                  desde la fecha indicada por el usuario. El descuento definitivo lo determina
+                  el organismo de tránsito competente al momento del pago. Tramita Yopal no
+                  garantiza el porcentaje estimado. El acceso al descuento está condicionado al
+                  cumplimiento del curso pedagógico presencial obligatorio establecido por la ley.
+                </li>
               </ul>
             </section>
 
@@ -82,15 +91,19 @@ export default function Terminos() {
               <ul className="space-y-2 list-disc pl-5">
                 <li>Todas las cotizaciones son gratuitas y sin compromiso.</li>
                 <li>
-                  Los honorarios de Tramita Yopal se informan antes de iniciar el trámite y
-                  no incluyen los derechos de tránsito, impuestos ni costos del organismo, los
-                  cuales son variables y dependen del organismo de tránsito.
+                  La cotización incluye los honorarios de Tramita Yopal y los derechos de trámite
+                  ante el RUNT y el organismo de tránsito. Estos valores se informan como un total
+                  antes de iniciar cualquier gestión.
                 </li>
                 <li>
                   <strong>Política de cobro en dos etapas:</strong> el cliente paga el 50% del
-                  valor total acordado al aprobar la cotización e iniciar el trámite. El 50%
+                  valor total cotizado al aprobar la cotización e iniciar el trámite. El 50%
                   restante se cobra únicamente cuando el organismo de tránsito aprueba y expide
-                  el documento. No se cobra el total por adelantado bajo ninguna circunstancia.
+                  el documento. No se cobra el total por adelantado.{' '}
+                  <strong>Excepción — Traspaso de Propiedad:</strong> el avalúo vehicular
+                  (equivalente al 1 % del valor comercial del vehículo) es exigido por el organismo
+                  de tránsito y debe pagarse en su totalidad al iniciar el trámite; este valor
+                  no hace parte del cobro de Tramita Yopal.
                 </li>
                 <li>
                   El pago de honorarios se acuerda individualmente mediante WhatsApp antes de

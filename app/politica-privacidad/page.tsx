@@ -59,6 +59,29 @@ export default function PoliticaPrivacidad() {
                   estrictamente en tiempo real y transitorio.
                 </li>
 
+                <li className="bg-blue-50 rounded-xl p-4 border border-blue-100">
+                  <strong className="block text-slate-900 mb-1">Formulario de descuento en comparendos</strong>
+                  <p className="mb-2">
+                    Cuando un usuario solicita asesoría para el pago de su comparendo con descuento,
+                    recopilamos su <strong>nombre</strong>, <strong>teléfono</strong>,{' '}
+                    <strong>tipo de comparendo</strong> y <strong>fecha del comparendo</strong>.
+                    De forma opcional, también puede indicar su <strong>número de cédula</strong>,
+                    el <strong>número del comparendo</strong> y una{' '}
+                    <strong>fecha y hora preferida para el curso CIA</strong>.
+                  </p>
+                  <ul className="space-y-1 text-sm text-slate-600 list-disc pl-4">
+                    <li>Estos datos se almacenan en nuestra base de datos para gestionar la solicitud y contactar al usuario.</li>
+                    <li>El porcentaje de descuento estimado se calcula localmente en el navegador y se guarda como referencia interna.</li>
+                    <li>
+                      <strong>No se comparten con terceros</strong>, salvo con Supabase como proveedor de base de datos bajo acuerdo de confidencialidad.
+                    </li>
+                    <li>
+                      El titular puede solicitar la eliminación de sus datos en cualquier momento escribiendo a{' '}
+                      <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">{BUSINESS.email}</a>.
+                    </li>
+                  </ul>
+                </li>
+
                 <li className="bg-amber-50 rounded-xl p-4 border border-amber-100">
                   <strong className="block text-slate-900 mb-1">Reseñas de clientes</strong>
                   <p className="mb-2">
@@ -96,9 +119,10 @@ export default function PoliticaPrivacidad() {
               <ul className="space-y-2 list-disc pl-5">
                 <li>
                   <strong>Supabase Inc.</strong> — Base de datos en la nube donde se almacenan
-                  exclusivamente las reseñas de clientes (nombre y correo). Los datos se almacenan
-                  en servidores ubicados en Estados Unidos bajo el estándar de seguridad SOC 2.
-                  Supabase actúa como encargado del tratamiento, sin acceso ni uso propio de los datos.
+                  las reseñas de clientes y las solicitudes de descuento en comparendos. Los datos
+                  se almacenan en servidores ubicados en Estados Unidos bajo el estándar de seguridad
+                  SOC 2. Supabase actúa como encargado del tratamiento, sin acceso ni uso propio de
+                  los datos.
                 </li>
                 <li>
                   <strong>WhatsApp / Meta Platforms Inc.</strong> — Plataforma de mensajería hacia

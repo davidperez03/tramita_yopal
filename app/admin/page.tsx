@@ -60,10 +60,21 @@ export default async function AdminPage({
     return <LoginPage error={params?.error ? 'Contraseña incorrecta.' : undefined} />;
   }
 
-  const { data: reviews } = await supabaseAdmin
-    .from('reviews')
-    .select('id, name, email, rating, text, type, year, source, visible, created_at')
-    .order('created_at', { ascending: false });
+  const [{ data: reviews }, { data: tramites }, { data: comparendos }] = await Promise.all([
+    supabaseAdmin
+      .from('reviews')
+      .select('id, name, email, rating, text, type, year, source, visible, created_at, photos')
+      .order('created_at', { ascending: false }),
+    supabaseAdmin
+      .from('tramites')
+      .select('id, created_at, updated_at, cliente_nombre, cliente_telefono, cliente_ciudad, placa, tipo, descripcion, estado, valor_honorarios, valor_derechos, valor_avaluo, pago_inicial, pago_inicial_fecha, pago_final, pago_final_fecha, notas')
+      .order('updated_at', { ascending: false, nullsFirst: false })
+      .order('created_at', { ascending: false }),
+    supabaseAdmin
+      .from('comparendo_solicitudes')
+      .select('id, created_at, nombre, cedula, telefono, tipo, fecha_comparendo, numero_comparendo, descuento_estimado, fecha_curso, estado')
+      .order('created_at', { ascending: false }),
+  ]);
 
-  return <Panel reviews={reviews ?? []} />;
+  return <Panel reviews={reviews ?? []} tramites={tramites ?? []} comparendos={comparendos ?? []} />;
 }

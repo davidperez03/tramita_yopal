@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useRef } from 'react';
 import { SERVICES } from '@/lib/constants';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -37,17 +37,98 @@ function StarPicker({ value, onChange }: { value: number; onChange: (n: number) 
   );
 }
 
+function PhotoPicker({
+  photos,
+  onAdd,
+  onRemove,
+}: {
+  photos: { file: File; preview: string }[];
+  onAdd: (files: FileList) => void;
+  onRemove: (index: number) => void;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  return (
+    <div>
+      <label className="block text-sm font-semibold text-slate-700 mb-1">
+        Fotos <span className="text-slate-400 font-normal">(opcional, máx. 3)</span>
+      </label>
+      <p className="text-xs text-slate-400 mb-3">Puedes adjuntar hasta 3 fotos de tu experiencia (JPG, PNG, máx. 5 MB c/u).</p>
+
+      <div className="flex gap-3 flex-wrap">
+        {photos.map((p, i) => (
+          <div key={i} className="relative w-20 h-20 rounded-xl overflow-hidden border border-slate-200 group">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={p.preview} alt={`Foto ${i + 1}`} className="w-full h-full object-cover" />
+            <button
+              type="button"
+              onClick={() => onRemove(i)}
+              className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xl font-bold"
+              aria-label="Eliminar foto"
+            >
+              ×
+            </button>
+          </div>
+        ))}
+
+        {photos.length < 3 && (
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            className="w-20 h-20 rounded-xl border-2 border-dashed border-slate-300 hover:border-brand-400 hover:bg-brand-50 flex flex-col items-center justify-center gap-1 transition-colors text-slate-400 hover:text-brand-600"
+          >
+            <span className="text-2xl leading-none">+</span>
+            <span className="text-[10px] font-medium">Foto</span>
+          </button>
+        )}
+      </div>
+
+      <input
+        ref={inputRef}
+        type="file"
+        name="photos"
+        accept="image/jpeg,image/png,image/webp,image/heic"
+        multiple
+        className="hidden"
+        onChange={e => { if (e.target.files) onAdd(e.target.files); e.target.value = ''; }}
+      />
+    </div>
+  );
+}
+
 const inputClass = 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent';
 
 export default function DejarResena() {
   const [isPending, startTransition] = useTransition();
   const [result, setResult]         = useState<{ success?: boolean; error?: string } | null>(null);
   const [rating, setRating]         = useState(0);
+  const [photos, setPhotos]         = useState<{ file: File; preview: string }[]>([]);
+  const formRef                     = useRef<HTMLFormElement>(null);
+
+  function handleAddPhotos(files: FileList) {
+    const remaining = 3 - photos.length;
+    const added = Array.from(files).slice(0, remaining).map(file => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+    setPhotos(prev => [...prev, ...added]);
+  }
+
+  function handleRemovePhoto(index: number) {
+    setPhotos(prev => {
+      URL.revokeObjectURL(prev[index].preview);
+      return prev.filter((_, i) => i !== index);
+    });
+  }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     formData.set('rating', String(rating));
+    // Adjuntar archivos de fotos manualmente (el input está oculto)
+    formData.delete('photos');
+    photos.forEach(p => formData.append('photos', p.file));
+
     startTransition(async () => {
       const res = await submitReview(formData);
       setResult(res);
@@ -92,7 +173,7 @@ export default function DejarResena() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8 space-y-5">
+          <form ref={formRef} onSubmit={handleSubmit} className="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8 space-y-5">
 
             {/* Calificación */}
             <div>
@@ -107,12 +188,7 @@ export default function DejarResena() {
               <label className="block text-sm font-semibold text-slate-700 mb-1">
                 Nombre <span className="text-red-500">*</span>
               </label>
-              <input
-                name="name"
-                required
-                placeholder="Ej: Carlos Mantilla"
-                className={inputClass}
-              />
+              <input name="name" required placeholder="Ej: Carlos Mantilla" className={inputClass} />
             </div>
 
             {/* Email */}
@@ -120,13 +196,7 @@ export default function DejarResena() {
               <label className="block text-sm font-semibold text-slate-700 mb-1">
                 Correo electrónico <span className="text-red-500">*</span>
               </label>
-              <input
-                name="email"
-                type="email"
-                required
-                placeholder="tucorreo@ejemplo.com"
-                className={inputClass}
-              />
+              <input name="email" type="email" required placeholder="tucorreo@ejemplo.com" className={inputClass} />
               <p className="mt-1 text-xs text-slate-400">
                 Tu correo no será visible en el sitio. Lo usamos solo para verificar tu identidad.
               </p>
@@ -158,6 +228,9 @@ export default function DejarResena() {
                 className={`${inputClass} resize-none`}
               />
             </div>
+
+            {/* Fotos */}
+            <PhotoPicker photos={photos} onAdd={handleAddPhotos} onRemove={handleRemovePhoto} />
 
             {/* Error */}
             {result?.error && (
