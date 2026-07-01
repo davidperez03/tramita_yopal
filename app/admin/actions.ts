@@ -8,7 +8,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 const SESSION_VALUE = () => `ty_admin_${process.env.ADMIN_PASSWORD}`;
 
 // Lanza si la sesión no es válida — protege todas las acciones sensibles
-async function requireAdmin() {
+export async function requireAdmin() {
   const jar   = await cookies();
   const value = jar.get('admin_session')?.value;
   if (!value || value !== SESSION_VALUE()) {
@@ -24,7 +24,7 @@ export async function login(formData: FormData) {
       secure: process.env.NODE_ENV === 'production',
       maxAge: 60 * 60 * 24 * 7,
       path: '/',
-      sameSite: 'lax',
+      sameSite: 'strict',
     });
     redirect('/admin');
   }
@@ -56,6 +56,18 @@ export async function deleteReview(id: string) {
   await supabaseAdmin.from('reviews').delete().eq('id', id);
   revalidatePath('/admin');
   revalidatePath('/');
+}
+
+export async function updateComparendoEstado(id: string, estado: 'pendiente' | 'en_gestion' | 'atendido') {
+  await requireAdmin();
+  await supabaseAdmin.from('comparendo_solicitudes').update({ estado }).eq('id', id);
+  revalidatePath('/admin');
+}
+
+export async function deleteComparendo(id: string) {
+  await requireAdmin();
+  await supabaseAdmin.from('comparendo_solicitudes').delete().eq('id', id);
+  revalidatePath('/admin');
 }
 
 export async function addReview(formData: FormData) {
