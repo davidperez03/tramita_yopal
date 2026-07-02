@@ -21,7 +21,7 @@ export async function GET() {
   const { data, error } = await supabaseAdmin
     .from('tramites')
     .select(
-      'id, created_at, updated_at, cliente_nombre, cliente_telefono, cliente_ciudad, placa, tipo, estado, valor_honorarios, valor_derechos, valor_avaluo, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento',
+      'id, created_at, updated_at, cliente_nombre, cliente_telefono, cliente_ciudad, placa, tipos, estado, honorarios_tramitador, honorarios_envio, valor_derechos, valor_avaluo, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento',
     )
     .is('deleted_at', null)
     .order('created_at', { ascending: false });
@@ -30,8 +30,8 @@ export async function GET() {
 
   const header = csvRow([
     'id', 'fecha_creacion', 'fecha_actualizacion', 'cliente', 'telefono', 'ciudad',
-    'placa', 'tipo', 'estado',
-    'honorarios', 'derechos', 'avaluo', 'total',
+    'placa', 'tipos', 'estado',
+    'honorarios_tramitador', 'honorarios_envio', 'derechos', 'avaluo', 'total',
     'pago_inicial', 'pago_inicial_fecha', 'pago_inicial_metodo',
     'pago_final', 'pago_final_fecha', 'pago_final_metodo',
     'cancelacion_motivo', 'pago_devuelto', 'codigo_seguimiento',
@@ -42,8 +42,8 @@ export async function GET() {
     return csvRow([
       t.id, t.created_at, t.updated_at,
       t.cliente_nombre, t.cliente_telefono, t.cliente_ciudad,
-      t.placa, t.tipo, t.estado,
-      t.valor_honorarios, t.valor_derechos, t.valor_avaluo, total,
+      t.placa, t.tipos.join(' + '), t.estado,
+      t.honorarios_tramitador, t.honorarios_envio, t.valor_derechos, t.valor_avaluo, total,
       t.pago_inicial, t.pago_inicial_fecha, t.pago_inicial_metodo,
       t.pago_final, t.pago_final_fecha, t.pago_final_metodo,
       t.cancelacion_motivo, t.pago_devuelto, t.codigo_seguimiento,

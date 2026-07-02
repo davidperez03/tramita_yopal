@@ -84,7 +84,7 @@ export default async function AdminPage({
     supabaseAdmin
       .from('tramites')
       .select(
-        'id, created_at, updated_at, cliente_nombre, cliente_telefono, cliente_ciudad, placa, tipo, estado, valor_honorarios, valor_derechos, valor_avaluo, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento',
+        'id, created_at, updated_at, cliente_nombre, cliente_telefono, cliente_ciudad, placa, tipos, estado, honorarios_tramitador, honorarios_envio, valor_derechos, valor_avaluo, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento',
         { count: 'exact' },
       )
       .is('deleted_at', null)

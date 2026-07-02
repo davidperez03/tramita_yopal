@@ -22,18 +22,19 @@ function parseValor(raw: FormDataEntryValue | null): number {
 export async function createTramite(formData: FormData) {
   await requireAdmin();
 
-  const cliente_nombre    = (formData.get('cliente_nombre')   as string)?.trim();
-  const cliente_telefono  = (formData.get('cliente_telefono') as string)?.trim();
-  const cliente_ciudad    = (formData.get('cliente_ciudad')   as string)?.trim();
-  const placa             = (formData.get('placa')            as string)?.trim().toUpperCase();
-  const tipo              = (formData.get('tipo')             as string)?.trim();
-  const valor_honorarios  = parseValor(formData.get('valor_honorarios'));
-  const valor_derechos    = parseValor(formData.get('valor_derechos'));
-  const avaluo_comercial  = parseValor(formData.get('avaluo_comercial'));
-  const valor_avaluo      = Math.round(avaluo_comercial * 0.01);
+  const cliente_nombre          = (formData.get('cliente_nombre')   as string)?.trim();
+  const cliente_telefono        = (formData.get('cliente_telefono') as string)?.trim();
+  const cliente_ciudad          = (formData.get('cliente_ciudad')   as string)?.trim();
+  const placa                   = (formData.get('placa')            as string)?.trim().toUpperCase();
+  const tipos                   = (formData.getAll('tipos') as string[]).map(s => s.trim()).filter(Boolean);
+  const honorarios_tramitador   = parseValor(formData.get('honorarios_tramitador'));
+  const honorarios_envio        = parseValor(formData.get('honorarios_envio'));
+  const valor_derechos          = parseValor(formData.get('valor_derechos'));
+  const avaluo_comercial        = parseValor(formData.get('avaluo_comercial'));
+  const valor_avaluo            = Math.round(avaluo_comercial * 0.01);
 
-  if (!cliente_nombre || !tipo) {
-    return { error: 'Nombre del cliente y tipo de trámite son obligatorios.' };
+  if (!cliente_nombre || !tipos.length) {
+    return { error: 'Nombre del cliente y al menos un tipo de trámite son obligatorios.' };
   }
 
   const placaValida = /^[A-Z0-9]{1,7}$/.test(placa);
@@ -43,15 +44,16 @@ export async function createTramite(formData: FormData) {
 
   const { error } = await supabaseAdmin.from('tramites').insert({
     cliente_nombre,
-    cliente_telefono:   cliente_telefono || null,
-    cliente_ciudad:     cliente_ciudad   || null,
-    placa:              placa            || null,
-    tipo,
-    estado:             'recibido',
-    valor_honorarios,
+    cliente_telefono:       cliente_telefono || null,
+    cliente_ciudad:         cliente_ciudad   || null,
+    placa:                  placa            || null,
+    tipos,
+    estado:                 'recibido',
+    honorarios_tramitador,
+    honorarios_envio,
     valor_derechos,
     valor_avaluo,
-    codigo_seguimiento: generateCodigo(),
+    codigo_seguimiento:     generateCodigo(),
   });
 
   if (error) return { error: 'Error al crear el trámite.' };

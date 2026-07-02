@@ -287,15 +287,23 @@ function AddTramiteForm() {
   const [open, setOpen]              = useState(false);
   const [isPending, startTransition] = useTransition();
   const [result, setResult]          = useState<{ success?: boolean; error?: string } | null>(null);
-  const [tipo, setTipo]              = useState('');
-  const esTraspaso = tipo === 'Traspaso de Propiedad';
+  const [tipos, setTipos]            = useState<string[]>([]);
 
-  function close() { setOpen(false); setTipo(''); setResult(null); }
+  const esTraspaso = tipos.includes('Traspaso de Propiedad');
+
+  function toggleTipo(s: string) {
+    setTipos(prev => prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]);
+  }
+
+  function close() { setOpen(false); setTipos([]); setResult(null); }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     startTransition(async () => {
-      const res = await createTramite(new FormData(e.currentTarget));
+      const fd = new FormData(e.currentTarget);
+      // Inyectar tipos seleccionados (no vienen del DOM directamente)
+      tipos.forEach(t => fd.append('tipos', t));
+      const res = await createTramite(fd);
       setResult(res);
       if (res.success) { (e.target as HTMLFormElement).reset(); close(); }
     });
@@ -351,24 +359,44 @@ function AddTramiteForm() {
           </div>
         </div>
 
-        {/* Tipo */}
+        {/* Tipos de trámite — multi-selección */}
         <div>
-          <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Tipo de trámite *</label>
-          <select name="tipo" required value={tipo} onChange={e => setTipo(e.target.value)}
-            className={`${inputCls} bg-white`}>
-            <option value="">Selecciona un trámite...</option>
-            {SERVICE_NAMES_WITH_OTHER.map(s => <option key={s} value={s}>{s}</option>)}
-          </select>
+          <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">
+            Tipos de trámite * <span className="font-normal normal-case text-slate-400">(puede seleccionar varios)</span>
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {SERVICE_NAMES_WITH_OTHER.map(s => {
+              const activo = tipos.includes(s);
+              return (
+                <button key={s} type="button" onClick={() => toggleTipo(s)}
+                  className={cx(
+                    'text-xs font-bold px-3 py-1.5 rounded-full border-2 transition-all',
+                    activo
+                      ? 'bg-brand-950 border-brand-950 text-white'
+                      : 'bg-white border-slate-200 text-slate-500 hover:border-brand-300 hover:text-brand-700',
+                  )}>
+                  {s}
+                </button>
+              );
+            })}
+          </div>
+          {tipos.length === 0 && result && (
+            <p className="text-xs text-red-500 mt-1">Selecciona al menos un tipo.</p>
+          )}
         </div>
 
         {/* Valores */}
-        {tipo && (
+        {tipos.length > 0 && (
           <div className="space-y-3">
             <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">Valores (COP)</p>
-            <div className={`grid gap-3 ${esTraspaso ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
+            <div className={`grid gap-3 ${esTraspaso ? 'sm:grid-cols-4' : 'sm:grid-cols-3'}`}>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Honorarios</label>
-                <MoneyInput name="valor_honorarios" />
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Honorarios tramitador</label>
+                <MoneyInput name="honorarios_tramitador" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Envío e imprevistos</label>
+                <MoneyInput name="honorarios_envio" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Derechos (RUNT + org.)</label>
@@ -396,7 +424,7 @@ function AddTramiteForm() {
         )}
 
         <div className="flex gap-3 pt-1">
-          <button type="submit" disabled={isPending}
+          <button type="submit" disabled={isPending || tipos.length === 0}
             className="bg-brand-950 hover:bg-brand-800 disabled:opacity-50 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors">
             {isPending ? 'Guardando...' : 'Crear trámite'}
           </button>
@@ -537,8 +565,8 @@ function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle }: {
             </svg>
           </div>
         </div>
-        {/* Segunda línea: tipo + fecha — subtle */}
-        <p className="text-[11px] text-slate-400 mt-1 truncate">{t.tipo} · {fmtDate(t.created_at)}</p>
+        {/* Segunda línea: tipos + fecha */}
+        <p className="text-[11px] text-slate-400 mt-1 truncate">{t.tipos.join(' · ')} · {fmtDate(t.created_at)}</p>
       </button>
 
       {/* Cuerpo expandido */}
@@ -620,10 +648,22 @@ function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle }: {
 
           {/* Desglose financiero — compacto */}
           {total > 0 && (
-            <div className="px-5 py-3 flex items-center gap-4 flex-wrap text-xs text-slate-500 bg-slate-50/50">
-              <span>Honorarios <strong className="text-slate-800 ml-1">{cop(t.valor_honorarios)}</strong></span>
-              <span className="text-slate-300">·</span>
-              <span>Derechos <strong className="text-slate-800 ml-1">{cop(t.valor_derechos)}</strong></span>
+            <div className="px-5 py-3 flex items-center gap-3 flex-wrap text-xs text-slate-500 bg-slate-50/50">
+              {t.honorarios_tramitador > 0 && (
+                <span>Tramitador <strong className="text-slate-800 ml-1">{cop(t.honorarios_tramitador)}</strong></span>
+              )}
+              {t.honorarios_envio > 0 && (
+                <>
+                  <span className="text-slate-300">·</span>
+                  <span>Envío <strong className="text-slate-600 ml-1">{cop(t.honorarios_envio)}</strong></span>
+                </>
+              )}
+              {t.valor_derechos > 0 && (
+                <>
+                  <span className="text-slate-300">·</span>
+                  <span>Derechos <strong className="text-slate-800 ml-1">{cop(t.valor_derechos)}</strong></span>
+                </>
+              )}
               {t.valor_avaluo > 0 && (
                 <>
                   <span className="text-slate-300">·</span>
@@ -816,8 +856,9 @@ export default function TramitesPanel({
 
   const neto = cobrado - devuelto;
 
+  // Solo honorarios_tramitador — el envío/imprevistos es costo operativo, no ganancia
   const honorariosCobrados = activos.reduce((sum, t) => {
-    const base = t.valor_honorarios;
+    const base = t.honorarios_tramitador;
     const p1h  = Math.floor(base / 2);
     const p2h  = base - p1h;
     return sum + (t.pago_inicial ? p1h : 0) + (t.pago_final ? p2h : 0);

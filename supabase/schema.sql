@@ -47,15 +47,16 @@ create table if not exists tramites (
   cliente_ciudad        text,
   placa                 text,
 
-  -- Trámite
-  tipo                  text        not null,
+  -- Trámite (arreglo para combinar servicios, ej: traspaso + levante de prenda)
+  tipos                 text[]      not null default '{}',
 
   -- Estado
   estado                text        not null default 'recibido'
                         check (estado in ('recibido','en_proceso','aprobado','entregado','cancelado')),
 
   -- Valores económicos (COP, enteros, máximo 100.000.000)
-  valor_honorarios      integer     not null default 0,
+  honorarios_tramitador integer     not null default 0,
+  honorarios_envio      integer     not null default 0,
   valor_derechos        integer     not null default 0,
   valor_avaluo          integer     not null default 0,
 

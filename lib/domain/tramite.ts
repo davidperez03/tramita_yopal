@@ -8,9 +8,10 @@ export type Tramite = {
   cliente_telefono: string | null;
   cliente_ciudad: string | null;
   placa: string | null;
-  tipo: string;
+  tipos: string[];
   estado: TramiteEstado;
-  valor_honorarios: number;
+  honorarios_tramitador: number;
+  honorarios_envio: number;
   valor_derechos: number;
   valor_avaluo: number;
   pago_inicial: boolean;
@@ -64,9 +65,10 @@ export const ESTADO_CONFIG = {
   },
 } satisfies Record<TramiteEstado, { label: string; badge: string; pillActive: string; band: string }>;
 
-export function calcPagos(t: Pick<Tramite, 'valor_honorarios' | 'valor_derechos' | 'valor_avaluo'>) {
-  const base      = t.valor_honorarios + t.valor_derechos;
-  const pago1base = Math.floor(base / 2);
-  const pago2base = base - pago1base;
+export function calcPagos(t: Pick<Tramite, 'honorarios_tramitador' | 'honorarios_envio' | 'valor_derechos' | 'valor_avaluo'>) {
+  const honorarios = t.honorarios_tramitador + t.honorarios_envio;
+  const base       = honorarios + t.valor_derechos;
+  const pago1base  = Math.floor(base / 2);
+  const pago2base  = base - pago1base;
   return { pago1: pago1base + t.valor_avaluo, pago2: pago2base, total: base + t.valor_avaluo };
 }
