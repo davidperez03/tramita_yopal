@@ -1,30 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createServerClient } from '@supabase/ssr';
 
-export function middleware(request: NextRequest) {
-  const session  = request.cookies.get('admin_session')?.value;
-  const expected = `ty_admin_${process.env.ADMIN_PASSWORD}`;
+export async function middleware(request: NextRequest) {
+  let response = NextResponse.next({ request });
+
+  // Renueva los tokens de sesión de Supabase Auth automáticamente
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value),
+          );
+          response = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options),
+          );
+        },
+      },
+    },
+  );
+
+  const { data: { user } } = await supabase.auth.getUser();
   const { pathname } = request.nextUrl;
 
-  // Deja pasar la página /admin sin cookie (muestra el login)
-  if (pathname === '/admin') {
-    if (session && session === expected) return NextResponse.next();
-    // Si hay cookie inválida, la borra antes de mostrar el login
-    if (session && session !== expected) {
-      const res = NextResponse.next();
-      res.cookies.delete('admin_session');
-      return res;
-    }
-    return NextResponse.next();
+  // /admin muestra el login por sí mismo cuando no hay sesión
+  if (pathname === '/admin') return response;
+
+  // Sub-rutas requieren sesión activa
+  if (pathname.startsWith('/admin/') && !user) {
+    return NextResponse.redirect(new URL('/admin', request.url));
   }
 
-  // Cualquier sub-ruta de /admin requiere cookie válida
-  if (pathname.startsWith('/admin/')) {
-    if (!session || session !== expected) {
-      return NextResponse.redirect(new URL('/admin', request.url));
-    }
-  }
-
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {

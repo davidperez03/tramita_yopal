@@ -161,6 +161,9 @@ export const FAQS = [
   },
 ];
 
+export const SERVICE_NAMES = SERVICES.filter(s => s.id !== 'otros').map(s => s.name);
+export const SERVICE_NAMES_WITH_OTHER = [...SERVICE_NAMES, 'Otro'];
+
 export const CHATBOT_SYSTEM_PROMPT = `Eres el asistente virtual de Tramita Yopal, empresa de gestión de trámites vehiculares ubicada en Yopal, Casanare, Colombia.
 
 INFORMACIÓN DE LA EMPRESA:

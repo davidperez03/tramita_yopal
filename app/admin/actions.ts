@@ -1,73 +1,90 @@
 'use server';
 
-import { cookies } from 'next/headers';
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { supabaseAdmin } from '@/lib/supabase';
+import { requireAdmin } from '@/lib/auth';
+import { createAuthClient } from '@/lib/supabase/server';
+import { checkRateLimit } from '@/lib/rateLimit';
 
-const SESSION_VALUE = () => `ty_admin_${process.env.ADMIN_PASSWORD}`;
-
-// Lanza si la sesión no es válida — protege todas las acciones sensibles
-export async function requireAdmin() {
-  const jar   = await cookies();
-  const value = jar.get('admin_session')?.value;
-  if (!value || value !== SESSION_VALUE()) {
-    redirect('/admin');
-  }
-}
+export { requireAdmin };
 
 export async function login(formData: FormData) {
+  const ip = ((await headers()).get('x-forwarded-for') ?? 'unknown').split(',')[0].trim();
+  if (checkRateLimit(ip)) redirect('/admin?error=rate');
+
+  const email    = (formData.get('email')    as string)?.trim();
   const password = (formData.get('password') as string)?.trim();
-  if (password && password === process.env.ADMIN_PASSWORD) {
-    (await cookies()).set('admin_session', SESSION_VALUE(), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24 * 7,
-      path: '/',
-      sameSite: 'strict',
-    });
-    redirect('/admin');
-  }
-  redirect('/admin?error=1');
+
+  if (!email || !password) redirect('/admin?error=1');
+
+  const supabase = await createAuthClient();
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+  if (error) redirect('/admin?error=1');
+  redirect('/admin');
 }
 
 export async function logout() {
-  await requireAdmin();
-  (await cookies()).delete('admin_session');
+  const supabase = await createAuthClient();
+  await supabase.auth.signOut();
   redirect('/admin');
 }
 
 export async function approveReview(id: string) {
   await requireAdmin();
-  await supabaseAdmin.from('reviews').update({ visible: true }).eq('id', id);
+  const { error } = await supabaseAdmin.from('reviews').update({ visible: true }).eq('id', id);
+  if (error) return { error: 'Error al aprobar la reseña.' };
   revalidatePath('/admin');
   revalidatePath('/');
+  return { success: true };
 }
 
 export async function hideReview(id: string) {
   await requireAdmin();
-  await supabaseAdmin.from('reviews').update({ visible: false }).eq('id', id);
+  const { error } = await supabaseAdmin.from('reviews').update({ visible: false }).eq('id', id);
+  if (error) return { error: 'Error al ocultar la reseña.' };
   revalidatePath('/admin');
   revalidatePath('/');
+  return { success: true };
 }
 
 export async function deleteReview(id: string) {
   await requireAdmin();
-  await supabaseAdmin.from('reviews').delete().eq('id', id);
+  const { error } = await supabaseAdmin
+    .from('reviews')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id);
+  if (error) return { error: 'Error al eliminar la reseña.' };
   revalidatePath('/admin');
   revalidatePath('/');
+  return { success: true };
 }
 
-export async function updateComparendoEstado(id: string, estado: 'pendiente' | 'en_gestion' | 'atendido') {
+export async function updateComparendoEstado(
+  id: string,
+  estado: 'pendiente' | 'en_gestion' | 'atendido',
+) {
   await requireAdmin();
-  await supabaseAdmin.from('comparendo_solicitudes').update({ estado }).eq('id', id);
+  const { error } = await supabaseAdmin
+    .from('comparendo_solicitudes')
+    .update({ estado })
+    .eq('id', id);
+  if (error) return { error: 'Error al actualizar estado.' };
   revalidatePath('/admin');
+  return { success: true };
 }
 
 export async function deleteComparendo(id: string) {
   await requireAdmin();
-  await supabaseAdmin.from('comparendo_solicitudes').delete().eq('id', id);
+  const { error } = await supabaseAdmin
+    .from('comparendo_solicitudes')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id);
+  if (error) return { error: 'Error al eliminar la solicitud.' };
   revalidatePath('/admin');
+  return { success: true };
 }
 
 export async function addReview(formData: FormData) {
