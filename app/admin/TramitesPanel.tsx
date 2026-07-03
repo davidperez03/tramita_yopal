@@ -78,9 +78,9 @@ export default function TramitesPanel({
     ? enPeriodo.filter(t => {
         const digits = q.replace(/\D/g, '');
         return (
-          norm(t.cliente_nombre).includes(q) ||
+          norm(t.cliente?.nombre ?? '').includes(q) ||
           (t.placa && norm(t.placa).includes(q)) ||
-          (digits && t.cliente_telefono?.replace(/\D/g, '').includes(digits))
+          (digits && t.cliente?.telefono?.replace(/\D/g, '').includes(digits))
         );
       })
     : enPeriodo;
@@ -221,7 +221,7 @@ export default function TramitesPanel({
             <TramiteCard
               key={t.id}
               t={t}
-              hasTramiteComp={!!(t.cliente_telefono && comparendosByPhone.has(t.cliente_telefono))}
+              hasTramiteComp={!!(t.cliente?.telefono && comparendosByPhone.has(t.cliente.telefono))}
               historial={historialMap.get(t.id) ?? []}
               selected={selected.has(t.id)}
               onToggle={() => toggleSelect(t.id)}

@@ -76,32 +76,28 @@ export default async function AdminPage({
   const LIMIT = 100;
 
   const TRAMITE_COLS =
-    'id, created_at, updated_at, cliente_nombre, cliente_telefono, cliente_ciudad, placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento';
+    'id, created_at, updated_at, cliente_id, cliente:clientes(nombre, telefono, ciudad), placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento';
 
-  const tramitesQuery = (cols: string) =>
-    supabaseAdmin
-      .from('tramites')
-      .select(cols, { count: 'exact' })
-      .is('deleted_at', null)
-      .order('updated_at', { ascending: false, nullsFirst: false })
-      .order('created_at', { ascending: false })
-      .limit(LIMIT);
-
-  const [reviewsRes, tramitesConClienteRes, comparendosRes, clientesRes] = await Promise.all([
+  const [reviewsRes, tramitesRes, comparendosRes, clientesRes] = await Promise.all([
     supabaseAdmin
       .from('reviews')
       .select('id, name, email, rating, text, type, year, source, visible, created_at, photos', { count: 'exact' })
       .is('deleted_at', null)
       .order('created_at', { ascending: false })
       .limit(LIMIT),
-    tramitesQuery(`${TRAMITE_COLS}, cliente_id`),
+    supabaseAdmin
+      .from('tramites')
+      .select(TRAMITE_COLS, { count: 'exact' })
+      .is('deleted_at', null)
+      .order('updated_at', { ascending: false, nullsFirst: false })
+      .order('created_at', { ascending: false })
+      .limit(LIMIT),
     supabaseAdmin
       .from('comparendo_solicitudes')
       .select('id, created_at, nombre, cedula, telefono, tipo, fecha_comparendo, numero_comparendo, descuento_estimado, fecha_curso, estado', { count: 'exact' })
       .is('deleted_at', null)
       .order('created_at', { ascending: false })
       .limit(LIMIT),
-    // Vista creada por migration_clientes.sql; si aún no existe, clientes = []
     supabaseAdmin
       .from('clientes_resumen')
       .select('id, created_at, nombre, telefono, cedula, ciudad, email, notas, tramites_total, tramites_activos, ultimo_tramite', { count: 'exact' })
@@ -109,11 +105,6 @@ export default async function AdminPage({
       .limit(LIMIT),
   ]);
 
-  // Antes de correr migration_clientes.sql la columna cliente_id no existe:
-  // reintenta sin ella para no tumbar el panel.
-  const tramitesRes = tramitesConClienteRes.error
-    ? await tramitesQuery(TRAMITE_COLS)
-    : tramitesConClienteRes;
   const tramitesData = (tramitesRes.data ?? []) as unknown as Tramite[];
 
   const tramiteIds = tramitesData.map(t => t.id);

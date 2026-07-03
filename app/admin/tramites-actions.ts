@@ -4,6 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { revalidatePath } from 'next/cache';
 import { requireAdmin } from '@/lib/auth';
 import { randomBytes } from 'crypto';
+import { notificarCambioEstado } from '@/lib/notificaciones';
 import type { TramiteEstado } from '@/lib/domain/tramite';
 
 function generateCodigo(): string {
@@ -20,8 +21,7 @@ function parseValor(raw: FormDataEntryValue | null): number {
 }
 
 // Busca el cliente por teléfono (o por nombre si no hay teléfono) y lo crea
-// si no existe. Devuelve null si la tabla clientes aún no existe o falla la
-// DB — el trámite se crea igual, solo que sin enlace.
+// si no existe.
 async function findOrCreateCliente(input: {
   nombre: string; telefono: string | null; ciudad: string | null; cedula: string | null;
 }): Promise<string | null> {
@@ -87,19 +87,17 @@ export async function createTramite(formData: FormData) {
     cedula:   cliente_cedula   || null,
   });
 
+  if (!cliente_id) return { error: 'Error al registrar el cliente.' };
+
   const { error } = await supabaseAdmin.from('tramites').insert({
-    cliente_nombre,
-    cliente_telefono:   cliente_telefono || null,
-    cliente_ciudad:     cliente_ciudad   || null,
-    placa:              placa            || null,
+    cliente_id,
+    placa:              placa || null,
     tipos,
     estado:             'recibido',
     valor_honorarios,
     valor_derechos,
     valor_avaluo,
     codigo_seguimiento: generateCodigo(),
-    // Solo si la migración de clientes ya corrió (la columna existe)
-    ...(cliente_id ? { cliente_id } : {}),
   });
 
   if (error) return { error: 'Error al crear el trámite.' };
@@ -121,6 +119,8 @@ export async function updateEstado(id: string, estado: TramiteEstado, nota?: str
     estado,
     nota: nota?.trim() || null,
   });
+
+  await notificarCambioEstado(id, estado, nota);
 
   revalidatePath('/admin');
   revalidatePath('/seguimiento', 'layout');
@@ -144,6 +144,8 @@ export async function cancelTramite(id: string, motivo: string) {
     estado: 'cancelado',
     nota: m,
   });
+
+  await notificarCambioEstado(id, 'cancelado');
 
   revalidatePath('/admin');
   revalidatePath('/seguimiento', 'layout');
@@ -232,6 +234,8 @@ export async function bulkUpdateEstado(ids: string[], estado: TramiteEstado, not
       estado,
       nota: notaTrimmed,
     });
+
+    await notificarCambioEstado(id, estado, notaTrimmed);
   }
 
   revalidatePath('/admin');

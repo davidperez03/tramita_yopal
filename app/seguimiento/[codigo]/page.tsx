@@ -29,12 +29,14 @@ export default async function SeguimientoPage({
 
   const { data: t } = await supabaseAdmin
     .from('tramites')
-    .select('id, tipos, estado, created_at, placa, cliente_ciudad, pago_inicial, pago_inicial_fecha, pago_final, pago_final_fecha, cancelacion_motivo')
+    .select('id, tipos, estado, created_at, placa, cliente:clientes(ciudad), pago_inicial, pago_inicial_fecha, pago_final, pago_final_fecha, cancelacion_motivo')
     .eq('codigo_seguimiento', upper)
     .is('deleted_at', null)
     .single();
 
   if (!t) notFound();
+
+  const clienteCiudad = (t.cliente as unknown as { ciudad: string | null } | null)?.ciudad;
 
   const { data: historial } = await supabaseAdmin
     .from('tramite_historial')
@@ -77,8 +79,8 @@ export default async function SeguimientoPage({
               <h1 className="text-xl font-extrabold text-slate-900 leading-tight">
                 {t.tipos.join(' + ')}
               </h1>
-              {t.cliente_ciudad && (
-                <p className="text-xs text-slate-400 mt-0.5">{t.cliente_ciudad}</p>
+              {clienteCiudad && (
+                <p className="text-xs text-slate-400 mt-0.5">{clienteCiudad}</p>
               )}
             </div>
 

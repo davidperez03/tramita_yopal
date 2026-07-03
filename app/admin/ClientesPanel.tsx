@@ -255,7 +255,7 @@ export default function ClientesPanel({ clientes, total, limit, tramites }: {
       )}
 
       {clientes.length === 0 ? (
-        <Empty msg="Aún no hay clientes. Se crean automáticamente al registrar trámites (requiere ejecutar migration_clientes.sql en Supabase)." />
+        <Empty msg="Aún no hay clientes. Se crean automáticamente al registrar trámites." />
       ) : filtered.length === 0 ? (
         <Empty msg={`Sin coincidencias para "${busqueda}"`} />
       ) : (

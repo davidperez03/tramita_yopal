@@ -37,20 +37,21 @@ INDEXNOW_KEY=tramitayopal2024    # Clave IndexNow para notificar buscadores
 NEXT_PUBLIC_SUPABASE_URL=        # URL del proyecto Supabase
 NEXT_PUBLIC_SUPABASE_ANON_KEY=   # Clave anónima (lecturas públicas con RLS)
 SUPABASE_SERVICE_ROLE_KEY=       # Clave service_role (solo servidor)
+WHATSAPP_ACCESS_TOKEN=           # WhatsApp Cloud API (Meta) — notificaciones a clientes
+WHATSAPP_PHONE_NUMBER_ID=        # ID del número emisor en WhatsApp Cloud API
+CRON_SECRET=                     # Protege /api/cron/notificaciones (Vercel lo envía solo)
 CALLMEBOT_API_KEY=               # Notificación WhatsApp interna (opcional)
 SENTRY_ORG=                      # Sentry (opcional, solo build)
 SENTRY_PROJECT=
 ```
 
+Sin `WHATSAPP_*` las notificaciones quedan encoladas (estado `pendiente` en la
+tabla `notificaciones`) y se envían cuando se configuren las credenciales.
+
 ## Base de datos (Supabase)
 
-- `supabase/schema.sql` — schema completo para una base nueva.
-- `supabase/migration_2026.sql` — migración: tipos[] multi-servicio y costos operativos.
-- `supabase/migration_seguridad.sql` — migración: rate limiting durable (**pendiente de ejecutar**;
-  mientras no se aplique, el rate limit funciona solo en memoria por instancia).
-- `supabase/migration_clientes.sql` — migración: entidad clientes con backfill desde trámites
-  (**pendiente de ejecutar**; mientras no se aplique, la pestaña Clientes del admin sale vacía
-  y los trámites nuevos se crean sin enlace a cliente).
+- `supabase/schema.sql` — schema completo (v6). La base se crea desde cero:
+  pegar todo el archivo en Supabase > SQL Editor. Único archivo fuente, sin migraciones.
 
 ## Desarrollo local
 

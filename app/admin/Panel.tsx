@@ -334,7 +334,7 @@ export default function Panel({
   // Cross-reference maps — phone matching between tramites and comparendos
   const tramitesByPhone    = new Map<string, true>();
   const comparendosByPhone = new Map<string, true>();
-  for (const t of tramites)   if (t.cliente_telefono) tramitesByPhone.set(t.cliente_telefono, true);
+  for (const t of tramites)   if (t.cliente?.telefono) tramitesByPhone.set(t.cliente.telefono, true);
   for (const c of comparendos) if (c.telefono)        comparendosByPhone.set(c.telefono, true);
 
   const BADGES: Record<TabKey, number> = {

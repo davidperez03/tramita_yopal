@@ -118,7 +118,7 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle }
           </div>
           {/* Izquierda: nombre + placa */}
           <div className="flex-1 min-w-0 flex items-center gap-2.5 flex-wrap">
-            <p className="text-sm font-extrabold text-slate-900 uppercase leading-none">{t.cliente_nombre}</p>
+            <p className="text-sm font-extrabold text-slate-900 uppercase leading-none">{t.cliente?.nombre ?? 'Sin cliente'}</p>
             {t.placa && (
               <span className="text-[11px] font-mono font-bold tracking-widest bg-slate-900 text-white px-2 py-0.5 rounded">
                 {t.placa}
@@ -149,14 +149,14 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle }
 
           {/* Info del cliente — tira horizontal */}
           <div className="px-5 py-3 flex items-center gap-5 flex-wrap">
-            {t.cliente_telefono && (
-              <a href={`tel:${t.cliente_telefono}`}
+            {t.cliente?.telefono && (
+              <a href={`tel:${t.cliente.telefono}`}
                 className="text-sm font-medium text-brand-600 hover:underline">
-                {t.cliente_telefono}
+                {t.cliente.telefono}
               </a>
             )}
-            {t.cliente_ciudad && (
-              <span className="text-xs font-semibold text-slate-500 uppercase">{t.cliente_ciudad}</span>
+            {t.cliente?.ciudad && (
+              <span className="text-xs font-semibold text-slate-500 uppercase">{t.cliente.ciudad}</span>
             )}
             {t.codigo_seguimiento && <CodigoCopy codigo={t.codigo_seguimiento} />}
           </div>

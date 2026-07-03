@@ -1,9 +1,9 @@
 -- ============================================================
--- TRAMITA YOPAL — Schema completo v5
--- Para base NUEVA: pegar todo en Supabase > SQL Editor
+-- TRAMITA YOPAL — Schema completo v6
+-- Base creada desde cero: pegar todo en Supabase > SQL Editor
 -- Auth: Supabase Auth (sin tabla sessions)
--- v4: tipos[], valor_honorarios, costo_* y rate_limits
--- v5: clientes + tramites.cliente_id + vista clientes_resumen
+-- v6: tramites normalizado (cliente solo vía cliente_id),
+--     notificaciones WhatsApp, rate_limits
 -- ============================================================
 
 
@@ -58,18 +58,17 @@ create index if not exists idx_reviews_visible
 
 -- ──────────────────────────────────────────────────────────────
 -- TABLA: tramites
+-- Datos del cliente SOLO vía cliente_id → clientes.
 -- ──────────────────────────────────────────────────────────────
 create table if not exists tramites (
   id                    uuid        primary key default gen_random_uuid(),
   created_at            timestamptz not null default now(),
   updated_at            timestamptz          default now(),
 
-  -- Cliente (cliente_id es la relación real; nombre/telefono/ciudad se
-  -- conservan desnormalizados como respaldo)
-  cliente_id            uuid        references clientes(id),
-  cliente_nombre        text        not null,
-  cliente_telefono      text,
-  cliente_ciudad        text,
+  -- Cliente
+  cliente_id            uuid        not null references clientes(id),
+
+  -- Vehículo
   placa                 text,
 
   -- Trámite (arreglo para combinar servicios, ej: traspaso + levante de prenda)
@@ -125,6 +124,8 @@ create index if not exists idx_tramites_codigo
   on tramites (codigo_seguimiento);
 create index if not exists idx_tramites_cliente
   on tramites (cliente_id);
+create index if not exists idx_tramites_tipos
+  on tramites using gin (tipos);
 
 
 -- ──────────────────────────────────────────────────────────────
@@ -187,6 +188,35 @@ alter table tramite_pagos_log enable row level security;
 
 create index if not exists idx_pagos_log_tramite_ts
   on tramite_pagos_log (tramite_id, ts);
+
+
+-- ──────────────────────────────────────────────────────────────
+-- TABLA: notificaciones  (cola + auditoría de mensajes al cliente)
+-- Se encolan al cambiar el estado de un trámite; se envían inline
+-- y el cron /api/cron/notificaciones reintenta las fallidas.
+-- ──────────────────────────────────────────────────────────────
+create table if not exists notificaciones (
+  id           uuid        primary key default gen_random_uuid(),
+  created_at   timestamptz not null default now(),
+  tramite_id   uuid        references tramites(id) on delete cascade,
+  canal        text        not null default 'whatsapp'
+               check (canal in ('whatsapp','sms','email')),
+  plantilla    text        not null,   -- ej: 'estado_en_proceso', 'estado_entregado'
+  destinatario text        not null,   -- teléfono/email al momento del envío
+  contenido    text        not null,
+  estado       text        not null default 'pendiente'
+               check (estado in ('pendiente','enviada','fallida')),
+  intentos     integer     not null default 0,
+  enviada_at   timestamptz,
+  error        text
+);
+
+alter table notificaciones enable row level security;
+-- Sin políticas públicas — solo service_role.
+
+create index if not exists idx_notificaciones_por_enviar
+  on notificaciones (created_at)
+  where estado <> 'enviada';
 
 
 -- ──────────────────────────────────────────────────────────────

@@ -21,7 +21,7 @@ export async function GET() {
   const { data, error } = await supabaseAdmin
     .from('tramites')
     .select(
-      'id, created_at, updated_at, cliente_nombre, cliente_telefono, cliente_ciudad, placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento',
+      'id, created_at, updated_at, cliente:clientes(nombre, telefono, ciudad, cedula), placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento',
     )
     .is('deleted_at', null)
     .order('created_at', { ascending: false });
@@ -29,7 +29,7 @@ export async function GET() {
   if (error) return NextResponse.json({ error: 'Error al exportar.' }, { status: 500 });
 
   const header = csvRow([
-    'id', 'fecha_creacion', 'fecha_actualizacion', 'cliente', 'telefono', 'ciudad',
+    'id', 'fecha_creacion', 'fecha_actualizacion', 'cliente', 'telefono', 'cedula', 'ciudad',
     'placa', 'tipos', 'estado',
     'honorarios', 'derechos', 'avaluo', 'total',
     'costo_tramitador', 'costo_envio', 'costo_imprevistos', 'neto_honorarios',
@@ -38,11 +38,13 @@ export async function GET() {
     'cancelacion_motivo', 'pago_devuelto', 'codigo_seguimiento',
   ]);
 
-  const rows = (data as Tramite[]).map(t => {
+  type Fila = Tramite & { cliente: (Tramite['cliente'] & { cedula?: string | null }) | null };
+
+  const rows = (data as unknown as Fila[]).map(t => {
     const { total } = calcPagos(t);
     return csvRow([
       t.id, t.created_at, t.updated_at,
-      t.cliente_nombre, t.cliente_telefono, t.cliente_ciudad,
+      t.cliente?.nombre, t.cliente?.telefono, t.cliente?.cedula, t.cliente?.ciudad,
       t.placa, t.tipos.join(' + '), t.estado,
       t.valor_honorarios, t.valor_derechos, t.valor_avaluo, total,
       t.costo_tramitador, t.costo_envio, t.costo_imprevistos, calcNeto(t),

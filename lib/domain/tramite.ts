@@ -1,13 +1,18 @@
 export type TramiteEstado = 'recibido' | 'en_proceso' | 'aprobado' | 'entregado' | 'cancelado';
 
+// Datos del cliente embebidos vía join (tramites.cliente_id → clientes)
+export type ClienteRef = {
+  nombre: string;
+  telefono: string | null;
+  ciudad: string | null;
+};
+
 export type Tramite = {
   id: string;
   created_at: string;
   updated_at: string | null;
-  cliente_id: string | null;
-  cliente_nombre: string;
-  cliente_telefono: string | null;
-  cliente_ciudad: string | null;
+  cliente_id: string;
+  cliente: ClienteRef | null;
   placa: string | null;
   tipos: string[];
   estado: TramiteEstado;

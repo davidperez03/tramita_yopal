@@ -137,11 +137,11 @@ por URL firmada de corta duración. Se deja para después de notificaciones.
 
 | Paso | Qué | Depende de |
 |---|---|---|
-| 1 | `clientes` + migración de datos + ficha en admin | ✅ **Implementado** — falta ejecutar `migration_clientes.sql` en Supabase |
+| 1 | `clientes` + ficha en admin | ✅ **Implementado** (base desde cero con schema.sql v6, sin backfill) |
 | 2 | Roles admin/tramitador + `asignado_a` | decisión de contratar tramitadores con acceso |
-| 3 | `notificaciones` + WhatsApp Cloud API + worker | verificación del negocio en Meta (tarda días — **iniciar ya**) |
-| 4 | `vehiculos` + recordatorios de vencimiento | 1 y 3 |
-| 5 | Documentos adjuntos | 1 |
+| 3 | `notificaciones` + WhatsApp Cloud API + worker | ✅ **Implementado** — falta configurar `WHATSAPP_ACCESS_TOKEN`/`WHATSAPP_PHONE_NUMBER_ID` (verificación del negocio en Meta — **iniciar ya**) |
+| 4 | `vehiculos` + recordatorios de vencimiento | 3 |
+| 5 | Documentos adjuntos | — |
 
 ## Decisiones que necesito de ustedes
 
