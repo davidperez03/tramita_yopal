@@ -13,6 +13,7 @@ const trustPills = [
   { text: `Respuesta en ${BUSINESS.responseTime}` },
   { text: 'Sin cobro total por adelantado' },
   { text: 'Tarjeta a domicilio sin costo' },
+  { text: 'Seguimiento en línea de tu trámite' },
 ];
 
 const messages = [

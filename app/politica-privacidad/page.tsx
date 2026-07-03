@@ -19,7 +19,7 @@ export default function PoliticaPrivacidad() {
             Política de Privacidad
           </h1>
           <p className="text-slate-400 text-sm mb-10">
-            Última actualización: junio de 2026 · Conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013
+            Última actualización: julio de 2026 · Conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013
           </p>
 
           <div className="prose prose-slate max-w-none space-y-8 text-slate-700 leading-relaxed">
@@ -44,6 +44,42 @@ export default function PoliticaPrivacidad() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">2. Datos que recopilamos y cómo los usamos</h2>
 
               <ul className="mt-3 space-y-3 list-none pl-0">
+                <li className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+                  <strong className="block text-slate-900 mb-1">Clientes y gestión de trámites</strong>
+                  <p className="mb-2">
+                    Cuando contratas un trámite con nosotros, registramos en nuestra base de datos tu{' '}
+                    <strong>nombre</strong>, <strong>teléfono</strong>, <strong>ciudad</strong> y, de forma
+                    opcional, tu <strong>número de cédula</strong> y <strong>correo electrónico</strong>,
+                    junto con los datos del trámite: <strong>placa del vehículo</strong>, tipo de trámite,
+                    estado, fechas y valores del servicio.
+                  </p>
+                  <ul className="space-y-1 text-sm text-slate-600 list-disc pl-4">
+                    <li>Finalidad: gestionar tu trámite, mantenerte informado de su avance, emitir soportes y cumplir obligaciones legales y contables.</li>
+                    <li>La cédula se usa exclusivamente para los trámites que la exigen ante el organismo de tránsito y el RUNT.</li>
+                    <li>Conservamos estos datos durante la relación comercial y los plazos legales aplicables; puedes solicitar su supresión cuando dejen de ser necesarios.</li>
+                  </ul>
+                </li>
+
+                <li className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+                  <strong className="block text-slate-900 mb-1">Notificaciones por WhatsApp y seguimiento en línea</strong>
+                  <p className="mb-2">
+                    Al contratar un trámite autorizas que te enviemos <strong>notificaciones por
+                    WhatsApp</strong> sobre el avance de tu trámite (recibido, en proceso, aprobado,
+                    entregado o cancelado) al teléfono que nos proporcionaste. Estos envíos se realizan
+                    a través de la API oficial de WhatsApp Business (Meta) y quedan registrados
+                    internamente para auditoría.
+                  </p>
+                  <ul className="space-y-1 text-sm text-slate-600 list-disc pl-4">
+                    <li>Puedes pedir que dejemos de enviarte notificaciones en cualquier momento respondiendo al mismo chat o escribiendo a {BUSINESS.email}.</li>
+                    <li>
+                      El <strong>seguimiento en línea</strong> funciona con un código aleatorio que solo tú
+                      recibes. La página de seguimiento muestra el tipo de trámite, la placa, la ciudad,
+                      el estado y las fechas — <strong>nunca muestra tu nombre, cédula, teléfono ni valores
+                      del servicio</strong>.
+                    </li>
+                  </ul>
+                </li>
+
                 <li className="bg-slate-50 rounded-xl p-4 border border-slate-100">
                   <strong className="block text-slate-900 mb-1">Formulario de cotización</strong>
                   Nombre, tipo de trámite, ciudad y descripción del caso. Estos datos son procesados
@@ -119,15 +155,17 @@ export default function PoliticaPrivacidad() {
               <ul className="space-y-2 list-disc pl-5">
                 <li>
                   <strong>Supabase Inc.</strong> — Base de datos en la nube donde se almacenan
-                  las reseñas de clientes y las solicitudes de descuento en comparendos. Los datos
-                  se almacenan en servidores ubicados en Estados Unidos bajo el estándar de seguridad
-                  SOC 2. Supabase actúa como encargado del tratamiento, sin acceso ni uso propio de
-                  los datos.
+                  los datos de clientes y trámites, las reseñas y las solicitudes de descuento en
+                  comparendos. Los datos se almacenan en servidores ubicados en Estados Unidos bajo
+                  el estándar de seguridad SOC 2. Supabase actúa como encargado del tratamiento,
+                  sin acceso ni uso propio de los datos.
                 </li>
                 <li>
                   <strong>WhatsApp / Meta Platforms Inc.</strong> — Plataforma de mensajería hacia
-                  la que se redirige la información de los formularios de cotización. Su tratamiento
-                  se rige por la política de privacidad de WhatsApp.
+                  la que se redirige la información de los formularios de cotización, y a través de
+                  cuya API oficial (WhatsApp Business Platform) enviamos las notificaciones de avance
+                  de trámites a los clientes que contrataron nuestro servicio. Su tratamiento se rige
+                  por la política de privacidad de WhatsApp.
                 </li>
                 <li>
                   <strong>OpenAI Inc.</strong> — Proveedor del modelo de inteligencia artificial
@@ -176,11 +214,14 @@ export default function PoliticaPrivacidad() {
             <section>
               <h2 className="text-xl font-bold text-slate-900 mb-3">6. Seguridad</h2>
               <p>
-                El sitio opera bajo protocolo HTTPS. Los datos de reseñas almacenados en Supabase
-                están protegidos mediante cifrado en tránsito (TLS) y en reposo, con políticas de
-                acceso por fila (Row Level Security) que impiden el acceso no autorizado. El correo
-                electrónico de los autores de reseñas nunca se expone en las interfaces públicas
-                del sitio.
+                El sitio opera bajo protocolo HTTPS con cabeceras de seguridad estrictas
+                (Content-Security-Policy, HSTS). Los datos almacenados en Supabase están protegidos
+                mediante cifrado en tránsito (TLS) y en reposo, con políticas de acceso por fila
+                (Row Level Security) que impiden el acceso no autorizado: los datos de clientes y
+                trámites solo son accesibles para el personal autorizado de Tramita Yopal, con
+                perfiles de acceso diferenciados según el rol. Los formularios públicos cuentan con
+                límites anti-abuso. El correo electrónico de los autores de reseñas nunca se expone
+                en las interfaces públicas del sitio.
               </p>
             </section>
 

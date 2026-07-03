@@ -19,7 +19,7 @@ export default function Terminos() {
             Términos y Condiciones
           </h1>
           <p className="text-slate-400 text-sm mb-10">
-            Última actualización: junio de 2026
+            Última actualización: julio de 2026
           </p>
 
           <div className="prose prose-slate max-w-none space-y-8 text-slate-700 leading-relaxed">
@@ -48,11 +48,33 @@ export default function Terminos() {
                 <li>Verificación gratuita de multas y comparendos por número de cédula.</li>
                 <li>Tramitación de prescripción de comparendos de tránsito cuando aplique.</li>
                 <li>Asesoría y gestión para el pago de comparendos con descuento del 50 % o 25 %, conforme a la Ley 769 de 2002 y sus modificaciones.</li>
+                <li>Seguimiento en línea del estado del trámite mediante código único y notificaciones de avance por WhatsApp.</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-3">3. Limitaciones del servicio</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">3. Seguimiento en línea y notificaciones</h2>
+              <ul className="space-y-2 list-disc pl-5">
+                <li>
+                  Al iniciar un trámite, el cliente recibe un <strong>código de seguimiento único</strong>{' '}
+                  con el que puede consultar el estado en tramitayopal.com/seguimiento. El código es
+                  personal: quien lo tenga puede ver el estado del trámite (nunca datos personales
+                  ni valores del servicio), por lo que recomendamos no compartirlo con terceros.
+                </li>
+                <li>
+                  El cliente autoriza el envío de <strong>notificaciones por WhatsApp</strong> sobre
+                  el avance de su trámite al número que proporcionó. Puede solicitar no recibirlas
+                  en cualquier momento sin que ello afecte la prestación del servicio.
+                </li>
+                <li>
+                  El tratamiento de los datos personales asociados se rige por nuestra{' '}
+                  <a href="/politica-privacidad" className="text-brand-700 hover:underline">Política de Privacidad</a>.
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">4. Limitaciones del servicio</h2>
               <ul className="space-y-2 list-disc pl-5">
                 <li>
                   <strong>Vehículos fuera de Yopal:</strong> Tramita Yopal está especializado en el
@@ -87,7 +109,7 @@ export default function Terminos() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-3">4. Cotizaciones y pagos</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">5. Cotizaciones y pagos</h2>
               <ul className="space-y-2 list-disc pl-5">
                 <li>Todas las cotizaciones son gratuitas y sin compromiso.</li>
                 <li>
@@ -117,7 +139,7 @@ export default function Terminos() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-3">5. Responsabilidad del usuario</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">6. Responsabilidad del usuario</h2>
               <ul className="space-y-2 list-disc pl-5">
                 <li>
                   El usuario es responsable de la veracidad y autenticidad de los documentos
@@ -135,7 +157,7 @@ export default function Terminos() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-3">6. Chatbot e IA</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">7. Chatbot e IA</h2>
               <p>
                 El asistente virtual y el validador de caso del sitio web utilizan inteligencia
                 artificial (OpenAI) para orientar al usuario. Las respuestas son
@@ -146,7 +168,7 @@ export default function Terminos() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-3">7. Propiedad intelectual</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">8. Propiedad intelectual</h2>
               <p>
                 Todos los contenidos del sitio web (textos, diseño, código, estructura) son propiedad
                 de Tramita Yopal. Queda prohibida su reproducción total o parcial sin autorización escrita.
@@ -154,7 +176,7 @@ export default function Terminos() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-3">8. Ley aplicable</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">9. Ley aplicable</h2>
               <p>
                 Estos términos se rigen por las leyes de la República de Colombia. Cualquier
                 controversia será resuelta ante los jueces competentes de {BUSINESS.location},
@@ -163,7 +185,7 @@ export default function Terminos() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-3">9. Contacto</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-3">10. Contacto</h2>
               <p>
                 📧 <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">{BUSINESS.email}</a><br />
                 📱 {BUSINESS.phone}<br />

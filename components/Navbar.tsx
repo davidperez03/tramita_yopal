@@ -11,7 +11,8 @@ const navLinks = [
   { href: '#validar',  label: '🔍 Validar caso' },
   { href: '#tramites', label: 'Trámites' },
   { href: '/prescripcion-comparendos', label: 'Multas' },
-  { href: '#cotizar',  label: 'Cotizar' },
+  { href: '/guias',    label: 'Guías' },
+  { href: '/seguimiento', label: 'Seguimiento' },
   { href: '#faq',      label: 'FAQ' },
 ];
 
