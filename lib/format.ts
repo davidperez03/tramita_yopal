@@ -4,3 +4,6 @@ const DT_OPTS:   Intl.DateTimeFormatOptions = { ...DATE_OPTS, hour: '2-digit', m
 
 export const fmtDate     = (iso: string) => new Date(iso).toLocaleDateString('es-CO', DATE_OPTS);
 export const fmtDatetime = (iso: string) => new Date(iso).toLocaleString('es-CO', DT_OPTS);
+
+export const cop = (n: number) =>
+  new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);

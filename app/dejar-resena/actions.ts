@@ -1,16 +1,23 @@
 'use server';
 
+import { headers } from 'next/headers';
 import { supabaseAdmin } from '@/lib/supabase';
+import { isRateLimited, getClientIp } from '@/lib/rateLimit';
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
 const MAX_SIZE_MB   = 5;
 
 export async function submitReview(formData: FormData) {
-  const name   = (formData.get('name')   as string)?.trim();
-  const email  = (formData.get('email')  as string)?.trim();
+  const ip = getClientIp(await headers());
+  if (await isRateLimited('form', ip)) {
+    return { error: 'Demasiados envíos. Intenta de nuevo más tarde.' };
+  }
+
+  const name   = (formData.get('name')   as string)?.trim().slice(0, 100);
+  const email  = (formData.get('email')  as string)?.trim().slice(0, 200);
   const rating = parseInt(formData.get('rating') as string);
-  const text   = (formData.get('text')   as string)?.trim();
-  const type   = (formData.get('type')   as string)?.trim();
+  const text   = (formData.get('text')   as string)?.trim().slice(0, 2000);
+  const type   = (formData.get('type')   as string)?.trim().slice(0, 60);
 
   if (!name || !email || !rating || !text || !type) {
     return { error: 'Por favor completa todos los campos obligatorios.' };

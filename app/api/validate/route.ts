@@ -1,16 +1,30 @@
 import OpenAI from 'openai';
 import { BUSINESS } from '@/lib/constants';
+import { isRateLimited, getClientIp } from '@/lib/rateLimit';
+
+const MAX_TRAMITE_LEN     = 120;
+const MAX_DESCRIPCION_LEN = 3000;
 
 export async function POST(req: Request) {
   try {
+    const ip = getClientIp(req.headers);
+    if (await isRateLimited('validate', ip)) {
+      return new Response(
+        JSON.stringify({ error: 'Demasiadas consultas. Espera unos minutos o escríbenos por WhatsApp.' }),
+        { status: 429, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
+
     const body = await req.json();
-    const { tramite, descripcion } = body ?? {};
+    let { tramite, descripcion } = body ?? {};
 
     if (!tramite || typeof tramite !== 'string' || !descripcion || typeof descripcion !== 'string') {
       return new Response(JSON.stringify({ error: 'Datos incompletos.' }), {
         status: 400, headers: { 'Content-Type': 'application/json' },
       });
     }
+    tramite     = tramite.slice(0, MAX_TRAMITE_LEN);
+    descripcion = descripcion.slice(0, MAX_DESCRIPCION_LEN);
 
     if (!process.env.OPENAI_API_KEY) {
       return new Response(

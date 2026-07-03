@@ -1,20 +1,36 @@
 'use server';
 
+import { headers } from 'next/headers';
 import { supabaseAdmin } from '@/lib/supabase';
 import { BUSINESS } from '@/lib/constants';
+import { isRateLimited, getClientIp } from '@/lib/rateLimit';
 
 export async function solicitarDescuento(formData: FormData) {
-  const nombre             = (formData.get('nombre')             as string)?.trim().toUpperCase();
-  const cedula             = (formData.get('cedula')             as string)?.trim();
-  const telefono           = (formData.get('telefono')           as string)?.trim();
+  const ip = getClientIp(await headers());
+  if (await isRateLimited('form', ip)) {
+    return { error: 'Demasiados envíos. Intenta de nuevo más tarde.' };
+  }
+
+  const nombre             = (formData.get('nombre')             as string)?.trim().toUpperCase().slice(0, 120);
+  const cedula             = (formData.get('cedula')             as string)?.trim().slice(0, 20);
+  const telefono           = (formData.get('telefono')           as string)?.trim().slice(0, 20);
   const tipo               = formData.get('tipo')               as string;
   const fecha_comparendo   = formData.get('fecha_comparendo')   as string;
-  const numero_comparendo  = (formData.get('numero_comparendo') as string)?.trim();
-  const descuento_estimado = formData.get('descuento_estimado') as string;
-  const fecha_curso        = (formData.get('fecha_curso')        as string)?.trim();
+  const numero_comparendo  = (formData.get('numero_comparendo') as string)?.trim().slice(0, 40);
+  const descuento_estimado = (formData.get('descuento_estimado') as string)?.slice(0, 40);
+  const fecha_curso        = (formData.get('fecha_curso')        as string)?.trim().slice(0, 40);
 
   if (!nombre || !telefono || !tipo || !fecha_comparendo) {
     return { error: 'Completa todos los campos obligatorios.' };
+  }
+  if (tipo !== 'fisico' && tipo !== 'fotomulta') {
+    return { error: 'Tipo de comparendo inválido.' };
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha_comparendo)) {
+    return { error: 'Fecha de comparendo inválida.' };
+  }
+  if (!/^[\d\s()+.-]{7,20}$/.test(telefono)) {
+    return { error: 'Ingresa un teléfono válido.' };
   }
 
   const { error: dbError } = await supabaseAdmin.from('comparendo_solicitudes').insert({

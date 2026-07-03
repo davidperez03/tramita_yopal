@@ -1,15 +1,39 @@
 import OpenAI from 'openai';
 import { BUSINESS, CHATBOT_SYSTEM_PROMPT } from '@/lib/constants';
+import { isRateLimited, getClientIp } from '@/lib/rateLimit';
+
+const MAX_MESSAGES    = 20;
+const MAX_CONTENT_LEN = 2000;
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const messages = body?.messages;
+    const ip = getClientIp(req.headers);
+    if (await isRateLimited('chat', ip)) {
+      return new Response(
+        JSON.stringify({ error: 'Demasiados mensajes. Espera unos minutos o escríbenos por WhatsApp.' }),
+        { status: 429, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
 
-    if (!Array.isArray(messages) || messages.length === 0) {
+    const body = await req.json();
+    const raw = body?.messages;
+
+    if (!Array.isArray(raw) || raw.length === 0) {
       return new Response(JSON.stringify({ error: 'Mensajes inválidos.' }), {
         status: 400, headers: { 'Content-Type': 'application/json' },
       });
+    }
+
+    // Solo roles user/assistant, con tope de cantidad y longitud —
+    // evita inyección de mensajes system y abuso de tokens.
+    const messages: { role: 'user' | 'assistant'; content: string }[] = [];
+    for (const m of raw.slice(-MAX_MESSAGES)) {
+      if (!m || (m.role !== 'user' && m.role !== 'assistant') || typeof m.content !== 'string') {
+        return new Response(JSON.stringify({ error: 'Mensajes inválidos.' }), {
+          status: 400, headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      messages.push({ role: m.role, content: m.content.slice(0, MAX_CONTENT_LEN) });
     }
 
     if (!process.env.OPENAI_API_KEY) {

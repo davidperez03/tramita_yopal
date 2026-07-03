@@ -6,13 +6,13 @@ import { revalidatePath } from 'next/cache';
 import { supabaseAdmin } from '@/lib/supabase';
 import { requireAdmin } from '@/lib/auth';
 import { createAuthClient } from '@/lib/supabase/server';
-import { checkRateLimit } from '@/lib/rateLimit';
+import { isRateLimited, getClientIp } from '@/lib/rateLimit';
 
 export { requireAdmin };
 
 export async function login(formData: FormData) {
-  const ip = ((await headers()).get('x-forwarded-for') ?? 'unknown').split(',')[0].trim();
-  if (checkRateLimit(ip)) redirect('/admin?error=rate');
+  const ip = getClientIp(await headers());
+  if (await isRateLimited('login', ip)) redirect('/admin?error=rate');
 
   const email    = (formData.get('email')    as string)?.trim();
   const password = (formData.get('password') as string)?.trim();

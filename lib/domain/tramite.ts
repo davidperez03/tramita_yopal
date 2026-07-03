@@ -34,6 +34,13 @@ export type Tramite = {
   codigo_seguimiento: string | null;
 };
 
+export type HistorialEntry = {
+  tramite_id: string;
+  ts: string;
+  estado: string;
+  nota: string | null;
+};
+
 export const ESTADOS: TramiteEstado[] = [
   'recibido', 'en_proceso', 'aprobado', 'entregado', 'cancelado',
 ];
