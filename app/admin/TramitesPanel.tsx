@@ -4,10 +4,10 @@ import { useState, useTransition } from 'react';
 import { SERVICE_NAMES_WITH_OTHER } from '@/lib/constants';
 import { fmtDate } from '@/lib/format';
 import {
-  type Tramite, type TramiteEstado, ESTADOS, ESTADO_CONFIG, METODOS_PAGO, calcPagos,
+  type Tramite, type TramiteEstado, ESTADOS, ESTADO_CONFIG, METODOS_PAGO, calcPagos, calcNeto,
 } from '@/lib/domain/tramite';
 import {
-  createTramite, updateEstado, togglePago,
+  createTramite, updateEstado, updateCostos, togglePago,
   deleteTramite, cancelTramite, togglePagoDevuelto, bulkUpdateEstado,
 } from './tramites-actions';
 import { cx, Badge, Stat, Err } from './ui';
@@ -389,14 +389,10 @@ function AddTramiteForm() {
         {tipos.length > 0 && (
           <div className="space-y-3">
             <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">Valores (COP)</p>
-            <div className={`grid gap-3 ${esTraspaso ? 'sm:grid-cols-4' : 'sm:grid-cols-3'}`}>
+            <div className={`grid gap-3 ${esTraspaso ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Honorarios tramitador</label>
-                <MoneyInput name="honorarios_tramitador" />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Envío e imprevistos</label>
-                <MoneyInput name="honorarios_envio" />
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Honorarios</label>
+                <MoneyInput name="valor_honorarios" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Derechos (RUNT + org.)</label>
@@ -434,6 +430,67 @@ function AddTramiteForm() {
           </button>
         </div>
       </form>
+    </div>
+  );
+}
+
+/* ─── Formulario de costos operativos ─── */
+function CostosForm({ t }: { t: Tramite }) {
+  const [isPending, startTransition] = useTransition();
+  const [saved, setSaved]            = useState(false);
+  const [tramitador, setTramitador]  = useState(t.costo_tramitador > 0 ? String(t.costo_tramitador) : '');
+  const [envio, setEnvio]            = useState(t.costo_envio > 0 ? String(t.costo_envio) : '');
+  const [imprev, setImprev]          = useState(t.costo_imprevistos > 0 ? String(t.costo_imprevistos) : '');
+
+  const parse = (v: string) => parseInt(v.replace(/\D/g, '') || '0', 10);
+  const fmt   = (v: string) => {
+    const n = parse(v);
+    return n > 0 ? new Intl.NumberFormat('es-CO').format(n) : '';
+  };
+
+  function handleSave() {
+    startTransition(async () => {
+      await updateCostos(t.id, parse(tramitador), parse(envio), parse(imprev));
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    });
+  }
+
+  return (
+    <div className="px-5 py-4 border-t border-slate-100">
+      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3">Costos operativos</p>
+      <div className="grid grid-cols-3 gap-2 mb-3">
+        {[
+          { label: 'Tramitador', val: tramitador, set: setTramitador },
+          { label: 'Envío',      val: envio,      set: setEnvio      },
+          { label: 'Imprevistos',val: imprev,     set: setImprev     },
+        ].map(({ label, val, set }) => (
+          <div key={label}>
+            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">{label}</label>
+            <div className="relative">
+              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none">$</span>
+              <input
+                type="text" inputMode="numeric"
+                value={fmt(val)}
+                onChange={e => set(e.target.value)}
+                placeholder="0"
+                className="w-full border border-slate-200 rounded-lg pl-5 pr-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center gap-3">
+        <button type="button" onClick={handleSave} disabled={isPending}
+          className="text-xs font-bold px-4 py-1.5 bg-slate-800 text-white rounded-lg hover:bg-slate-700 disabled:opacity-50 transition-colors">
+          {saved ? 'Guardado ✓' : isPending ? 'Guardando...' : 'Guardar costos'}
+        </button>
+        {(parse(tramitador) + parse(envio) + parse(imprev)) > 0 && (
+          <span className="text-xs text-slate-500">
+            Neto: <strong className="text-emerald-700">{cop(t.valor_honorarios - parse(tramitador) - parse(envio) - parse(imprev))}</strong>
+          </span>
+        )}
+      </div>
     </div>
   );
 }
@@ -646,33 +703,40 @@ function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle }: {
             </div>
           </div>
 
-          {/* Desglose financiero — compacto */}
+          {/* Desglose financiero + costos operativos */}
           {total > 0 && (
-            <div className="px-5 py-3 flex items-center gap-3 flex-wrap text-xs text-slate-500 bg-slate-50/50">
-              {t.honorarios_tramitador > 0 && (
-                <span>Tramitador <strong className="text-slate-800 ml-1">{cop(t.honorarios_tramitador)}</strong></span>
-              )}
-              {t.honorarios_envio > 0 && (
-                <>
+            <div className="px-5 py-3 space-y-2 bg-slate-50/50">
+              {/* Cobro al cliente */}
+              <div className="flex items-center gap-3 flex-wrap text-xs text-slate-500">
+                <span>Honorarios <strong className="text-slate-800 ml-1">{cop(t.valor_honorarios)}</strong></span>
+                {t.valor_derechos > 0 && (
+                  <><span className="text-slate-300">·</span>
+                  <span>Derechos <strong className="text-slate-800 ml-1">{cop(t.valor_derechos)}</strong></span></>
+                )}
+                {t.valor_avaluo > 0 && (
+                  <><span className="text-slate-300">·</span>
+                  <span>Avalúo <strong className="text-amber-700 ml-1">{cop(t.valor_avaluo)}</strong></span></>
+                )}
+                <span className="text-slate-300">·</span>
+                <span className="font-bold text-slate-800">Total {cop(total)}</span>
+              </div>
+              {/* Costos registrados */}
+              {(t.costo_tramitador > 0 || t.costo_envio > 0 || t.costo_imprevistos > 0) && (
+                <div className="flex items-center gap-3 flex-wrap text-xs text-slate-400 border-t border-slate-100 pt-2">
+                  <span className="font-bold text-slate-400 uppercase tracking-wide text-[10px]">Costos</span>
+                  {t.costo_tramitador > 0 && <span>Tramitador <strong className="text-slate-600">{cop(t.costo_tramitador)}</strong></span>}
+                  {t.costo_envio > 0 && <span>Envío <strong className="text-slate-600">{cop(t.costo_envio)}</strong></span>}
+                  {t.costo_imprevistos > 0 && <span>Imprevistos <strong className="text-slate-600">{cop(t.costo_imprevistos)}</strong></span>}
                   <span className="text-slate-300">·</span>
-                  <span>Envío <strong className="text-slate-600 ml-1">{cop(t.honorarios_envio)}</strong></span>
-                </>
+                  <span>Neto <strong className="text-emerald-700">{cop(calcNeto(t))}</strong></span>
+                </div>
               )}
-              {t.valor_derechos > 0 && (
-                <>
-                  <span className="text-slate-300">·</span>
-                  <span>Derechos <strong className="text-slate-800 ml-1">{cop(t.valor_derechos)}</strong></span>
-                </>
-              )}
-              {t.valor_avaluo > 0 && (
-                <>
-                  <span className="text-slate-300">·</span>
-                  <span>Avalúo <strong className="text-amber-700 ml-1">{cop(t.valor_avaluo)}</strong></span>
-                </>
-              )}
-              <span className="text-slate-300">·</span>
-              <span className="font-bold text-slate-800">Total {cop(total)}</span>
             </div>
+          )}
+
+          {/* Costos operativos — visible cuando aprobado o entregado */}
+          {(t.estado === 'aprobado' || t.estado === 'entregado') && (
+            <CostosForm t={t} />
           )}
 
           {/* Cambiar estado */}
@@ -856,12 +920,14 @@ export default function TramitesPanel({
 
   const neto = cobrado - devuelto;
 
-  // Solo honorarios_tramitador — el envío/imprevistos es costo operativo, no ganancia
+  // Honorarios netos = honorarios cobrados - costos operativos registrados
   const honorariosCobrados = activos.reduce((sum, t) => {
-    const base = t.honorarios_tramitador;
+    const base = t.valor_honorarios;
     const p1h  = Math.floor(base / 2);
     const p2h  = base - p1h;
-    return sum + (t.pago_inicial ? p1h : 0) + (t.pago_final ? p2h : 0);
+    const bruto = (t.pago_inicial ? p1h : 0) + (t.pago_final ? p2h : 0);
+    const costos = t.costo_tramitador + t.costo_envio + t.costo_imprevistos;
+    return sum + Math.max(0, bruto - costos);
   }, 0);
 
   const pendiente = activos

@@ -54,11 +54,15 @@ create table if not exists tramites (
   estado                text        not null default 'recibido'
                         check (estado in ('recibido','en_proceso','aprobado','entregado','cancelado')),
 
-  -- Valores económicos (COP, enteros, máximo 100.000.000)
-  honorarios_tramitador integer     not null default 0,
-  honorarios_envio      integer     not null default 0,
+  -- Valores económicos — lo que cobra al cliente (COP, enteros, máximo 100.000.000)
+  valor_honorarios      integer     not null default 0,
   valor_derechos        integer     not null default 0,
   valor_avaluo          integer     not null default 0,
+
+  -- Costos operativos — se registran al cerrar el trámite (aprobado/entregado)
+  costo_tramitador      integer     not null default 0,
+  costo_envio           integer     not null default 0,
+  costo_imprevistos     integer     not null default 0,
 
   -- Pagos (política 50/50)
   -- pago1 = floor((honorarios + derechos) / 2) + avaluo

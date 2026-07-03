@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { isAuthed } from '@/lib/auth';
-import { calcPagos, type Tramite } from '@/lib/domain/tramite';
+import { calcPagos, calcNeto, type Tramite } from '@/lib/domain/tramite';
 
 function csvRow(fields: (string | number | boolean | null | undefined)[]) {
   return fields
@@ -21,7 +21,7 @@ export async function GET() {
   const { data, error } = await supabaseAdmin
     .from('tramites')
     .select(
-      'id, created_at, updated_at, cliente_nombre, cliente_telefono, cliente_ciudad, placa, tipos, estado, honorarios_tramitador, honorarios_envio, valor_derechos, valor_avaluo, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento',
+      'id, created_at, updated_at, cliente_nombre, cliente_telefono, cliente_ciudad, placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento',
     )
     .is('deleted_at', null)
     .order('created_at', { ascending: false });
@@ -31,7 +31,8 @@ export async function GET() {
   const header = csvRow([
     'id', 'fecha_creacion', 'fecha_actualizacion', 'cliente', 'telefono', 'ciudad',
     'placa', 'tipos', 'estado',
-    'honorarios_tramitador', 'honorarios_envio', 'derechos', 'avaluo', 'total',
+    'honorarios', 'derechos', 'avaluo', 'total',
+    'costo_tramitador', 'costo_envio', 'costo_imprevistos', 'neto_honorarios',
     'pago_inicial', 'pago_inicial_fecha', 'pago_inicial_metodo',
     'pago_final', 'pago_final_fecha', 'pago_final_metodo',
     'cancelacion_motivo', 'pago_devuelto', 'codigo_seguimiento',
@@ -43,7 +44,8 @@ export async function GET() {
       t.id, t.created_at, t.updated_at,
       t.cliente_nombre, t.cliente_telefono, t.cliente_ciudad,
       t.placa, t.tipos.join(' + '), t.estado,
-      t.honorarios_tramitador, t.honorarios_envio, t.valor_derechos, t.valor_avaluo, total,
+      t.valor_honorarios, t.valor_derechos, t.valor_avaluo, total,
+      t.costo_tramitador, t.costo_envio, t.costo_imprevistos, calcNeto(t),
       t.pago_inicial, t.pago_inicial_fecha, t.pago_inicial_metodo,
       t.pago_final, t.pago_final_fecha, t.pago_final_metodo,
       t.cancelacion_motivo, t.pago_devuelto, t.codigo_seguimiento,

@@ -27,8 +27,7 @@ export async function createTramite(formData: FormData) {
   const cliente_ciudad          = (formData.get('cliente_ciudad')   as string)?.trim();
   const placa                   = (formData.get('placa')            as string)?.trim().toUpperCase();
   const tipos                   = (formData.getAll('tipos') as string[]).map(s => s.trim()).filter(Boolean);
-  const honorarios_tramitador   = parseValor(formData.get('honorarios_tramitador'));
-  const honorarios_envio        = parseValor(formData.get('honorarios_envio'));
+  const valor_honorarios        = parseValor(formData.get('valor_honorarios'));
   const valor_derechos          = parseValor(formData.get('valor_derechos'));
   const avaluo_comercial        = parseValor(formData.get('avaluo_comercial'));
   const valor_avaluo            = Math.round(avaluo_comercial * 0.01);
@@ -44,16 +43,15 @@ export async function createTramite(formData: FormData) {
 
   const { error } = await supabaseAdmin.from('tramites').insert({
     cliente_nombre,
-    cliente_telefono:       cliente_telefono || null,
-    cliente_ciudad:         cliente_ciudad   || null,
-    placa:                  placa            || null,
+    cliente_telefono:   cliente_telefono || null,
+    cliente_ciudad:     cliente_ciudad   || null,
+    placa:              placa            || null,
     tipos,
-    estado:                 'recibido',
-    honorarios_tramitador,
-    honorarios_envio,
+    estado:             'recibido',
+    valor_honorarios,
     valor_derechos,
     valor_avaluo,
-    codigo_seguimiento:     generateCodigo(),
+    codigo_seguimiento: generateCodigo(),
   });
 
   if (error) return { error: 'Error al crear el trámite.' };
@@ -148,6 +146,22 @@ export async function togglePagoDevuelto(id: string, value: boolean) {
     .update({ pago_devuelto: value, updated_at: new Date().toISOString() })
     .eq('id', id);
   if (error) return { error: 'Error al actualizar devolución.' };
+  revalidatePath('/admin');
+  return { success: true };
+}
+
+export async function updateCostos(
+  id: string,
+  costo_tramitador: number,
+  costo_envio: number,
+  costo_imprevistos: number,
+) {
+  await requireAdmin();
+  const { error } = await supabaseAdmin
+    .from('tramites')
+    .update({ costo_tramitador, costo_envio, costo_imprevistos, updated_at: new Date().toISOString() })
+    .eq('id', id);
+  if (error) return { error: 'Error al guardar costos.' };
   revalidatePath('/admin');
   return { success: true };
 }

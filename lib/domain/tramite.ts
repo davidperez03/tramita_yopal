@@ -10,16 +10,25 @@ export type Tramite = {
   placa: string | null;
   tipos: string[];
   estado: TramiteEstado;
-  honorarios_tramitador: number;
-  honorarios_envio: number;
+
+  // Lo que cobra al cliente
+  valor_honorarios: number;
   valor_derechos: number;
   valor_avaluo: number;
+
+  // Costos operativos — se registran al cerrar el trámite
+  costo_tramitador: number;
+  costo_envio: number;
+  costo_imprevistos: number;
+
+  // Pagos del cliente
   pago_inicial: boolean;
   pago_inicial_fecha: string | null;
   pago_inicial_metodo: string | null;
   pago_final: boolean;
   pago_final_fecha: string | null;
   pago_final_metodo: string | null;
+
   cancelacion_motivo: string | null;
   pago_devuelto: boolean;
   codigo_seguimiento: string | null;
@@ -65,10 +74,13 @@ export const ESTADO_CONFIG = {
   },
 } satisfies Record<TramiteEstado, { label: string; badge: string; pillActive: string; band: string }>;
 
-export function calcPagos(t: Pick<Tramite, 'honorarios_tramitador' | 'honorarios_envio' | 'valor_derechos' | 'valor_avaluo'>) {
-  const honorarios = t.honorarios_tramitador + t.honorarios_envio;
-  const base       = honorarios + t.valor_derechos;
-  const pago1base  = Math.floor(base / 2);
-  const pago2base  = base - pago1base;
+export function calcPagos(t: Pick<Tramite, 'valor_honorarios' | 'valor_derechos' | 'valor_avaluo'>) {
+  const base      = t.valor_honorarios + t.valor_derechos;
+  const pago1base = Math.floor(base / 2);
+  const pago2base = base - pago1base;
   return { pago1: pago1base + t.valor_avaluo, pago2: pago2base, total: base + t.valor_avaluo };
+}
+
+export function calcNeto(t: Pick<Tramite, 'valor_honorarios' | 'costo_tramitador' | 'costo_envio' | 'costo_imprevistos'>) {
+  return t.valor_honorarios - t.costo_tramitador - t.costo_envio - t.costo_imprevistos;
 }
