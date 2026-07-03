@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { requireAdmin, requireUser } from '@/lib/auth';
 import { randomBytes } from 'crypto';
 import { notificarCambioEstado } from '@/lib/notificaciones';
+import { findOrCreateCliente } from '@/lib/clientes';
 import type { TramiteEstado } from '@/lib/domain/tramite';
 
 function generateCodigo(): string {
@@ -18,43 +19,6 @@ const MAX_VALOR = 100_000_000;
 function parseValor(raw: FormDataEntryValue | null): number {
   const n = parseInt((raw as string)?.replace(/\D/g, '') || '0', 10);
   return Number.isFinite(n) ? Math.min(Math.max(n, 0), MAX_VALOR) : 0;
-}
-
-// Busca el cliente por teléfono (o por nombre si no hay teléfono) y lo crea
-// si no existe.
-async function findOrCreateCliente(input: {
-  nombre: string; telefono: string | null; ciudad: string | null; cedula: string | null;
-}): Promise<string | null> {
-  try {
-    const lookup = input.telefono
-      ? supabaseAdmin.from('clientes').select('id').eq('telefono', input.telefono)
-      : supabaseAdmin.from('clientes').select('id').eq('nombre', input.nombre).is('telefono', null);
-    const { data: existing } = await lookup.is('deleted_at', null).limit(1);
-    if (existing?.[0]) return existing[0].id;
-
-    const { data: created, error } = await supabaseAdmin
-      .from('clientes')
-      .insert({
-        nombre:   input.nombre,
-        telefono: input.telefono,
-        ciudad:   input.ciudad,
-        cedula:   input.cedula,
-      })
-      .select('id')
-      .single();
-
-    if (!error && created) return created.id;
-
-    // Conflicto de unicidad (carrera por teléfono/cédula): reintenta la búsqueda
-    if (input.telefono) {
-      const { data: retry } = await supabaseAdmin
-        .from('clientes').select('id').eq('telefono', input.telefono).limit(1);
-      if (retry?.[0]) return retry[0].id;
-    }
-    return null;
-  } catch {
-    return null;
-  }
 }
 
 export async function createTramite(formData: FormData) {

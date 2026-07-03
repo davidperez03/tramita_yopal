@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { cop, fmtDate } from '@/lib/format';
-import type { ClienteResumen } from '@/lib/domain/cliente';
+import type { ClienteResumen, ComparendoDeCliente } from '@/lib/domain/cliente';
 import { type Tramite, ESTADO_CONFIG, calcPagos } from '@/lib/domain/tramite';
 import { updateCliente } from './clientes-actions';
 import { cx, Badge, Stat, Empty, Err, field } from './ui';
@@ -95,12 +95,23 @@ function EditClienteForm({ c, onDone }: { c: ClienteResumen; onDone: () => void 
   );
 }
 
+const COMP_ESTADO_LABEL: Record<ComparendoDeCliente['estado'], { label: string; cls: string }> = {
+  pendiente:  { label: 'Pendiente',  cls: 'bg-amber-50 text-amber-700 border-amber-200' },
+  en_gestion: { label: 'En gestión', cls: 'bg-blue-50 text-blue-700 border-blue-200' },
+  atendido:   { label: 'Atendido',   cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+};
+
 /* ─── Tarjeta de cliente ─── */
-function ClienteCard({ c, tramites }: { c: ClienteResumen; tramites: Tramite[] }) {
+function ClienteCard({ c, tramites, comparendos }: {
+  c: ClienteResumen; tramites: Tramite[]; comparendos: ComparendoDeCliente[];
+}) {
   const [expanded, setExpanded] = useState(false);
   const [editing, setEditing]   = useState(false);
 
   const suyos = tramites.filter(t => t.cliente_id === c.id);
+  const susComparendos = comparendos.filter(
+    cs => cs.cliente_id === c.id || (c.telefono && cs.telefono === c.telefono),
+  );
 
   return (
     <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
@@ -114,6 +125,7 @@ function ClienteCard({ c, tramites }: { c: ClienteResumen; tramites: Tramite[] }
             <div className="flex items-center gap-2 flex-wrap">
               <p className="text-sm font-extrabold text-slate-900 uppercase leading-none">{c.nombre}</p>
               {c.tramites_activos > 0 && <Badge v="info">{c.tramites_activos} activo{c.tramites_activos !== 1 ? 's' : ''}</Badge>}
+              {c.comparendos_total > 0 && <Badge v="warn">{c.comparendos_total} comparendo{c.comparendos_total !== 1 ? 's' : ''}</Badge>}
             </div>
             <p className="text-[11px] text-slate-400 mt-1 truncate">
               {[c.telefono, c.cedula && `CC ${c.cedula}`, c.ciudad].filter(Boolean).join(' · ') || 'Sin datos de contacto'}
@@ -189,6 +201,32 @@ function ClienteCard({ c, tramites }: { c: ClienteResumen; tramites: Tramite[] }
               </div>
             )}
           </div>
+
+          {/* Sus solicitudes de comparendo */}
+          {susComparendos.length > 0 && (
+            <div className="px-5 py-4">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Comparendos</p>
+              {susComparendos.map(cs => {
+                const cfg = COMP_ESTADO_LABEL[cs.estado];
+                return (
+                  <div key={cs.id} className="flex items-center gap-3 flex-wrap py-2 border-b border-slate-50 last:border-b-0">
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border flex-shrink-0 ${cfg.cls}`}>
+                      {cfg.label}
+                    </span>
+                    <span className="text-xs text-slate-600 flex-1 min-w-0">
+                      {cs.tipo === 'fisico' ? 'Físico (agente)' : 'Fotomulta'}
+                    </span>
+                    <span className="text-[10px] text-slate-400 flex-shrink-0">
+                      Comparendo del {fmtDate(cs.fecha_comparendo)}
+                    </span>
+                    <span className="text-[10px] text-slate-300 flex-shrink-0">
+                      Solicitado el {fmtDate(cs.created_at)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -196,11 +234,12 @@ function ClienteCard({ c, tramites }: { c: ClienteResumen; tramites: Tramite[] }
 }
 
 /* ─── Panel principal ─── */
-export default function ClientesPanel({ clientes, total, limit, tramites }: {
+export default function ClientesPanel({ clientes, total, limit, tramites, comparendos }: {
   clientes: ClienteResumen[];
   total: number;
   limit: number;
   tramites: Tramite[];
+  comparendos: ComparendoDeCliente[];
 }) {
   const [busqueda, setBusqueda] = useState('');
 
@@ -260,7 +299,7 @@ export default function ClientesPanel({ clientes, total, limit, tramites }: {
         <Empty msg={`Sin coincidencias para "${busqueda}"`} />
       ) : (
         <div className="space-y-2">
-          {filtered.map(c => <ClienteCard key={c.id} c={c} tramites={tramites} />)}
+          {filtered.map(c => <ClienteCard key={c.id} c={c} tramites={tramites} comparendos={comparendos} />)}
         </div>
       )}
     </div>

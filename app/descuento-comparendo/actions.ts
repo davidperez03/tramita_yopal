@@ -4,6 +4,7 @@ import { headers } from 'next/headers';
 import { supabaseAdmin } from '@/lib/supabase';
 import { BUSINESS } from '@/lib/constants';
 import { isRateLimited, getClientIp } from '@/lib/rateLimit';
+import { findOrCreateCliente } from '@/lib/clientes';
 
 export async function solicitarDescuento(formData: FormData) {
   const ip = getClientIp(await headers());
@@ -33,6 +34,14 @@ export async function solicitarDescuento(formData: FormData) {
     return { error: 'Ingresa un teléfono válido.' };
   }
 
+  // El solicitante también es cliente (línea de comparendos): se crea o
+  // enlaza por teléfono. Si falla, la solicitud se guarda igual sin enlace.
+  const cliente_id = await findOrCreateCliente({
+    nombre,
+    telefono,
+    cedula: cedula || null,
+  });
+
   const { error: dbError } = await supabaseAdmin.from('comparendo_solicitudes').insert({
     nombre,
     cedula:            cedula           || null,
@@ -42,6 +51,7 @@ export async function solicitarDescuento(formData: FormData) {
     numero_comparendo: numero_comparendo || null,
     descuento_estimado: descuento_estimado || null,
     fecha_curso:       fecha_curso       || null,
+    ...(cliente_id ? { cliente_id } : {}),
   });
 
   if (dbError) return { error: 'Error al registrar la solicitud. Intenta de nuevo.' };

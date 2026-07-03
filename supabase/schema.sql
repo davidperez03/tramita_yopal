@@ -1,10 +1,11 @@
 -- ============================================================
--- TRAMITA YOPAL — Schema completo v7
+-- TRAMITA YOPAL — Schema completo v8
 -- Base creada desde cero: pegar todo en Supabase > SQL Editor
 -- Auth: Supabase Auth (sin tabla sessions)
 -- v6: tramites normalizado (cliente solo vía cliente_id),
 --     notificaciones WhatsApp, rate_limits
 -- v7: roles admin/tramitador + tramites.asignado_a
+-- v8: comparendo_solicitudes.cliente_id (cliente línea comparendos)
 --
 -- ROLES: se guardan en app_metadata.role de Supabase Auth.
 -- Un usuario SIN role es tramitador (mínimo privilegio).
@@ -152,7 +153,9 @@ select
   c.id, c.created_at, c.nombre, c.telefono, c.cedula, c.ciudad, c.email, c.notas,
   count(t.id) filter (where t.deleted_at is null)                                                   as tramites_total,
   count(t.id) filter (where t.deleted_at is null and t.estado not in ('entregado','cancelado'))     as tramites_activos,
-  max(t.created_at) filter (where t.deleted_at is null)                                             as ultimo_tramite
+  max(t.created_at) filter (where t.deleted_at is null)                                             as ultimo_tramite,
+  (select count(*) from comparendo_solicitudes cs
+    where cs.cliente_id = c.id and cs.deleted_at is null)                                           as comparendos_total
 from clientes c
 left join tramites t on t.cliente_id = c.id
 where c.deleted_at is null
@@ -239,6 +242,9 @@ create index if not exists idx_notificaciones_por_enviar
 create table if not exists comparendo_solicitudes (
   id                  uuid        primary key default gen_random_uuid(),
   created_at          timestamptz not null default now(),
+  -- Cliente de la línea comparendos (se crea/enlaza por teléfono al recibir
+  -- la solicitud; puede ser null en registros antiguos o fallos de enlace)
+  cliente_id          uuid        references clientes(id),
   nombre              text        not null,
   cedula              text,
   telefono            text        not null,
@@ -252,11 +258,33 @@ create table if not exists comparendo_solicitudes (
   deleted_at          timestamptz
 );
 
+-- Para bases creadas antes de v8:
+alter table comparendo_solicitudes add column if not exists cliente_id uuid references clientes(id);
+
 alter table comparendo_solicitudes enable row level security;
 -- Sin políticas públicas — solo service_role.
 
 create index if not exists idx_comparendos_estado
   on comparendo_solicitudes (estado);
+create index if not exists idx_comparendos_cliente
+  on comparendo_solicitudes (cliente_id);
+
+-- Backfill: enlaza solicitudes existentes con clientes por teléfono y crea
+-- clientes para las que no tengan match. Re-ejecutable.
+insert into clientes (nombre, telefono, cedula)
+select distinct on (cs.telefono) cs.nombre, cs.telefono, cs.cedula
+from comparendo_solicitudes cs
+where cs.cliente_id is null
+  and cs.deleted_at is null
+  and not exists (select 1 from clientes c where c.telefono = cs.telefono)
+order by cs.telefono, cs.created_at desc
+on conflict do nothing;
+
+update comparendo_solicitudes cs
+set cliente_id = c.id
+from clientes c
+where cs.cliente_id is null
+  and c.telefono = cs.telefono;
 
 
 -- ──────────────────────────────────────────────────────────────

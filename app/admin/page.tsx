@@ -123,13 +123,13 @@ export default async function AdminPage({
       .limit(LIMIT),
     supabaseAdmin
       .from('comparendo_solicitudes')
-      .select('id, created_at, nombre, cedula, telefono, tipo, fecha_comparendo, numero_comparendo, descuento_estimado, fecha_curso, estado', { count: 'exact' })
+      .select('id, created_at, cliente_id, nombre, cedula, telefono, tipo, fecha_comparendo, numero_comparendo, descuento_estimado, fecha_curso, estado', { count: 'exact' })
       .is('deleted_at', null)
       .order('created_at', { ascending: false })
       .limit(LIMIT),
     supabaseAdmin
       .from('clientes_resumen')
-      .select('id, created_at, nombre, telefono, cedula, ciudad, email, notas, tramites_total, tramites_activos, ultimo_tramite', { count: 'exact' })
+      .select('id, created_at, nombre, telefono, cedula, ciudad, email, notas, tramites_total, tramites_activos, ultimo_tramite, comparendos_total', { count: 'exact' })
       .order('ultimo_tramite', { ascending: false, nullsFirst: false })
       .limit(LIMIT),
   ]);

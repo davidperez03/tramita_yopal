@@ -19,6 +19,7 @@ type EstadoComp = 'pendiente' | 'en_gestion' | 'atendido';
 
 type Comparendo = {
   id: string; created_at: string;
+  cliente_id: string | null;
   nombre: string; cedula: string | null; telefono: string;
   tipo: 'fisico' | 'fotomulta';
   fecha_comparendo: string; numero_comparendo: string | null;
@@ -435,7 +436,7 @@ export default function Panel({
                 <h1 className="text-base font-bold text-slate-900">Clientes</h1>
                 <p className="text-xs text-slate-400 mt-0.5">{clientesTotal} clientes en total</p>
               </div>
-              <ClientesPanel clientes={clientes} total={clientesTotal} limit={limit} tramites={tramites} />
+              <ClientesPanel clientes={clientes} total={clientesTotal} limit={limit} tramites={tramites} comparendos={comparendos} />
             </>
           )}
 
