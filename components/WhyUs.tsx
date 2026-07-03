@@ -33,11 +33,15 @@ export default function WhyUs() {
                 <div className="w-12 h-12 bg-brand-800 ring-1 ring-white/10 rounded-2xl flex items-center justify-center mb-4">
                   <PackageCheck className="w-6 h-6 text-brand-300" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Seguimiento hasta tu puerta</h3>
-                <p className="text-brand-200 text-sm leading-relaxed">
-                  Desde que recibes tu cotización hasta que la tarjeta de propiedad llega a tu domicilio,
-                  puedes escribirnos en cualquier momento y te contamos el estado de tu trámite — por el mismo WhatsApp.
+                <h3 className="text-xl font-bold mb-2">Seguimiento en línea, en tiempo real</h3>
+                <p className="text-brand-200 text-sm leading-relaxed mb-4">
+                  Al iniciar tu trámite recibes un código único. Lo ingresas en nuestra página de
+                  seguimiento y ves el estado, el historial y las fechas de cada etapa — a cualquier
+                  hora, sin preguntar. Y cada avance también te llega por WhatsApp.
                 </p>
+                <a href="/seguimiento" className="inline-flex items-center gap-1.5 text-sm font-bold text-gold-400 hover:text-gold-300 transition-colors">
+                  Consultar mi trámite →
+                </a>
               </div>
             </FadeIn>
 

@@ -48,15 +48,19 @@ function SourceBadge({ source }: { source: string }) {
   );
 }
 
+const MAX_VISIBLE = 9;
+
 export default async function Reviews() {
-  const { data: reviews } = await supabase
+  const { data: reviews, count } = await supabase
     .from('reviews')
-    .select('id, name, rating, text, type, year, source, photos')
+    .select('id, name, rating, text, type, year, source, photos', { count: 'exact' })
     .eq('visible', true)
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .limit(MAX_VISIBLE);
 
   if (!reviews || reviews.length === 0) return null;
 
+  const total     = count ?? reviews.length;
   const avgRating = (reviews.reduce((s: number, r: Review) => s + r.rating, 0) / reviews.length).toFixed(1);
 
   return (
@@ -74,7 +78,7 @@ export default async function Reviews() {
             <span className="text-slate-800 font-bold text-lg">{avgRating}</span>
             <Stars n={5} />
             <span className="text-slate-400 text-sm">·</span>
-            <span className="text-slate-500 text-sm">{reviews.length} reseñas</span>
+            <span className="text-slate-500 text-sm">{total} reseña{total !== 1 ? 's' : ''}</span>
           </div>
         </FadeIn>
 

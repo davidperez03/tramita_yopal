@@ -100,7 +100,7 @@ export const PROCESS_STEPS = [
   {
     step: '03',
     title: 'Envías documentos',
-    description: 'Remites los originales por Interrapidísimo o Servientrega. Nos encargamos de todo el proceso en ventanilla.',
+    description: 'Remites los originales por Interrapidísimo o Servientrega. Nos encargamos de todo el proceso en ventanilla y te entregamos un código para seguir tu trámite en línea.',
   },
   {
     step: '04',
@@ -145,7 +145,7 @@ export const FAQS = [
   },
   {
     question: '¿Puedo hacer seguimiento a mi trámite mientras está en proceso?',
-    answer: 'Sí. Durante todo el proceso puedes escribirnos por el mismo WhatsApp donde iniciaste el trámite y te decimos en qué estado está. No necesitas llamar al tránsito ni hacer filas — nosotros hacemos ese seguimiento por ti y te mantenemos informado.',
+    answer: 'Sí, en tiempo real y sin preguntar. Al iniciar tu trámite te entregamos un código de seguimiento único: lo ingresas en tramitayopal.com/seguimiento y ves el estado, el historial de avances y las fechas de cada etapa, a cualquier hora. Además te avisamos por WhatsApp cada vez que tu trámite cambia de estado. Ningún otro tramitador de la región te ofrece eso.',
   },
   {
     question: '¿Puedo hacer el trámite aunque el vendedor viva en otra ciudad?',
@@ -180,6 +180,13 @@ Tramita Yopal ofrece consulta gratuita de multas por número de cédula. Revisan
 - Multas pendientes registradas en el SIMIT
 - Comparendos prescritos (en Colombia prescriben a los 3 años desde la infracción)
 - Bloqueos que puedan afectar un trámite vehicular
+
+SEGUIMIENTO EN LÍNEA (DIFERENCIADOR):
+Cada trámite recibe un código de seguimiento único de 8 caracteres. El cliente lo ingresa
+en https://tramitayopal.com/seguimiento y ve el estado actual, el historial de avances y
+las fechas, a cualquier hora. Además recibe notificaciones por WhatsApp en cada cambio de
+estado. Si un cliente pregunta "¿en qué va mi trámite?", indícale usar su código en esa
+página, o escribir al WhatsApp ${BUSINESS.phone} si no lo tiene.
 
 SERVICIO DIFERENCIADOR — VALIDACIÓN PREVIA:
 Tramita Yopal valida al comprador, al vendedor y al vehículo ANTES de iniciar el trámite:

@@ -56,6 +56,7 @@ create table if not exists reviews (
 
 alter table reviews enable row level security;
 
+drop policy if exists "Lectura pública de reseñas visibles" on reviews;
 create policy "Lectura pública de reseñas visibles"
   on reviews for select
   using (visible = true and deleted_at is null);
@@ -378,6 +379,7 @@ insert into storage.buckets (id, name, public)
   values ('review-photos', 'review-photos', true)
   on conflict (id) do nothing;
 
+drop policy if exists "Lectura pública de fotos de reseñas" on storage.objects;
 create policy "Lectura pública de fotos de reseñas"
   on storage.objects for select
   using (bucket_id = 'review-photos');
