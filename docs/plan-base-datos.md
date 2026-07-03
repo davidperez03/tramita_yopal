@@ -137,7 +137,7 @@ por URL firmada de corta duración. Se deja para después de notificaciones.
 
 | Paso | Qué | Depende de |
 |---|---|---|
-| 1 | `clientes` + migración de datos + ficha en admin | — |
+| 1 | `clientes` + migración de datos + ficha en admin | ✅ **Implementado** — falta ejecutar `migration_clientes.sql` en Supabase |
 | 2 | Roles admin/tramitador + `asignado_a` | decisión de contratar tramitadores con acceso |
 | 3 | `notificaciones` + WhatsApp Cloud API + worker | verificación del negocio en Meta (tarda días — **iniciar ya**) |
 | 4 | `vehiculos` + recordatorios de vencimiento | 1 y 3 |

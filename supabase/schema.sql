@@ -1,9 +1,31 @@
 -- ============================================================
--- TRAMITA YOPAL — Schema completo v4
+-- TRAMITA YOPAL — Schema completo v5
 -- Para base NUEVA: pegar todo en Supabase > SQL Editor
 -- Auth: Supabase Auth (sin tabla sessions)
 -- v4: tipos[], valor_honorarios, costo_* y rate_limits
+-- v5: clientes + tramites.cliente_id + vista clientes_resumen
 -- ============================================================
+
+
+-- ──────────────────────────────────────────────────────────────
+-- TABLA: clientes
+-- ──────────────────────────────────────────────────────────────
+create table if not exists clientes (
+  id           uuid        primary key default gen_random_uuid(),
+  created_at   timestamptz not null default now(),
+  nombre       text        not null,
+  telefono     text        unique,   -- clave natural de contacto (WhatsApp)
+  cedula       text        unique,
+  ciudad       text,
+  email        text,
+  notas        text,
+  deleted_at   timestamptz
+);
+
+alter table clientes enable row level security;
+-- Sin políticas públicas — solo service_role.
+
+create index if not exists idx_clientes_nombre on clientes (nombre);
 
 
 -- ──────────────────────────────────────────────────────────────
@@ -42,7 +64,9 @@ create table if not exists tramites (
   created_at            timestamptz not null default now(),
   updated_at            timestamptz          default now(),
 
-  -- Cliente
+  -- Cliente (cliente_id es la relación real; nombre/telefono/ciudad se
+  -- conservan desnormalizados como respaldo)
+  cliente_id            uuid        references clientes(id),
   cliente_nombre        text        not null,
   cliente_telefono      text,
   cliente_ciudad        text,
@@ -99,6 +123,25 @@ create index if not exists idx_tramites_updated_at
   on tramites (updated_at desc nulls last);
 create index if not exists idx_tramites_codigo
   on tramites (codigo_seguimiento);
+create index if not exists idx_tramites_cliente
+  on tramites (cliente_id);
+
+
+-- ──────────────────────────────────────────────────────────────
+-- VISTA: clientes_resumen  (cliente + agregados de sus trámites)
+-- security_invoker: respeta el RLS de las tablas base
+-- ──────────────────────────────────────────────────────────────
+create or replace view clientes_resumen
+with (security_invoker = true) as
+select
+  c.id, c.created_at, c.nombre, c.telefono, c.cedula, c.ciudad, c.email, c.notas,
+  count(t.id) filter (where t.deleted_at is null)                                                   as tramites_total,
+  count(t.id) filter (where t.deleted_at is null and t.estado not in ('entregado','cancelado'))     as tramites_activos,
+  max(t.created_at) filter (where t.deleted_at is null)                                             as ultimo_tramite
+from clientes c
+left join tramites t on t.cliente_id = c.id
+where c.deleted_at is null
+group by c.id;
 
 
 -- ──────────────────────────────────────────────────────────────

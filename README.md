@@ -48,6 +48,9 @@ SENTRY_PROJECT=
 - `supabase/migration_2026.sql` — migración: tipos[] multi-servicio y costos operativos.
 - `supabase/migration_seguridad.sql` — migración: rate limiting durable (**pendiente de ejecutar**;
   mientras no se aplique, el rate limit funciona solo en memoria por instancia).
+- `supabase/migration_clientes.sql` — migración: entidad clientes con backfill desde trámites
+  (**pendiente de ejecutar**; mientras no se aplique, la pestaña Clientes del admin sale vacía
+  y los trámites nuevos se crean sin enlace a cliente).
 
 ## Desarrollo local
 

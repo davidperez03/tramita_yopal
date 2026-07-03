@@ -4,6 +4,7 @@ export type Tramite = {
   id: string;
   created_at: string;
   updated_at: string | null;
+  cliente_id: string | null;
   cliente_nombre: string;
   cliente_telefono: string | null;
   cliente_ciudad: string | null;

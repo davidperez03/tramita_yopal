@@ -75,6 +75,12 @@ export function AddTramiteForm() {
             <input name="cliente_telefono" placeholder="+57 300..." className={inputCls} />
           </div>
           <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Cédula</label>
+            <input name="cliente_cedula" placeholder="Opcional" inputMode="numeric"
+              onChange={e => { e.target.value = e.target.value.replace(/\D/g, ''); }}
+              className={inputCls} />
+          </div>
+          <div>
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Ciudad</label>
             <input name="cliente_ciudad" placeholder="YOPAL"
               onChange={e => { e.target.value = e.target.value.toUpperCase(); }}
