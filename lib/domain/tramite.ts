@@ -13,6 +13,7 @@ export type Tramite = {
   updated_at: string | null;
   cliente_id: string;
   cliente: ClienteRef | null;
+  asignado_a: string | null;
   placa: string | null;
   tipos: string[];
   estado: TramiteEstado;
@@ -39,6 +40,9 @@ export type Tramite = {
   pago_devuelto: boolean;
   codigo_seguimiento: string | null;
 };
+
+// Usuario asignable como tramitador (auth.users sin rol admin)
+export type TramitadorOption = { id: string; email: string };
 
 export type HistorialEntry = {
   tramite_id: string;

@@ -50,8 +50,22 @@ tabla `notificaciones`) y se envían cuando se configuren las credenciales.
 
 ## Base de datos (Supabase)
 
-- `supabase/schema.sql` — schema completo (v6). La base se crea desde cero:
+- `supabase/schema.sql` — schema completo (v7). La base se crea desde cero:
   pegar todo el archivo en Supabase > SQL Editor. Único archivo fuente, sin migraciones.
+
+## Roles
+
+Los roles viven en `app_metadata.role` de Supabase Auth. Un usuario **sin** role
+es tramitador (mínimo privilegio): solo ve sus trámites asignados, sin información
+financiera, y puede avanzar estados (nunca cancelar). Para volver admin a un usuario:
+
+```sql
+update auth.users
+set raw_app_meta_data = raw_app_meta_data || '{"role":"admin"}'
+where email = 'tu@correo.com';
+```
+
+⚠️ Ejecuta esto para tu propio usuario apenas lo crees, o entrarás al panel restringido.
 
 ## Desarrollo local
 

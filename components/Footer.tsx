@@ -57,6 +57,8 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               {[
                 { href: '/#nosotros', label: 'Quiénes somos' },
+                { href: '/guias',     label: 'Guías de trámites' },
+                { href: '/seguimiento', label: 'Seguir mi trámite' },
                 { href: '/#validar',  label: 'Validar mi caso' },
                 { href: '/prescripcion-comparendos', label: 'Consultar multas' },
                 { href: '/#proceso',  label: 'Cómo trabajamos' },

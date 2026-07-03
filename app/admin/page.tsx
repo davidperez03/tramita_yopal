@@ -1,8 +1,8 @@
-import { redirect } from 'next/navigation';
 import { supabaseAdmin } from '@/lib/supabase';
-import { isAuthed } from '@/lib/auth';
-import type { Tramite } from '@/lib/domain/tramite';
+import { getSessionInfo } from '@/lib/auth';
+import type { Tramite, HistorialEntry } from '@/lib/domain/tramite';
 import Panel from './Panel';
+import TramitadorPanel, { type TramiteAsignado } from './TramitadorPanel';
 import { login } from './actions';
 
 function LoginPage({ errorType }: { errorType?: string }) {
@@ -66,17 +66,46 @@ export default async function AdminPage({
 }: {
   searchParams: Promise<{ error?: string }>;
 }) {
-  const authed = await isAuthed();
+  const session = await getSessionInfo();
 
-  if (!authed) {
+  if (!session) {
     const params = await searchParams;
     return <LoginPage errorType={params?.error} />;
   }
 
   const LIMIT = 100;
 
+  // ── Vista tramitador: solo sus trámites asignados, sin finanzas ──
+  if (session.role === 'tramitador') {
+    const { data: asignados } = await supabaseAdmin
+      .from('tramites')
+      .select('id, created_at, placa, tipos, estado, cliente:clientes(nombre, telefono, ciudad)')
+      .eq('asignado_a', session.userId)
+      .is('deleted_at', null)
+      .order('created_at', { ascending: false })
+      .limit(LIMIT);
+
+    const tramitesAsignados = (asignados ?? []) as unknown as TramiteAsignado[];
+    const ids = tramitesAsignados.map(t => t.id);
+    const { data: hist } = ids.length > 0
+      ? await supabaseAdmin
+          .from('tramite_historial')
+          .select('tramite_id, ts, estado, nota')
+          .in('tramite_id', ids)
+          .order('ts', { ascending: true })
+      : { data: [] as HistorialEntry[] };
+
+    return (
+      <TramitadorPanel
+        tramites={tramitesAsignados}
+        historial={hist ?? []}
+        email={session.email}
+      />
+    );
+  }
+
   const TRAMITE_COLS =
-    'id, created_at, updated_at, cliente_id, cliente:clientes(nombre, telefono, ciudad), placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento';
+    'id, created_at, updated_at, cliente_id, cliente:clientes(nombre, telefono, ciudad), asignado_a, placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento';
 
   const [reviewsRes, tramitesRes, comparendosRes, clientesRes] = await Promise.all([
     supabaseAdmin
@@ -107,6 +136,12 @@ export default async function AdminPage({
 
   const tramitesData = (tramitesRes.data ?? []) as unknown as Tramite[];
 
+  // Usuarios con acceso (para asignar tramitadores): todo el que no sea admin
+  const { data: usersData } = await supabaseAdmin.auth.admin.listUsers({ perPage: 200 });
+  const tramitadores = (usersData?.users ?? [])
+    .filter(u => u.app_metadata?.role !== 'admin')
+    .map(u => ({ id: u.id, email: u.email ?? u.id.slice(0, 8) }));
+
   const tramiteIds = tramitesData.map(t => t.id);
   const historialRes = tramiteIds.length > 0
     ? await supabaseAdmin
@@ -122,6 +157,7 @@ export default async function AdminPage({
       reviewsTotal={reviewsRes.count ?? 0}
       tramites={tramitesData}
       tramitesTotal={tramitesRes.count ?? 0}
+      tramitadores={tramitadores}
       clientes={clientesRes.data ?? []}
       clientesTotal={clientesRes.count ?? 0}
       comparendos={comparendosRes.data ?? []}

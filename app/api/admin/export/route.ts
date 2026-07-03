@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
-import { isAuthed } from '@/lib/auth';
+import { getSessionInfo } from '@/lib/auth';
 import { calcPagos, calcNeto, type Tramite } from '@/lib/domain/tramite';
 
 function csvRow(fields: (string | number | boolean | null | undefined)[]) {
@@ -15,8 +15,11 @@ function csvRow(fields: (string | number | boolean | null | undefined)[]) {
 }
 
 export async function GET() {
-  const authed = await isAuthed();
-  if (!authed) return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+  // Solo admin: el CSV contiene toda la información financiera
+  const session = await getSessionInfo();
+  if (!session || session.role !== 'admin') {
+    return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+  }
 
   const { data, error } = await supabaseAdmin
     .from('tramites')

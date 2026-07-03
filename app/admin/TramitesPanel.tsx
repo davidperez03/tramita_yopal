@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react';
 import { cop } from '@/lib/format';
 import {
-  type Tramite, type TramiteEstado, type HistorialEntry, ESTADOS,
+  type Tramite, type TramiteEstado, type HistorialEntry, type TramitadorOption, ESTADOS,
 } from '@/lib/domain/tramite';
 import { calcMetricas } from '@/lib/domain/metricas';
 import { bulkUpdateEstado } from './tramites-actions';
@@ -20,13 +20,14 @@ function norm(s: string) {
 }
 
 export default function TramitesPanel({
-  tramites, total, limit, comparendosByPhone, historial,
+  tramites, total, limit, comparendosByPhone, historial, tramitadores,
 }: {
   tramites: Tramite[];
   total: number;
   limit: number;
   comparendosByPhone: Map<string, true>;
   historial: HistorialEntry[];
+  tramitadores: TramitadorOption[];
 }) {
   const [filtro, setFiltro]     = useState<string>('todos');
   const [periodo, setPeriodo]   = useState<string>('todos');
@@ -225,6 +226,7 @@ export default function TramitesPanel({
               historial={historialMap.get(t.id) ?? []}
               selected={selected.has(t.id)}
               onToggle={() => toggleSelect(t.id)}
+              tramitadores={tramitadores}
             />
           ))}
         </div>

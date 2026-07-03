@@ -76,6 +76,15 @@ export default function Page({ params }: { params: Params }) {
       serviceType: service.name,
       offers: { '@type': 'Offer', description: 'Cotización gratuita sin compromiso', priceCurrency: 'COP' },
     },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: service.faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
   ];
 
   return (

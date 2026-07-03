@@ -123,6 +123,76 @@ export default function ServiceCityPage({ service, city }: Props) {
         </div>
       </section>
 
+      {/* Requisitos + Cómo funciona */}
+      <section className="py-14 sm:py-20 bg-white border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+
+            <div>
+              <h2 className="text-2xl font-extrabold text-slate-900 mb-2">
+                Requisitos para {service.name.toLowerCase()}
+              </h2>
+              <p className="text-sm text-slate-500 mb-6">
+                Esto es lo que necesitas tener a la mano. Si te falta algo, te decimos cómo conseguirlo.
+              </p>
+              <ul className="space-y-3">
+                {service.requisitos.map((r) => (
+                  <li key={r} className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-slate-600 leading-relaxed">{r}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-extrabold text-slate-900 mb-2">
+                Cómo funciona desde {city.name}
+              </h2>
+              <p className="text-sm text-slate-500 mb-6">
+                {city.isOfficeCity
+                  ? 'Puedes traer los documentos a nuestra oficina o enviarlos — tú eliges.'
+                  : `Todo se hace a distancia: tú envías los documentos desde ${city.name} y nosotros tramitamos en Yopal.`}
+              </p>
+              <ol className="space-y-4">
+                {service.pasos.map((p, i) => (
+                  <li key={i} className="flex items-start gap-4">
+                    <span className="w-7 h-7 rounded-full bg-brand-950 text-white text-xs font-black flex items-center justify-center flex-shrink-0">
+                      {i + 1}
+                    </span>
+                    <span className="text-sm text-slate-600 leading-relaxed pt-1">{p}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Preguntas frecuentes del servicio */}
+      <section className="py-14 sm:py-20 bg-[#fafaf7] border-t border-slate-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-extrabold text-slate-900 mb-8">
+            Preguntas frecuentes sobre {service.name.toLowerCase()}
+          </h2>
+          <div className="space-y-3">
+            {service.faqs.map((f) => (
+              <details key={f.q} className="group bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none font-semibold text-sm text-slate-900 hover:text-brand-700 transition-colors">
+                  {f.q}
+                  <svg className="w-4 h-4 text-slate-300 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p className="px-6 pb-5 text-sm text-slate-600 leading-relaxed">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ¿Vehículo matriculado en otra ciudad? */}
       {!city.isOfficeCity && (
         <section className="py-10 bg-white border-y border-slate-100">

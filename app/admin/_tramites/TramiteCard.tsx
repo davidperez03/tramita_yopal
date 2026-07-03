@@ -3,19 +3,21 @@
 import { useState, useTransition } from 'react';
 import { cop, fmtDate } from '@/lib/format';
 import {
-  type Tramite, type TramiteEstado, type HistorialEntry,
+  type Tramite, type TramiteEstado, type HistorialEntry, type TramitadorOption,
   ESTADO_CONFIG, calcPagos, calcNeto,
 } from '@/lib/domain/tramite';
 import {
   updateEstado, togglePago, deleteTramite, cancelTramite, togglePagoDevuelto,
+  asignarTramitador,
 } from '../tramites-actions';
 import { cx, Badge, Err } from '../ui';
 import { PagoIcon, PaySlot, MetodoSelector, EstadoPills, HistorialMini, CodigoCopy } from './widgets';
 import { CostosForm } from './CostosForm';
 
-export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle }: {
+export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, tramitadores }: {
   t: Tramite; hasTramiteComp: boolean; historial: HistorialEntry[];
   selected: boolean; onToggle: () => void;
+  tramitadores: TramitadorOption[];
 }) {
   const [isPending, startTransition]                = useTransition();
   const [expanded, setExpanded]                     = useState(false);
@@ -159,6 +161,30 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle }
               <span className="text-xs font-semibold text-slate-500 uppercase">{t.cliente.ciudad}</span>
             )}
             {t.codigo_seguimiento && <CodigoCopy codigo={t.codigo_seguimiento} />}
+
+            {/* Asignación de tramitador */}
+            {tramitadores.length > 0 && !cancelado && (
+              <div className="flex items-center gap-2 ml-auto">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Tramitador:</span>
+                <select
+                  value={t.asignado_a ?? ''}
+                  disabled={isPending}
+                  onChange={e => {
+                    const v = e.target.value || null;
+                    startTransition(async () => {
+                      const res = await asignarTramitador(t.id, v);
+                      if (res?.error) setPagoError(res.error);
+                    });
+                  }}
+                  className="text-xs border border-slate-200 rounded-lg px-2 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 max-w-[180px]"
+                >
+                  <option value="">Sin asignar</option>
+                  {tramitadores.map(u => (
+                    <option key={u.id} value={u.id}>{u.email}</option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
 
           {/* Motivo cancelación */}

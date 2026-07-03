@@ -138,7 +138,7 @@ por URL firmada de corta duración. Se deja para después de notificaciones.
 | Paso | Qué | Depende de |
 |---|---|---|
 | 1 | `clientes` + ficha en admin | ✅ **Implementado** (base desde cero con schema.sql v6, sin backfill) |
-| 2 | Roles admin/tramitador + `asignado_a` | decisión de contratar tramitadores con acceso |
+| 2 | Roles admin/tramitador + `asignado_a` | ✅ **Implementado** — rol en app_metadata, panel restringido del tramitador, asignación desde la tarjeta del trámite |
 | 3 | `notificaciones` + WhatsApp Cloud API + worker | ✅ **Implementado** — falta configurar `WHATSAPP_ACCESS_TOKEN`/`WHATSAPP_PHONE_NUMBER_ID` (verificación del negocio en Meta — **iniciar ya**) |
 | 4 | `vehiculos` + recordatorios de vencimiento | 3 |
 | 5 | Documentos adjuntos | — |

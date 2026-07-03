@@ -1,9 +1,17 @@
 -- ============================================================
--- TRAMITA YOPAL — Schema completo v6
+-- TRAMITA YOPAL — Schema completo v7
 -- Base creada desde cero: pegar todo en Supabase > SQL Editor
 -- Auth: Supabase Auth (sin tabla sessions)
 -- v6: tramites normalizado (cliente solo vía cliente_id),
 --     notificaciones WhatsApp, rate_limits
+-- v7: roles admin/tramitador + tramites.asignado_a
+--
+-- ROLES: se guardan en app_metadata.role de Supabase Auth.
+-- Un usuario SIN role es tramitador (mínimo privilegio).
+-- Para volver admin a un usuario, ejecutar:
+--   update auth.users
+--   set raw_app_meta_data = raw_app_meta_data || '{"role":"admin"}'
+--   where email = 'tu@correo.com';
 -- ============================================================
 
 
@@ -68,6 +76,9 @@ create table if not exists tramites (
   -- Cliente
   cliente_id            uuid        not null references clientes(id),
 
+  -- Tramitador asignado (auth.users; rol en app_metadata.role)
+  asignado_a            uuid        references auth.users(id),
+
   -- Vehículo
   placa                 text,
 
@@ -126,6 +137,8 @@ create index if not exists idx_tramites_cliente
   on tramites (cliente_id);
 create index if not exists idx_tramites_tipos
   on tramites using gin (tipos);
+create index if not exists idx_tramites_asignado
+  on tramites (asignado_a);
 
 
 -- ──────────────────────────────────────────────────────────────

@@ -10,6 +10,7 @@ import {
 import TramitesPanel, { type Tramite, type HistorialEntry } from './TramitesPanel';
 import ClientesPanel from './ClientesPanel';
 import type { ClienteResumen } from '@/lib/domain/cliente';
+import type { TramitadorOption } from '@/lib/domain/tramite';
 import { cx, Badge, Stat, FilterBar, Empty, Btn, useAction, Err, field } from './ui';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -306,6 +307,7 @@ function NavItem({
 export default function Panel({
   reviews, reviewsTotal,
   tramites, tramitesTotal,
+  tramitadores,
   clientes, clientesTotal,
   comparendos, comparendosTotal,
   historial,
@@ -313,6 +315,7 @@ export default function Panel({
 }: {
   reviews: Review[]; reviewsTotal: number;
   tramites: Tramite[]; tramitesTotal: number;
+  tramitadores: TramitadorOption[];
   clientes: ClienteResumen[]; clientesTotal: number;
   comparendos: Comparendo[]; comparendosTotal: number;
   historial: HistorialEntry[];
@@ -421,7 +424,7 @@ export default function Panel({
                   CSV
                 </a>
               </div>
-              <TramitesPanel tramites={tramites} total={tramitesTotal} limit={limit} comparendosByPhone={comparendosByPhone} historial={historial} />
+              <TramitesPanel tramites={tramites} total={tramitesTotal} limit={limit} comparendosByPhone={comparendosByPhone} historial={historial} tramitadores={tramitadores} />
             </>
           )}
 

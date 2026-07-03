@@ -6,6 +6,8 @@ export type City = {
   isOfficeCity?: boolean;
 };
 
+export type ServiceFaq = { q: string; a: string };
+
 export type SeoService = {
   slug: string;
   name: string;
@@ -13,6 +15,9 @@ export type SeoService = {
   description: string;
   duration: string;
   waMessage: string;
+  requisitos: string[];
+  pasos: string[];
+  faqs: ServiceFaq[];
 };
 
 export const CITIES: City[] = [
@@ -102,6 +107,39 @@ export const SEO_SERVICES: SeoService[] = [
     description: 'Formaliza el cambio de propietario de tu vehículo. Revisamos el historial antes de empezar para evitar sorpresas.',
     duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un traspaso de propiedad.',
+    requisitos: [
+      'Cédulas de comprador y vendedor (copias legibles por ambas caras)',
+      'Tarjeta de propiedad (licencia de tránsito) original',
+      'Contrato de compraventa del vehículo',
+      'SOAT vigente y revisión técnico-mecánica vigente (si el vehículo ya la requiere)',
+      'Paz y salvo de multas en el SIMIT de comprador y vendedor',
+      'Improntas del vehículo (te explicamos cómo tomarlas o las tomamos nosotros)',
+    ],
+    pasos: [
+      'Validación previa gratuita: revisamos en el RUNT el vehículo, el vendedor y el comprador — prendas, multas, embargos o cualquier bloqueo.',
+      'Recibes la cotización cerrada por WhatsApp: honorarios + derechos del organismo de tránsito, sin sorpresas.',
+      'Nos haces llegar los documentos en nuestra oficina en Yopal o por mensajería desde tu municipio.',
+      'Liquidamos y pagamos los derechos, radicamos el trámite en el organismo de tránsito y te vamos informando cada avance.',
+      'Recibes la nueva tarjeta de propiedad a domicilio, con envío gratis.',
+    ],
+    faqs: [
+      {
+        q: '¿Comprador y vendedor tienen que ir al organismo de tránsito?',
+        a: 'No. Con los documentos firmados y autenticados nosotros gestionamos todo en ventanilla. Tú solo envías los papeles y recibes la tarjeta nueva en tu casa.',
+      },
+      {
+        q: '¿Qué pasa si compro un vehículo y no hago el traspaso?',
+        a: 'El vehículo sigue a nombre del vendedor: sus multas y responsabilidades te pueden afectar y tú no puedes demostrar propiedad plena. Un "traspaso abierto" también expone al vendedor a comparendos y responsabilidad civil por un carro que ya no usa. Es el trámite más importante después de comprar.',
+      },
+      {
+        q: '¿Cuánto cuesta un traspaso?',
+        a: 'Depende del avalúo del vehículo (los derechos e impuestos se liquidan sobre él) y del organismo de tránsito. Por eso hacemos la validación previa gratis: te damos una cotización cerrada antes de que pagues un peso.',
+      },
+      {
+        q: '¿Puedo hacer el traspaso si el vehículo tiene multas o prenda?',
+        a: 'No hasta resolverlas: el RUNT bloquea el trámite. En la validación previa detectamos esos bloqueos y te ayudamos a resolverlos — levantamiento de prenda, prescripción o acuerdo de pago de multas.',
+      },
+    ],
   },
   {
     slug:        'levantamiento-prenda',
@@ -110,6 +148,33 @@ export const SEO_SERVICES: SeoService[] = [
     description: 'Libera tu vehículo de gravámenes financieros una vez cancelado el crédito. Gestionamos el trámite ante el organismo de tránsito.',
     duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un levantamiento de prenda.',
+    requisitos: [
+      'Carta de levantamiento de prenda emitida por el banco o entidad financiera (paz y salvo del crédito)',
+      'Cédula del propietario (copia legible por ambas caras)',
+      'Tarjeta de propiedad (licencia de tránsito) original',
+      'Paz y salvo de multas en el SIMIT',
+    ],
+    pasos: [
+      'Verificamos en el RUNT que la prenda esté registrada y a favor de qué entidad.',
+      'Revisamos que la carta del banco cumpla los requisitos del organismo de tránsito (es el error más común).',
+      'Recibimos tus documentos en oficina o por mensajería.',
+      'Radicamos el levantamiento ante el organismo de tránsito y pagamos los derechos.',
+      'Te confirmamos cuando el vehículo queda libre de gravamen en el RUNT y te enviamos el soporte.',
+    ],
+    faqs: [
+      {
+        q: '¿Qué es la prenda y por qué debo levantarla?',
+        a: 'Es el gravamen que el banco inscribe sobre tu vehículo como garantía del crédito. Aunque termines de pagar, la prenda no desaparece sola: hay que tramitar el levantamiento. Mientras exista, no puedes vender ni traspasar el vehículo.',
+      },
+      {
+        q: 'Ya pagué el crédito, ¿el banco no hace el levantamiento automáticamente?',
+        a: 'No. El banco te entrega la carta de levantamiento, pero el registro ante el organismo de tránsito y el RUNT es responsabilidad del propietario. Ese es el trámite que hacemos por ti.',
+      },
+      {
+        q: '¿Puedo vender mi vehículo con la prenda vigente?',
+        a: 'En la práctica no: el traspaso queda bloqueado hasta levantar el gravamen. Si ya tienes comprador, gestionamos levantamiento y traspaso juntos para que sea un solo proceso.',
+      },
+    ],
   },
   {
     slug:        'traslado-cuenta',
@@ -118,6 +183,34 @@ export const SEO_SERVICES: SeoService[] = [
     description: 'Mueve el expediente de tu vehículo entre organismos de tránsito de cualquier ciudad de Colombia.',
     duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un traslado de cuenta.',
+    requisitos: [
+      'Cédula del propietario (copia legible por ambas caras)',
+      'Tarjeta de propiedad (licencia de tránsito) original',
+      'SOAT vigente y revisión técnico-mecánica vigente (si aplica)',
+      'Paz y salvo de multas en el SIMIT',
+      'Paz y salvo de impuestos vehiculares del departamento de origen',
+    ],
+    pasos: [
+      'Confirmamos en qué organismo de tránsito está matriculado tu vehículo y verificamos que no haya bloqueos.',
+      'Te cotizamos el traslado completo: derechos de salida y de entrada.',
+      'Recibimos los documentos y solicitamos el expediente al organismo de origen.',
+      'Radicamos la matrícula en el organismo de destino.',
+      'Recibes tu nueva tarjeta de propiedad con la matrícula actualizada, a domicilio.',
+    ],
+    faqs: [
+      {
+        q: '¿Para qué sirve trasladar la cuenta de mi vehículo?',
+        a: 'Para que el expediente quede en el organismo de tránsito donde realmente vives o donde te resulta más práctico hacer trámites futuros: traspasos, duplicados y renovaciones se vuelven más ágiles cuando la cuenta está cerca.',
+      },
+      {
+        q: '¿Puedo trasladar la cuenta desde cualquier ciudad de Colombia?',
+        a: 'Sí. No importa dónde esté matriculado el vehículo: solicitamos el expediente al organismo de origen y lo radicamos en el de destino, sin que tengas que viajar.',
+      },
+      {
+        q: '¿El traslado cambia mis placas?',
+        a: 'No necesariamente: la placa acompaña al vehículo. Lo que cambia es el organismo de tránsito responsable del expediente, y tu tarjeta de propiedad se actualiza.',
+      },
+    ],
   },
   {
     slug:        'duplicado-placas',
@@ -126,6 +219,34 @@ export const SEO_SERVICES: SeoService[] = [
     description: 'Repón tus placas en caso de pérdida, robo o daño de forma ágil y sin complicaciones.',
     duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un duplicado de placas.',
+    requisitos: [
+      'Cédula del propietario (copia legible por ambas caras)',
+      'Tarjeta de propiedad (licencia de tránsito)',
+      'Denuncia por pérdida o hurto (se hace en línea, te guiamos)',
+      'Entrega de la placa deteriorada, si el duplicado es por daño',
+      'Paz y salvo de multas en el SIMIT',
+    ],
+    pasos: [
+      'Te ayudamos a formalizar la denuncia de pérdida o hurto si aún no la tienes.',
+      'Verificamos el vehículo en el RUNT y te damos la cotización cerrada.',
+      'Radicamos la solicitud de duplicado ante el organismo de tránsito y pagamos los derechos.',
+      'El organismo ordena la fabricación de las placas nuevas.',
+      'Te avisamos apenas estén listas y coordinamos la entrega o el envío.',
+    ],
+    faqs: [
+      {
+        q: '¿Puedo circular mientras me entregan las placas nuevas?',
+        a: 'Circular sin placas expone a inmovilización y comparendo. Lo recomendable es mover el vehículo lo mínimo posible hasta tener el duplicado; por eso priorizamos radicar el trámite el mismo día que recibimos tus documentos.',
+      },
+      {
+        q: 'Me robaron una sola placa, ¿debo duplicar las dos?',
+        a: 'Sí. Las placas se fabrican y entregan por juego: el duplicado repone el par completo con la misma nomenclatura.',
+      },
+      {
+        q: '¿Cuánto tardan en fabricar las placas?',
+        a: 'La radicación toma 1 a 2 días hábiles; la fabricación depende del proveedor del organismo de tránsito y suele tardar unos días más. Te mantenemos informado con el código de seguimiento.',
+      },
+    ],
   },
   {
     slug:        'cambio-servicio',
@@ -134,6 +255,30 @@ export const SEO_SERVICES: SeoService[] = [
     description: 'Cambia la naturaleza de tu vehículo entre particular y público de forma ágil.',
     duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un cambio de servicio.',
+    requisitos: [
+      'Cédula del propietario (copia legible por ambas caras)',
+      'Tarjeta de propiedad (licencia de tránsito) original',
+      'SOAT y revisión técnico-mecánica vigentes acordes al servicio de destino',
+      'Paz y salvo de multas en el SIMIT',
+      'Documentos adicionales según el caso (capacidad transportadora, vinculación a empresa, etc. — te confirmamos en la validación)',
+    ],
+    pasos: [
+      'Analizamos tu caso: no todos los cambios de servicio son viables y depende de la normativa vigente y del tipo de vehículo.',
+      'Te confirmamos requisitos exactos y cotización antes de iniciar.',
+      'Reunimos y revisamos la documentación completa.',
+      'Radicamos ante el organismo de tránsito y hacemos seguimiento hasta la aprobación.',
+      'Recibes la tarjeta de propiedad actualizada con el nuevo servicio.',
+    ],
+    faqs: [
+      {
+        q: '¿Todos los vehículos pueden cambiar de servicio?',
+        a: 'No. El cambio entre particular y público depende de la normativa del Ministerio de Transporte vigente, el tipo de vehículo y, en el caso del servicio público, de la capacidad transportadora y la vinculación a una empresa habilitada. Por eso lo primero que hacemos es estudiar tu caso y decirte con franqueza si es viable.',
+      },
+      {
+        q: '¿Qué cambia en la práctica con el servicio del vehículo?',
+        a: 'Cambian las condiciones del SOAT, la periodicidad de la revisión técnico-mecánica, los impuestos y lo que legalmente puedes hacer con el vehículo (por ejemplo, transportar pasajeros o carga con ánimo de lucro).',
+      },
+    ],
   },
   {
     slug:        'prescripcion-comparendos',
@@ -142,5 +287,35 @@ export const SEO_SERVICES: SeoService[] = [
     description: 'Las multas de más de 3 años pueden estar prescritas. Revisamos gratis y tramitamos la declaración para eliminarlas del sistema.',
     duration:    '15 a 30 días hábiles',
     waMessage:   'Hola, quiero verificar si tengo comparendos prescritos.',
+    requisitos: [
+      'Cédula del interesado (copia legible por ambas caras)',
+      'Consulta de tus comparendos en el SIMIT (la hacemos gratis contigo)',
+      'Poder o autorización para presentar la solicitud ante la autoridad de tránsito',
+    ],
+    pasos: [
+      'Consultamos gratis tu estado en el SIMIT y el RUNT e identificamos qué multas tienen más de 3 años.',
+      'Verificamos que no haya actos que hayan interrumpido la prescripción (acuerdos de pago, cobros coactivos notificados).',
+      'Preparamos y radicamos la solicitud de prescripción ante la autoridad de tránsito correspondiente.',
+      'Hacemos seguimiento hasta obtener la resolución.',
+      'Confirmamos la eliminación de la multa del SIMIT y te enviamos el soporte.',
+    ],
+    faqs: [
+      {
+        q: '¿Cuándo prescribe un comparendo en Colombia?',
+        a: 'Como regla general, la sanción prescribe a los 3 años desde que la multa quedó en firme, siempre que la autoridad no haya interrumpido válidamente el cobro (por ejemplo, con un mandamiento de pago notificado o un acuerdo de pago que tú hayas firmado). Cada caso hay que revisarlo — por eso la consulta es gratis.',
+      },
+      {
+        q: '¿La prescripción es automática?',
+        a: 'No. Aunque el derecho exista, la multa sigue apareciendo en el SIMIT hasta que la autoridad declare la prescripción mediante resolución. Ese es exactamente el trámite que gestionamos.',
+      },
+      {
+        q: '¿Por qué me conviene eliminar multas prescritas?',
+        a: 'Mientras aparezcan en el SIMIT no puedes hacer traspasos ni la mayoría de trámites vehiculares, y el cobro puede escalar a embargos. Con la resolución de prescripción quedas a paz y salvo.',
+      },
+      {
+        q: '¿Qué pasa si firmé un acuerdo de pago hace años y no lo cumplí?',
+        a: 'El acuerdo de pago interrumpe la prescripción y el conteo de los 3 años arranca de nuevo. Igual vale la pena revisar: en muchos casos el nuevo término también ya venció.',
+      },
+    ],
   },
 ];

@@ -2,7 +2,7 @@
 
 import { supabaseAdmin } from '@/lib/supabase';
 import { revalidatePath } from 'next/cache';
-import { requireAdmin } from '@/lib/auth';
+import { requireAdmin, requireUser } from '@/lib/auth';
 import { randomBytes } from 'crypto';
 import { notificarCambioEstado } from '@/lib/notificaciones';
 import type { TramiteEstado } from '@/lib/domain/tramite';
@@ -105,8 +105,23 @@ export async function createTramite(formData: FormData) {
   return { success: true };
 }
 
+// Admin puede cambiar el estado de cualquier trámite; el tramitador solo el
+// de los que tiene asignados, y nunca cancelarlos.
 export async function updateEstado(id: string, estado: TramiteEstado, nota?: string) {
-  await requireAdmin();
+  const { userId, role } = await requireUser();
+
+  if (role !== 'admin') {
+    if (estado === 'cancelado') return { error: 'Solo un administrador puede cancelar trámites.' };
+    const { data } = await supabaseAdmin
+      .from('tramites')
+      .select('asignado_a')
+      .eq('id', id)
+      .single();
+    if (!data || data.asignado_a !== userId) {
+      return { error: 'No tienes asignado este trámite.' };
+    }
+  }
+
   const { error } = await supabaseAdmin
     .from('tramites')
     .update({ estado, updated_at: new Date().toISOString() })
@@ -240,6 +255,17 @@ export async function bulkUpdateEstado(ids: string[], estado: TramiteEstado, not
 
   revalidatePath('/admin');
   revalidatePath('/seguimiento', 'layout');
+  return { success: true };
+}
+
+export async function asignarTramitador(id: string, userId: string | null) {
+  await requireAdmin();
+  const { error } = await supabaseAdmin
+    .from('tramites')
+    .update({ asignado_a: userId, updated_at: new Date().toISOString() })
+    .eq('id', id);
+  if (error) return { error: 'Error al asignar el tramitador.' };
+  revalidatePath('/admin');
   return { success: true };
 }
 

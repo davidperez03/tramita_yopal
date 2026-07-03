@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { BUSINESS } from '@/lib/constants';
 import { CITIES, SEO_SERVICES } from '@/lib/seo-data';
+import { GUIAS } from '@/lib/guias';
 
 const base = `https://${BUSINESS.domain}`;
 
@@ -33,6 +34,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
+    {
+      url: `${base}/guias`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    ...GUIAS.map((g) => ({
+      url: `${base}/guias/${g.slug}`,
+      lastModified: new Date(g.actualizado),
+      changeFrequency: 'monthly' as const,
+      priority: 0.85,
+    })),
     ...cityServicePages,
   ];
 }
