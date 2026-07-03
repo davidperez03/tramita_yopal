@@ -144,25 +144,6 @@ create index if not exists idx_tramites_asignado
 
 
 -- ──────────────────────────────────────────────────────────────
--- VISTA: clientes_resumen  (cliente + agregados de sus trámites)
--- security_invoker: respeta el RLS de las tablas base
--- ──────────────────────────────────────────────────────────────
-create or replace view clientes_resumen
-with (security_invoker = true) as
-select
-  c.id, c.created_at, c.nombre, c.telefono, c.cedula, c.ciudad, c.email, c.notas,
-  count(t.id) filter (where t.deleted_at is null)                                                   as tramites_total,
-  count(t.id) filter (where t.deleted_at is null and t.estado not in ('entregado','cancelado'))     as tramites_activos,
-  max(t.created_at) filter (where t.deleted_at is null)                                             as ultimo_tramite,
-  (select count(*) from comparendo_solicitudes cs
-    where cs.cliente_id = c.id and cs.deleted_at is null)                                           as comparendos_total
-from clientes c
-left join tramites t on t.cliente_id = c.id
-where c.deleted_at is null
-group by c.id;
-
-
--- ──────────────────────────────────────────────────────────────
 -- TABLA: tramite_historial  (línea de tiempo pública)
 -- Una fila por cada cambio de estado, alimentada por triggers.
 -- El cliente la consulta desde /seguimiento/[codigo]
@@ -285,6 +266,27 @@ set cliente_id = c.id
 from clientes c
 where cs.cliente_id is null
   and c.telefono = cs.telefono;
+
+
+-- ──────────────────────────────────────────────────────────────
+-- VISTA: clientes_resumen  (cliente + agregados de trámites y
+-- comparendos). Va después de tramites y comparendo_solicitudes
+-- porque referencia ambas tablas.
+-- security_invoker: respeta el RLS de las tablas base
+-- ──────────────────────────────────────────────────────────────
+create or replace view clientes_resumen
+with (security_invoker = true) as
+select
+  c.id, c.created_at, c.nombre, c.telefono, c.cedula, c.ciudad, c.email, c.notas,
+  count(t.id) filter (where t.deleted_at is null)                                                   as tramites_total,
+  count(t.id) filter (where t.deleted_at is null and t.estado not in ('entregado','cancelado'))     as tramites_activos,
+  max(t.created_at) filter (where t.deleted_at is null)                                             as ultimo_tramite,
+  (select count(*) from comparendo_solicitudes cs
+    where cs.cliente_id = c.id and cs.deleted_at is null)                                           as comparendos_total
+from clientes c
+left join tramites t on t.cliente_id = c.id
+where c.deleted_at is null
+group by c.id;
 
 
 -- ──────────────────────────────────────────────────────────────
