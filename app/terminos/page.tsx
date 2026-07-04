@@ -100,10 +100,12 @@ export default function Terminos() {
                 <li>
                   <strong>Descuento en comparendos:</strong> El porcentaje de descuento informado
                   en el formulario web es una estimación basada en los días hábiles transcurridos
-                  desde la fecha indicada por el usuario. El descuento definitivo lo determina
-                  el organismo de tránsito competente al momento del pago. Tramita Yopal no
-                  garantiza el porcentaje estimado. El acceso al descuento está condicionado al
-                  cumplimiento del curso pedagógico presencial obligatorio establecido por la ley.
+                  desde la fecha indicada por el usuario. El descuento definitivo es el que
+                  refleja el <strong>SIMIT</strong> al momento de la liquidación y pago, de acuerdo
+                  con los plazos y condiciones establecidos en la ley (Ley 769 de 2002 y sus
+                  modificaciones). Tramita Yopal no garantiza el porcentaje estimado. El acceso
+                  al descuento está condicionado al cumplimiento del curso pedagógico presencial
+                  obligatorio establecido por la ley.
                 </li>
               </ul>
             </section>
@@ -187,9 +189,9 @@ export default function Terminos() {
             <section>
               <h2 className="text-xl font-bold text-slate-900 mb-3">10. Contacto</h2>
               <p>
-                📧 <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">{BUSINESS.email}</a><br />
-                📱 {BUSINESS.phone}<br />
-                📍 {BUSINESS.location}, Colombia
+                Correo: <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">{BUSINESS.email}</a><br />
+                WhatsApp: {BUSINESS.phone}<br />
+                Dirección: {BUSINESS.location}, Colombia
               </p>
             </section>
 

@@ -163,14 +163,14 @@ export default function TramitadorPanel({ tramites, historial, email }: {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="bg-white border-b border-slate-100">
+      <div className="bg-brand-950">
         <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
           <div>
-            <p className="text-[10px] font-black tracking-widest text-brand-600 uppercase">Tramita Yopal</p>
-            <p className="text-xs text-slate-400 mt-0.5">Panel de tramitador{email ? ` · ${email}` : ''}</p>
+            <p className="text-[10px] font-black tracking-widest text-gold-400 uppercase">Tramita Yopal</p>
+            <p className="text-xs text-brand-300 mt-0.5">Panel de tramitador{email ? ` · ${email}` : ''}</p>
           </div>
           <form action={logout}>
-            <button type="submit" className="text-xs text-slate-400 hover:text-slate-700 font-semibold transition-colors">
+            <button type="submit" className="text-xs text-brand-300 hover:text-white font-semibold transition-colors">
               Salir
             </button>
           </form>

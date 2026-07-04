@@ -238,9 +238,9 @@ export default function PoliticaPrivacidad() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">8. Contacto</h2>
               <p>Para cualquier consulta relacionada con el tratamiento de sus datos personales:</p>
               <p className="mt-2">
-                📧 <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">{BUSINESS.email}</a><br />
-                📍 {BUSINESS.location}, Colombia<br />
-                🕐 {BUSINESS.hours.full}
+                Correo: <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">{BUSINESS.email}</a><br />
+                Dirección: {BUSINESS.location}, Colombia<br />
+                Horario: {BUSINESS.hours.full}
               </p>
             </section>
 

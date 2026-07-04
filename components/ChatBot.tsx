@@ -11,7 +11,7 @@ interface Message {
 const INITIAL_MESSAGE: Message = {
   role: 'assistant',
   content:
-    '¡Hola! Soy el asistente de Tramita Yopal 🚗. Puedo responderte al instante sobre nuestros trámites vehiculares, documentos requeridos y tiempos. ¿En qué te puedo ayudar?',
+    'Hola, soy el asistente de Tramita Yopal. Te respondo al instante sobre trámites, documentos requeridos y tiempos. ¿En qué te puedo ayudar?',
 };
 
 const QUICK_OPTIONS = [
@@ -117,8 +117,8 @@ export default function ChatBot() {
           {/* Header */}
           <div className="bg-brand-900 px-5 py-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-lg">
-                🤖
+              <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-xs font-bold text-white select-none">
+                TY
               </div>
               <div>
                 <div className="text-white font-bold text-sm">Asistente Tramita Yopal</div>
@@ -235,9 +235,7 @@ export default function ChatBot() {
           </svg>
         )}
         {!open && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full flex items-center justify-center">
-            <span className="text-amber-900 text-xs font-bold leading-none">✦</span>
-          </span>
+          <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-gold-400 rounded-full ring-2 ring-white" />
         )}
       </button>
     </>

@@ -123,12 +123,13 @@ export const SEO_SERVICES: SeoService[] = [
     duration:    '1 a 2 días hábiles',
     waMessage:   'Hola, necesito cotizar un traspaso de propiedad.',
     requisitos: [
-      'Cédulas de comprador y vendedor (copias legibles por ambas caras)',
-      'Tarjeta de propiedad (licencia de tránsito) original',
+      'Documentos de identidad de comprador y vendedor (copias legibles por ambas caras)',
       'Contrato de compraventa del vehículo',
+      'Contrato de de comprador y vendedor (original y autenticado)',
       'SOAT vigente y revisión técnico-mecánica vigente (si el vehículo ya la requiere)',
       'Paz y salvo de multas en el SIMIT de comprador y vendedor',
-      'Improntas del vehículo (te explicamos cómo tomarlas o las tomamos nosotros)',
+      'Improntas del vehículo',
+      'Paz y salvo de impuesto vehicular (si aplica)'
     ],
     pasos: [
       'Validación previa gratuita: revisamos en el RUNT el vehículo, el vendedor y el comprador — prendas, multas, embargos o cualquier bloqueo.',

@@ -32,7 +32,7 @@ export function Pipeline({ counts, total, active, onChange }: {
 }) {
   const cancelCount = counts['cancelado'] ?? 0;
   return (
-    <div className="bg-white border border-slate-100 rounded-xl overflow-x-auto">
+    <div className="bg-white border border-slate-200/70 rounded-2xl shadow-sm overflow-x-auto">
       <div className="flex min-w-max">
         <PipelineCol label="Todos" count={total} isActive={active === 'todos'} band="bg-slate-300"
           onClick={() => onChange('todos')} />

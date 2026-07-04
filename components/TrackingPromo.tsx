@@ -83,7 +83,7 @@ export default function TrackingPromo() {
 
               <div className="mt-5 bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-3">
                 <p className="text-xs text-emerald-800">
-                  <strong>Aprobado</strong> · El tránsito expidió tu documento. Coordinamos la entrega. 🎉
+                  <strong>Aprobado</strong> · El tránsito expidió tu documento. Coordinamos la entrega.
                 </p>
               </div>
             </div>

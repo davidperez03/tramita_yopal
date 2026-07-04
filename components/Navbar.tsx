@@ -8,7 +8,7 @@ import { WhatsAppIcon } from './WhatsAppIcon';
 
 const navLinks = [
   { href: '#nosotros', label: 'Nosotros' },
-  { href: '#validar',  label: '🔍 Validar caso' },
+  { href: '#validar',  label: 'Validar mi caso' },
   { href: '#tramites', label: 'Trámites' },
   { href: '/prescripcion-comparendos', label: 'Multas' },
   { href: '/guias',    label: 'Guías' },

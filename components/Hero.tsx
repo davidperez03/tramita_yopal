@@ -177,7 +177,7 @@ export default function Hero() {
                           <p className="text-slate-800 text-[12px] leading-relaxed">{msg.text}</p>
                           <p className="text-slate-400 text-[10px] text-right mt-1">{msg.time} ✓✓</p>
                         </div>
-                        <FemaleAvatarSmall />
+                        <ClienteAvatar />
                       </>
                     )}
                     {msg.from === 'ty' && (
@@ -209,7 +209,7 @@ export default function Hero() {
         <div className="flex whitespace-nowrap animate-marquee">
           {[...SERVICES, ...SERVICES].map((s, i) => (
             <span key={i} className="inline-flex items-center gap-2 text-brand-400 text-sm px-6">
-              <span className="text-gold-500">✦</span>
+              <span className="w-1 h-1 rounded-full bg-gold-500 inline-block" />
               {s.name}
             </span>
           ))}
@@ -219,15 +219,10 @@ export default function Hero() {
   );
 }
 
-function FemaleAvatarSmall() {
+function ClienteAvatar() {
   return (
-    <div className="w-5 h-5 rounded-full bg-pink-200 flex-shrink-0 overflow-hidden flex items-end justify-center">
-      <svg viewBox="0 0 40 44" fill="none" className="w-4 h-4">
-        <ellipse cx="20" cy="14" rx="8" ry="9" fill="#f9a8d4" />
-        <path d="M6 44 C6 30 34 30 34 44" fill="#f9a8d4" />
-        <ellipse cx="20" cy="13" rx="6" ry="7" fill="#fce7f3" />
-        <path d="M12 12 Q12 4 20 4 Q28 4 28 12" fill="#ec4899" />
-      </svg>
+    <div className="w-5 h-5 rounded-full bg-slate-300 text-slate-600 text-[9px] font-bold flex items-center justify-center flex-shrink-0 select-none">
+      M
     </div>
   );
 }

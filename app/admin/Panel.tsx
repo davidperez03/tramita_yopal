@@ -287,15 +287,15 @@ function NavItem({
   return (
     <button onClick={onClick}
       className={cx(
-        'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors text-left',
-        active ? 'bg-brand-50 text-brand-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800',
+        'w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors text-left',
+        active ? 'bg-white/10 text-white' : 'text-brand-300 hover:bg-white/5 hover:text-white',
       )}>
-      <span className={cx('flex-shrink-0 transition-colors', active ? 'text-brand-600' : 'text-slate-400')}>
+      <span className={cx('flex-shrink-0 transition-colors', active ? 'text-gold-400' : 'text-brand-500')}>
         {item.icon}
       </span>
       <span className="flex-1">{item.label}</span>
       {badge > 0 && (
-        <span className="bg-amber-400 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-none">
+        <span className="bg-gold-500 text-brand-950 text-[10px] font-black px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-none">
           {badge}
         </span>
       )}
@@ -352,20 +352,20 @@ export default function Panel({
     <div className="flex min-h-screen bg-slate-50">
 
       {/* ── Sidebar lg+ ────────────────────────────────────────────────────── */}
-      <aside className="hidden lg:flex flex-col w-60 bg-white border-r border-slate-100 fixed inset-y-0 left-0 z-20">
-        <div className="px-5 pt-6 pb-5 border-b border-slate-100">
-          <p className="text-[10px] font-black tracking-widest text-brand-600 uppercase">Tramita Yopal</p>
-          <p className="text-xs text-slate-400 mt-0.5">Panel admin</p>
+      <aside className="hidden lg:flex flex-col w-60 bg-brand-950 fixed inset-y-0 left-0 z-20">
+        <div className="px-5 pt-6 pb-5 border-b border-white/10">
+          <p className="text-[10px] font-black tracking-widest text-gold-400 uppercase">Tramita Yopal</p>
+          <p className="text-xs text-brand-400 mt-0.5">Panel administrativo</p>
         </div>
-        <nav className="flex-1 px-3 py-3 space-y-0.5">
+        <nav className="flex-1 px-3 py-4 space-y-1">
           {NAV.map(item => (
             <NavItem key={item.key} item={item} active={tab === item.key} badge={BADGES[item.key]} onClick={() => setTab(item.key)} />
           ))}
         </nav>
-        <div className="px-3 py-4 border-t border-slate-100">
+        <div className="px-3 py-4 border-t border-white/10">
           <form action={logout}>
             <button type="submit"
-              className="w-full text-left text-xs text-slate-400 hover:text-slate-700 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors font-medium">
+              className="w-full text-left text-xs text-brand-400 hover:text-white px-3.5 py-2 rounded-xl hover:bg-white/5 transition-colors font-medium">
               Cerrar sesión
             </button>
           </form>
@@ -373,29 +373,30 @@ export default function Panel({
       </aside>
 
       {/* ── Mobile header ───────────────────────────────────────────────────── */}
-      <div className="lg:hidden fixed top-0 inset-x-0 z-20 bg-white border-b border-slate-100">
+      <div className="lg:hidden fixed top-0 inset-x-0 z-20 bg-brand-950 shadow-md shadow-black/10">
         <div className="flex items-center justify-between px-4 py-3">
-          <p className="text-xs font-black text-brand-600 uppercase tracking-widest">Tramita Yopal</p>
+          <p className="text-xs font-black text-gold-400 uppercase tracking-widest">Tramita Yopal</p>
           <form action={logout}>
-            <button type="submit" className="text-xs text-slate-400 hover:text-slate-700 font-semibold transition-colors">
+            <button type="submit" className="text-xs text-brand-300 hover:text-white font-semibold transition-colors">
               Salir
             </button>
           </form>
         </div>
         {/* Scrollable tab bar */}
-        <div className="flex overflow-x-auto px-3 pb-3 gap-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex overflow-x-auto px-3 pb-3 gap-1.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {NAV.map(item => {
             const active = tab === item.key;
             const badge  = BADGES[item.key];
             return (
               <button key={item.key} onClick={() => setTab(item.key)}
                 className={cx(
-                  'flex-shrink-0 flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap',
-                  active ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200',
+                  'flex-shrink-0 flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 rounded-full transition-colors whitespace-nowrap',
+                  active ? 'bg-gold-500 text-brand-950' : 'bg-white/10 text-brand-200 hover:bg-white/20',
                 )}>
                 {item.label}
                 {badge > 0 && (
-                  <span className="bg-amber-400 text-white text-[10px] font-black px-1 rounded-full leading-none">
+                  <span className={cx('text-[10px] font-black px-1 rounded-full leading-none',
+                    active ? 'bg-brand-950 text-gold-400' : 'bg-gold-500 text-brand-950')}>
                     {badge}
                   </span>
                 )}
@@ -414,7 +415,7 @@ export default function Panel({
             <>
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-base font-bold text-slate-900">Trámites</h1>
+                  <h1 className="text-xl font-extrabold tracking-tight text-slate-900">Trámites</h1>
                   <p className="text-xs text-slate-400 mt-0.5">{tramitesTotal} registros en total</p>
                 </div>
                 <a href="/api/admin/export" download
@@ -433,7 +434,7 @@ export default function Panel({
           {tab === 'clientes' && (
             <>
               <div>
-                <h1 className="text-base font-bold text-slate-900">Clientes</h1>
+                <h1 className="text-xl font-extrabold tracking-tight text-slate-900">Clientes</h1>
                 <p className="text-xs text-slate-400 mt-0.5">{clientesTotal} clientes en total</p>
               </div>
               <ClientesPanel clientes={clientes} total={clientesTotal} limit={limit} tramites={tramites} comparendos={comparendos} />
@@ -444,7 +445,7 @@ export default function Panel({
           {tab === 'comparendos' && (
             <>
               <div>
-                <h1 className="text-base font-bold text-slate-900">Comparendos</h1>
+                <h1 className="text-xl font-extrabold tracking-tight text-slate-900">Comparendos</h1>
                 <p className="text-xs text-slate-400 mt-0.5">{comparendosTotal} solicitudes en total</p>
               </div>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -481,7 +482,7 @@ export default function Panel({
           {tab === 'resenas' && (
             <>
               <div>
-                <h1 className="text-base font-bold text-slate-900">Reseñas</h1>
+                <h1 className="text-xl font-extrabold tracking-tight text-slate-900">Reseñas</h1>
                 <p className="text-xs text-slate-400 mt-0.5">{reviewsTotal} reseñas en total</p>
               </div>
               <div className="grid grid-cols-3 lg:grid-cols-3 gap-3">
