@@ -74,7 +74,7 @@ export default async function Reviews() {
           <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold text-slate-900">
             Lo que dicen nuestros clientes
           </h2>
-          <div className="mt-4 inline-flex items-center gap-2 bg-white border border-slate-200 rounded-2xl px-5 py-3 shadow-sm">
+          <div className="mt-4 inline-flex items-center gap-2 bg-white border border-slate-200 rounded-xl px-5 py-3 shadow-sm">
             <span className="text-slate-800 font-bold text-lg">{avgRating}</span>
             <Stars n={5} />
             <span className="text-slate-400 text-sm">·</span>
@@ -85,7 +85,7 @@ export default async function Reviews() {
         <FadeInStagger className="grid md:grid-cols-3 gap-5 mb-10" stagger={0.1}>
           {reviews.map((r: Review) => (
             <FadeInItem key={r.id}>
-              <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm h-full flex flex-col">
+              <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm h-full flex flex-col">
 
                 <div className="flex items-center gap-3 mb-4">
                   <div

@@ -24,21 +24,25 @@ export default function GuidesTeaser() {
           </Link>
         </FadeIn>
 
-        <FadeInStagger className="grid md:grid-cols-3 gap-5" stagger={0.1}>
+        <FadeInStagger className="border-t-2 border-brand-950" stagger={0.06}>
           {GUIAS.slice(0, 3).map((g) => (
             <FadeInItem key={g.slug}>
               <Link
                 href={`/guias/${g.slug}`}
-                className="bg-[#fafaf7] rounded-2xl border border-slate-100 p-6 hover:border-brand-300 hover:shadow-md transition-all group flex flex-col h-full"
+                className="group grid sm:grid-cols-[8rem_1fr_auto] items-baseline gap-x-8 gap-y-1 py-6 border-b border-slate-200 hover:bg-[#fafaf7] transition-colors"
               >
-                <p className="text-[11px] text-slate-400 mb-3">{g.minutos} min de lectura</p>
-                <h3 className="text-base font-extrabold text-slate-900 group-hover:text-brand-700 transition-colors leading-snug mb-2">
-                  {g.tituloCorto}
-                </h3>
-                <p className="text-sm text-slate-500 leading-relaxed line-clamp-3 flex-1">
-                  {g.descripcion}
-                </p>
-                <span className="text-sm font-semibold text-brand-600 group-hover:text-brand-800 transition-colors mt-4">
+                <span className="text-[11px] text-slate-400 uppercase tracking-wide">
+                  {g.minutos} min de lectura
+                </span>
+                <div>
+                  <h3 className="text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-brand-700 transition-colors leading-snug">
+                    {g.tituloCorto}
+                  </h3>
+                  <p className="text-sm text-slate-500 leading-relaxed mt-1 max-w-2xl line-clamp-2">
+                    {g.descripcion}
+                  </p>
+                </div>
+                <span className="text-sm font-semibold text-brand-700 group-hover:text-brand-900 transition-colors">
                   Leer guía →
                 </span>
               </Link>

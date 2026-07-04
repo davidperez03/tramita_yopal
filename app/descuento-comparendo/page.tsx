@@ -58,7 +58,7 @@ export default function DescuentoComparendoPage() {
 
                 {/* Tarjetas de plazos */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/5 border border-emerald-500/30 rounded-2xl p-5">
+                  <div className="bg-white/5 border border-emerald-500/30 rounded-xl p-5">
                     <p className="text-4xl font-black text-emerald-400 leading-none mb-4">50%</p>
                     <div className="space-y-2 text-sm">
                       <p className="text-brand-100">
@@ -72,7 +72,7 @@ export default function DescuentoComparendoPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white/5 border border-amber-500/30 rounded-2xl p-5">
+                  <div className="bg-white/5 border border-amber-500/30 rounded-xl p-5">
                     <p className="text-4xl font-black text-amber-400 leading-none mb-4">25%</p>
                     <div className="space-y-2 text-sm">
                       <p className="text-brand-100">
@@ -87,13 +87,14 @@ export default function DescuentoComparendoPage() {
                   </div>
                 </div>
 
-                <p className="mt-5 text-xs text-brand-400">
-                  ⚠️ Requiere curso pedagógico presencial obligatorio para aplicar al descuento
+                <p className="mt-5 text-xs text-brand-400 border-l-2 border-amber-500/60 pl-3">
+                  El descuento exige completar el curso pedagógico presencial dentro del plazo.
+                  El porcentaje definitivo es el que refleje el SIMIT al momento del pago.
                 </p>
               </div>
 
               {/* Derecha — formulario */}
-              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl">
+              <div className="bg-white rounded-xl p-6 sm:p-8 shadow-2xl">
                 <h2 className="text-xl font-bold text-slate-900 mb-1">
                   Verifica tu plazo y agenda tu caso
                 </h2>

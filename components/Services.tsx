@@ -17,7 +17,8 @@ export default function Services() {
           </p>
         </FadeIn>
 
-        <FadeInStagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* Índice de trámites — filas editoriales, sin tarjetas */}
+        <FadeInStagger className="border-t-2 border-brand-950" stagger={0.06}>
           {SERVICES.map((s) => {
             const waUrl = waLink(s.whatsappMessage);
             const isPrescripcion = s.id === 'prescripcion-comparendos';
@@ -34,31 +35,27 @@ export default function Services() {
                   href={href}
                   target={isExt ? '_blank' : undefined}
                   rel={isExt ? 'noopener noreferrer' : undefined}
-                  className={`group rounded-2xl border p-6 hover:shadow-md transition-all flex flex-col h-full ${
-                    isPrescripcion
-                      ? 'bg-brand-950 border-brand-800 hover:border-gold-500/50'
-                      : 'bg-white border-slate-100 hover:border-brand-300'
-                  }`}
+                  className="group grid grid-cols-[1fr_auto] sm:grid-cols-[3.5rem_1fr_9rem_11rem] items-center gap-x-6 gap-y-1 py-5 sm:py-6 border-b border-slate-200 hover:bg-white transition-colors"
                 >
-                  <span className={`text-xs font-bold tracking-widest mb-3 ${isPrescripcion ? 'text-brand-600' : 'text-slate-300'}`}>
+                  <span className="hidden sm:block text-xs font-bold tracking-widest text-slate-300 tabular-nums">
                     {s.number}
                   </span>
-                  <h3 className={`text-base font-bold transition-colors mb-2 flex-1 ${
-                    isPrescripcion
-                      ? 'text-white group-hover:text-gold-400'
-                      : 'text-slate-900 group-hover:text-brand-700'
-                  }`}>
-                    {s.name}
-                  </h3>
-                  <p className={`text-sm leading-relaxed mb-4 ${isPrescripcion ? 'text-brand-300' : 'text-slate-500'}`}>
-                    {s.description}
-                  </p>
-                  <span className={`text-sm font-semibold transition-colors flex items-center gap-1 ${
-                    isPrescripcion
-                      ? 'text-gold-400 group-hover:text-gold-300'
-                      : 'text-wa group-hover:text-wa-hover'
-                  }`}>
-                    {isOtros ? 'Preguntar por WhatsApp →' : 'Ver trámite →'}
+                  <div className="col-span-2 sm:col-span-1">
+                    <h3 className="text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-brand-700 transition-colors flex items-center gap-2.5 flex-wrap">
+                      {s.name}
+                      {isPrescripcion && (
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-gold-600 border border-gold-500/40 px-2 py-0.5 rounded">
+                          Consulta gratis
+                        </span>
+                      )}
+                    </h3>
+                    <p className="text-sm text-slate-500 leading-relaxed mt-1 max-w-xl">{s.description}</p>
+                  </div>
+                  <span className="hidden sm:block text-xs text-slate-400">
+                    {s.duration ?? 'Según el caso'}
+                  </span>
+                  <span className="text-sm font-semibold text-brand-700 group-hover:text-brand-900 transition-colors justify-self-start sm:justify-self-end">
+                    {isOtros ? 'Preguntar por WhatsApp' : 'Ver trámite'} →
                   </span>
                 </Link>
               </FadeInItem>
