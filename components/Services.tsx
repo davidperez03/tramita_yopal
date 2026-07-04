@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { SERVICES, waLink, WA_MESSAGES } from '@/lib/constants';
-import { SEO_SERVICES } from '@/lib/seo-data';
 import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
 
 export default function Services() {
@@ -21,13 +20,13 @@ export default function Services() {
         <FadeInStagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {SERVICES.map((s) => {
             const waUrl = waLink(s.whatsappMessage);
-            const isPrescripcion = s.id === 'prescripcion';
+            const isPrescripcion = s.id === 'prescripcion-comparendos';
             const isOtros = s.id === 'otros';
-            const seoSlug = SEO_SERVICES.find((ss) => ss.name === s.name)?.slug;
+            // El id de cada servicio del catálogo es su slug SEO
             const href = isPrescripcion
               ? '/prescripcion-comparendos'
-              : seoSlug ? `/tramites/${seoSlug}/yopal` : waUrl;
-            const isExt = !isPrescripcion && !seoSlug;
+              : isOtros ? waUrl : `/tramites/${s.id}/yopal`;
+            const isExt = isOtros;
 
             return (
               <FadeInItem key={s.id}>

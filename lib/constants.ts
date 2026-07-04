@@ -1,3 +1,5 @@
+import { SEO_SERVICES } from './seo-data';
+
 export const BUSINESS = {
   name: 'Tramita Yopal',
   city: 'Yopal',
@@ -27,61 +29,24 @@ export const WA_MESSAGES = {
   noMatricula: 'Hola, mi vehículo no está matriculado en Yopal. ¿Pueden ayudarme?',
 };
 
+// Catálogo público — DERIVADO del catálogo único en lib/seo-data.ts.
+// Para agregar o editar trámites, hazlo allá (ver instructivo encima de
+// SEO_SERVICES). Aquí solo vive la entrada especial "Otros trámites".
 export const SERVICES = [
-  {
-    id: 'traspaso',
-    number: '001',
-    name: 'Traspaso de Propiedad',
-    description: 'Formaliza el cambio de propietario de tu vehículo. Te decimos exactamente qué necesitas.',
-    duration: '1 a 2 días hábiles',
-    whatsappMessage: 'Hola, necesito información sobre un Traspaso de Propiedad de mi vehículo.',
-  },
-  {
-    id: 'prenda',
-    number: '002',
-    name: 'Levantamiento de Prenda',
-    description: 'Libera tu vehículo de gravámenes financieros una vez cancelado el crédito.',
-    duration: '1 a 2 días hábiles',
-    whatsappMessage: 'Hola, necesito información sobre Levantamiento de Prenda de mi vehículo.',
-  },
-  {
-    id: 'traslado',
-    number: '003',
-    name: 'Traslado de Cuenta',
-    description: 'Mueve el expediente de tu vehículo entre organismos de tránsito de todo el país.',
-    duration: '1 a 2 días hábiles',
-    whatsappMessage: 'Hola, necesito información sobre un Traslado de Cuenta de mi vehículo.',
-  },
-  {
-    id: 'placas',
-    number: '004',
-    name: 'Duplicado de Placas',
-    description: 'Repón tus placas en caso de pérdida, robo o daño de forma ágil.',
-    duration: '1 a 2 días hábiles',
-    whatsappMessage: 'Hola, necesito información sobre Duplicado de Placas para mi vehículo.',
-  },
-  {
-    id: 'servicio',
-    number: '005',
-    name: 'Cambio de Servicio',
-    description: 'Cambia la naturaleza de tu vehículo entre particular y público fácilmente.',
-    duration: '1 a 2 días hábiles',
-    whatsappMessage: 'Hola, necesito información sobre Cambio de Servicio de mi vehículo.',
-  },
-  {
-    id: 'prescripcion',
-    number: '006',
-    name: 'Prescripción de Comparendos',
-    description: '¿Multas de más de 3 años? Pueden estar prescritas. Revisamos gratis y tramitamos la declaración.',
-    duration: '15 a 30 días hábiles',
-    whatsappMessage: 'Hola, quiero verificar si tengo comparendos prescritos.',
-  },
+  ...SEO_SERVICES.map((s, i) => ({
+    id:              s.slug,
+    number:          String(i + 1).padStart(3, '0'),
+    name:            s.name,
+    description:     s.description,
+    duration:        s.duration as string | null,
+    whatsappMessage: s.waMessage,
+  })),
   {
     id: 'otros',
-    number: '007',
+    number: String(SEO_SERVICES.length + 1).padStart(3, '0'),
     name: 'Otros trámites',
     description: '¿Tu trámite no está en la lista o tienes una duda? Escríbenos — te orientamos sin compromiso.',
-    duration: null,
+    duration: null as string | null,
     whatsappMessage: 'Hola, tengo una consulta sobre un trámite vehicular y quiero saber si me pueden ayudar.',
   },
 ];
@@ -198,21 +163,14 @@ Tramita Yopal valida al comprador, al vendedor y al vehículo ANTES de iniciar e
 SERVICIOS:
 ${SERVICES.filter(s => s.id !== 'otros').map(s => `- ${s.name}${s.duration ? ` — ${s.duration}` : ''}: ${s.description}`).join('\n')}
 
-DOCUMENTOS REQUERIDOS POR TRÁMITE:
+DOCUMENTOS Y REQUISITOS POR TRÁMITE (misma lista oficial del sitio web — cítala tal cual):
 
-TRASPASO DE PROPIEDAD — documentos requeridos:
-1. Formulario único de solicitud de trámites (lo provee el organismo de tránsito)
-2. Documento de identidad del propietario (vendedor) y del comprador — originales
-3. Contrato de compraventa o documento que soporte la transferencia de dominio
-4. Contratos de mandato de ambas partes (vendedor y comprador)
-5. Paz y salvo y liquidación de impuesto vehicular — obligatorio para vehículos de más de 125cc
-6. Improntas de chasis y motor legibles
-7. SOAT vigente — indispensable
-8. Revisión técnico-mecánica (tecnomecánica) vigente
-9. Sin multas pendientes por parte del vendedor ni del comprador
-10. Todos los documentos sin tachones ni enmendaduras
+${SEO_SERVICES.map(s =>
+  `${s.name.toUpperCase()} — requisitos:\n${s.requisitos.map((r, i) => `${i + 1}. ${r}`).join('\n')}`
+).join('\n\n')}
 
 NOTA GENERAL — SOAT: Es indispensable para TODOS los trámites sin excepción.
+NOTA GENERAL — Todos los documentos deben ir sin tachones ni enmendaduras.
 
 POLÍTICA DE COBRO (MUY IMPORTANTE):
 - Se cobra en DOS etapas: 50% al aprobar la cotización e iniciar el trámite, 50% restante una vez que el tránsito aprueba y expide el documento

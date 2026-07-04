@@ -124,6 +124,18 @@ En orden de impacto sugerido:
 6. Eliminar `CALLMEBOT_API_KEY` cuando las notificaciones Cloud API estén activas
    (migrar el aviso interno de comparendos al mismo canal).
 
+## Agregar o editar trámites (catálogo único)
+
+Todo el catálogo de trámites vive en **`lib/seo-data.ts` → `SEO_SERVICES`**
+(hay un instructivo en el propio archivo). Al agregar una entrada ahí se
+generan solas: las tarjetas de la home, los enlaces del footer, las páginas
+`/tramites/[slug]/[ciudad]` con el sitemap, los requisitos que recita el
+chatbot y las opciones del formulario del panel admin.
+
+**Para actualizar requisitos** de un trámite: edita solo su arreglo
+`requisitos` en ese archivo — se refleja en páginas de servicio, chatbot y
+guías con el siguiente deploy. No hay más copias que mantener.
+
 ## Archivos clave para orientarse
 
 - `supabase/schema.sql` — toda la base de datos (v7), único archivo SQL.

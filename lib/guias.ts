@@ -1,3 +1,10 @@
+import { SEO_SERVICES } from './seo-data';
+
+// Requisitos desde el catálogo único (lib/seo-data.ts) — así las guías
+// siempre muestran la misma lista que las páginas de servicio y el chatbot.
+const requisitosDe = (slug: string): string[] =>
+  SEO_SERVICES.find((s) => s.slug === slug)?.requisitos ?? [];
+
 export type GuiaSeccion = {
   titulo: string;
   parrafos: string[];
@@ -41,14 +48,7 @@ export const GUIAS: Guia[] = [
       {
         titulo: 'Documentos que necesitas',
         parrafos: ['Para radicar el traspaso en Yopal necesitas tener a la mano:'],
-        lista: [
-          'Cédulas de comprador y vendedor (copias legibles por ambas caras)',
-          'Tarjeta de propiedad (licencia de tránsito) original',
-          'Contrato de compraventa del vehículo',
-          'SOAT vigente y revisión técnico-mecánica vigente, si el vehículo ya la requiere por antigüedad',
-          'Paz y salvo de multas en el SIMIT — de ambas partes',
-          'Improntas del vehículo (calcos del número de motor, chasis y serie)',
-        ],
+        lista: requisitosDe('traspaso-propiedad'),
       },
       {
         titulo: '¿Cuánto cuesta el traspaso en Yopal?',
@@ -198,12 +198,7 @@ export const GUIAS: Guia[] = [
       {
         titulo: 'Documentos y pasos',
         parrafos: ['Necesitas lo siguiente:'],
-        lista: [
-          'Carta de levantamiento de prenda emitida por el banco',
-          'Cédula del propietario',
-          'Tarjeta de propiedad (licencia de tránsito) original',
-          'Paz y salvo de multas en el SIMIT',
-        ],
+        lista: requisitosDe('levantamiento-prenda'),
       },
       {
         titulo: 'Cómo lo gestionamos',

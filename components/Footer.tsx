@@ -41,13 +41,18 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold text-sm mb-3">Trámites</h4>
             <ul className="space-y-2">
-              {SERVICES.map((s) => (
-                <li key={s.id}>
-                  <a href="#tramites" className="text-sm hover:text-white transition-colors">
-                    {s.name}
-                  </a>
-                </li>
-              ))}
+              {SERVICES.map((s) => {
+                const href = s.id === 'prescripcion-comparendos'
+                  ? '/prescripcion-comparendos'
+                  : s.id === 'otros' ? '/#tramites' : `/tramites/${s.id}/yopal`;
+                return (
+                  <li key={s.id}>
+                    <a href={href} className="text-sm hover:text-white transition-colors">
+                      {s.name}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

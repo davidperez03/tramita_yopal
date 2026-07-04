@@ -99,6 +99,21 @@ export const CITIES: City[] = [
   },
 ];
 
+// ══════════════════════════════════════════════════════════════
+// CATÁLOGO ÚNICO DE TRÁMITES — única fuente de verdad.
+//
+// Para AGREGAR UN TRÁMITE nuevo basta con añadir una entrada aquí
+// (slug único, name, keyword, description, duration, waMessage,
+// requisitos, pasos y faqs). De esta lista se generan solas:
+//  - Las tarjetas de la home y los enlaces del footer
+//  - Las páginas /tramites/[slug]/[ciudad] (una por municipio) y el sitemap
+//  - Los requisitos, pasos y FAQs de esas páginas (+ FAQPage para Google)
+//  - Lo que sabe el chatbot (servicios y requisitos)
+//  - Las opciones del formulario "Nuevo trámite" del panel admin
+//
+// Para ACTUALIZAR REQUISITOS: edita solo el arreglo `requisitos` del
+// trámite — se refleja en páginas, chatbot y guías al desplegar.
+// ══════════════════════════════════════════════════════════════
 export const SEO_SERVICES: SeoService[] = [
   {
     slug:        'traspaso-propiedad',
