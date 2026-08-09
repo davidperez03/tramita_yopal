@@ -18,6 +18,10 @@ export type SeoService = {
   requisitos: string[];
   pasos: string[];
   faqs: ServiceFaq[];
+  // true para trámites de la persona (no de un vehículo matriculado en
+  // algún lugar): el mensaje de WhatsApp no debe decir "mi vehículo está
+  // en X" — ver ServiceCityPage.
+  esTramitePersonal?: boolean;
 };
 
 export const CITIES: City[] = [
@@ -304,6 +308,7 @@ export const SEO_SERVICES: SeoService[] = [
     description: 'Las multas de más de 3 años pueden estar prescritas. Revisamos gratis y tramitamos la declaración para eliminarlas del sistema.',
     duration:    '15 a 30 días hábiles',
     waMessage:   'Hola, quiero verificar si tengo comparendos prescritos.',
+    esTramitePersonal: true,
     requisitos: [
       'Cédula del interesado (copia legible por ambas caras)',
       'Consulta de tus comparendos en el SIMIT (la hacemos gratis contigo)',
@@ -342,6 +347,7 @@ export const SEO_SERVICES: SeoService[] = [
     description: 'Requisito obligatorio para acceder al descuento de tu comparendo. Te agendamos el curso presencial dentro de tu plazo legal y confirmamos el cupo.',
     duration:    'Sujeto a disponibilidad de cupo — agéndalo apenas conozcas tu plazo',
     waMessage:   'Hola, necesito agendar el curso pedagógico para el descuento de mi comparendo.',
+    esTramitePersonal: true,
     requisitos: [
       'Cédula del infractor (copia legible por ambas caras)',
       'Comparendo o soporte de la infracción, si lo tienes a la mano',

@@ -83,9 +83,9 @@ type DatosEnviados = {
 
 function Exito({ datos }: { datos: DatosEnviados }) {
   const tipoLabel  = datos.tipo === 'fisico' ? 'Físico' : 'Fotomulta';
-  const fechaLabel = new Date(datos.fecha + 'T12:00:00').toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' });
+  const fechaLabel = new Date(datos.fecha + 'T12:00:00').toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
   const fechaCursoLabel = datos.fechaCurso
-    ? new Date(datos.fechaCurso).toLocaleString('es-CO', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+    ? new Date(datos.fechaCurso).toLocaleString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
     : null;
 
   const lineas = [

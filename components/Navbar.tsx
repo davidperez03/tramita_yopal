@@ -16,9 +16,8 @@ const navLinks = [
 ];
 
 const comparendoLinks = [
-  { href: '/prescripcion-comparendos',        label: 'Consultar multas prescritas' },
-  { href: '/descuento-comparendo',            label: 'Pagar con descuento' },
-  { href: '/tramites/curso-pedagogico/yopal', label: 'Curso pedagógico' },
+  { href: '/prescripcion-comparendos', label: 'Consultar multas prescritas' },
+  { href: '/descuento-comparendo',     label: 'Pagar con descuento' },
 ];
 
 const waUrl = waLink(WA_MESSAGES.cotizar);

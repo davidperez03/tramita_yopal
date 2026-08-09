@@ -9,7 +9,10 @@ const RELATED_SERVICES_COUNT = 4;
 const NEARBY_CITIES_COUNT    = 6;
 
 export default function ServiceCityPage({ service, city }: Props) {
-  const waUrl = waLink(`${service.waMessage} Mi vehículo está en ${city.name}, ${city.department}.`);
+  const contexto = service.esTramitePersonal
+    ? `Estoy en ${city.name}, ${city.department}.`
+    : `Mi vehículo está en ${city.name}, ${city.department}.`;
+  const waUrl = waLink(`${service.waMessage} ${contexto}`);
   const otherServices = SEO_SERVICES.filter((s) => s.slug !== service.slug).slice(0, RELATED_SERVICES_COUNT);
   const nearbyCities  = CITIES.filter((c) => c.slug !== city.slug).slice(0, NEARBY_CITIES_COUNT);
 

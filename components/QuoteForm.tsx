@@ -1,13 +1,20 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import { BUSINESS, SERVICES, waLink } from '@/lib/constants';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
 import { Tag, Zap, Truck, ShieldCheck } from 'lucide-react';
 
+// No es un trámite del catálogo (no hay tarjeta que expedir ni ciudad de
+// matrícula) — tiene su propio formulario especializado en /descuento-comparendo,
+// así que en vez de armar un WhatsApp genérico redirigimos allá.
+const OPCION_DESCUENTO_COMPARENDO = 'Pago de comparendo con descuento';
+
 const tramiteOptions = [
   ...SERVICES.filter((s) => s.id !== 'otros').map((s) => s.name),
+  OPCION_DESCUENTO_COMPARENDO,
   'Otro / No estoy seguro',
 ];
 
@@ -22,6 +29,7 @@ const stats = [
 ];
 
 export default function QuoteForm() {
+  const router = useRouter();
   const [form, setForm] = useState({
     nombre: '', tramite: '', ciudad: '', descripcion: '',
   });
@@ -32,6 +40,12 @@ export default function QuoteForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    if (form.tramite === OPCION_DESCUENTO_COMPARENDO) {
+      router.push('/descuento-comparendo');
+      return;
+    }
+
     const msg = `Hola, necesito una cotización.
 *Nombre:* ${form.nombre}
 *Trámite:* ${form.tramite || 'No especificado'}
@@ -116,13 +130,22 @@ export default function QuoteForm() {
                 </span>
               </label>
 
-              <button
-                type="submit"
-                className="w-full bg-wa hover:bg-wa-hover text-white font-bold py-3.5 rounded-xl text-base transition-colors flex items-center justify-center gap-2"
-              >
-                <WhatsAppIcon className="w-5 h-5" />
-                Cotizar por WhatsApp
-              </button>
+              {form.tramite === OPCION_DESCUENTO_COMPARENDO ? (
+                <button
+                  type="submit"
+                  className="w-full bg-brand-950 hover:bg-brand-800 text-white font-bold py-3.5 rounded-xl text-base transition-colors flex items-center justify-center gap-2"
+                >
+                  Continuar al formulario de descuento →
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full bg-wa hover:bg-wa-hover text-white font-bold py-3.5 rounded-xl text-base transition-colors flex items-center justify-center gap-2"
+                >
+                  <WhatsAppIcon className="w-5 h-5" />
+                  Cotizar por WhatsApp
+                </button>
+              )}
 
               <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3 text-center space-y-0.5">
                 <p className="text-xs font-semibold text-slate-700">Sin cobro total por adelantado</p>
