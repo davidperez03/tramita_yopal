@@ -31,7 +31,7 @@ export const GUIAS: Guia[] = [
     titulo:      'Cómo hacer el traspaso de un vehículo en Yopal (2026): requisitos, costos y pasos',
     tituloCorto: 'Traspaso de vehículo en Yopal, paso a paso',
     descripcion: 'Guía completa y actualizada del traspaso de propiedad en Yopal, Casanare: documentos, cuánto cuesta, cuánto tarda, errores comunes y cómo hacerlo sin ir al organismo de tránsito.',
-    actualizado: '2026-07-03',
+    actualizado: '2026-08-09',
     minutos:     7,
     intro: [
       'Compraste o vendiste un carro o una moto y ahora viene el paso que casi todos aplazan: el traspaso. En esta guía te explicamos exactamente cómo funciona el traspaso de propiedad ante el organismo de tránsito de Yopal, qué documentos necesitas, cuánto cuesta y los errores que más bloquean el trámite.',

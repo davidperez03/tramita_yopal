@@ -85,11 +85,7 @@ export default function ServiceCityPage({ service, city }: Props) {
                 {service.description}
               </p>
               <p className="text-slate-500 text-sm leading-relaxed">
-                Antes de iniciar{' '}
-                <strong className="text-slate-700">revisamos el vehículo, al propietario y al comprador</strong>{' '}
-                para detectar prendas activas, multas o restricciones en el RUNT que puedan
-                bloquear el proceso. Solo arrancamos cuando todo está despejado — o te decimos
-                exactamente qué resolver primero.
+                {service.pasos[0]}
               </p>
             </div>
 

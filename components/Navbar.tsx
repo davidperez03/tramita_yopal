@@ -10,10 +10,15 @@ const navLinks = [
   { href: '#nosotros', label: 'Nosotros' },
   { href: '#validar',  label: 'Validar mi caso' },
   { href: '#tramites', label: 'Trámites' },
-  { href: '/prescripcion-comparendos', label: 'Multas' },
   { href: '/guias',    label: 'Guías' },
   { href: '/seguimiento', label: 'Seguimiento' },
   { href: '#faq',      label: 'FAQ' },
+];
+
+const comparendoLinks = [
+  { href: '/prescripcion-comparendos',        label: 'Consultar multas prescritas' },
+  { href: '/descuento-comparendo',            label: 'Pagar con descuento' },
+  { href: '/tramites/curso-pedagogico/yopal', label: 'Curso pedagógico' },
 ];
 
 const waUrl = waLink(WA_MESSAGES.cotizar);
@@ -52,7 +57,7 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-5">
-            {navLinks.map((l) => (
+            {navLinks.slice(0, 3).map((l) => (
               <a
                 key={l.href}
                 href={h(l.href)}
@@ -61,6 +66,36 @@ export default function Navbar() {
                     ? 'text-gold-400 hover:text-gold-300'
                     : 'text-brand-300 hover:text-white'
                 }`}
+              >
+                {l.label}
+              </a>
+            ))}
+
+            {/* Comparendos — desplegable con las 3 páginas relacionadas */}
+            <div className="relative group">
+              <button className="text-sm font-medium text-brand-300 hover:text-white transition-colors flex items-center gap-1">
+                Comparendos
+                <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div className="absolute top-full left-0 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="bg-white rounded-xl shadow-xl border border-slate-100 py-2 w-64">
+                  {comparendoLinks.map((l) => (
+                    <a key={l.href} href={l.href}
+                      className="block px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-700 transition-colors">
+                      {l.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {navLinks.slice(3).map((l) => (
+              <a
+                key={l.href}
+                href={h(l.href)}
+                className="text-sm font-medium text-brand-300 hover:text-white transition-colors"
               >
                 {l.label}
               </a>
@@ -106,7 +141,7 @@ export default function Navbar() {
         {/* Mobile menu */}
         {open && (
           <div className="lg:hidden bg-brand-950 border-t border-brand-800 py-3">
-            {navLinks.map((l) => (
+            {navLinks.slice(0, 3).map((l) => (
               <a
                 key={l.href}
                 href={h(l.href)}
@@ -116,6 +151,27 @@ export default function Navbar() {
                     ? 'text-gold-400 hover:text-gold-300'
                     : 'text-brand-200 hover:text-white hover:bg-brand-900'
                 }`}
+              >
+                {l.label}
+              </a>
+            ))}
+
+            <p className="px-4 pt-2 pb-1 text-[10px] font-bold text-brand-500 uppercase tracking-wider">
+              Comparendos
+            </p>
+            {comparendoLinks.map((l) => (
+              <a key={l.href} href={l.href} onClick={() => setOpen(false)}
+                className="block px-6 py-2 text-sm text-brand-200 hover:text-white hover:bg-brand-900 transition-colors">
+                {l.label}
+              </a>
+            ))}
+
+            {navLinks.slice(3).map((l) => (
+              <a
+                key={l.href}
+                href={h(l.href)}
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2.5 font-medium text-brand-200 hover:text-white hover:bg-brand-900 transition-colors"
               >
                 {l.label}
               </a>
