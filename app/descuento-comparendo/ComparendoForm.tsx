@@ -134,7 +134,13 @@ function Exito({ datos }: { datos: DatosEnviados }) {
           </li>
           <li className="flex gap-3">
             <span className="w-5 h-5 rounded-full bg-brand-100 text-brand-800 text-xs font-black flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
-            <p className="text-xs text-slate-600 leading-relaxed">Asistes al curso pedagógico presencial obligatorio. Te confirmamos disponibilidad y te indicamos el lugar.</p>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Asistes al{' '}
+              <a href="/tramites/curso-pedagogico/yopal" className="text-brand-700 font-semibold hover:underline">
+                curso pedagógico presencial
+              </a>{' '}
+              obligatorio. Te confirmamos disponibilidad y te indicamos el lugar.
+            </p>
           </li>
         </ol>
       </div>

@@ -79,7 +79,7 @@ export const GUIAS: Guia[] = [
       {
         titulo: '¿Cuánto tarda?',
         parrafos: [
-          'Con los documentos completos y sin bloqueos, la radicación y aprobación toma normalmente 1 a 2 días hábiles en el organismo de tránsito de Yopal. Si el vehículo está matriculado en otra ciudad, primero se hace el traslado de cuenta, que agrega unos días.',
+          'Con los documentos completos y sin bloqueos, la radicación y aprobación toma normalmente 1 a 2 días hábiles en el organismo de tránsito de Yopal. Si el vehículo está matriculado en otra ciudad, primero hay que trasladar la cuenta a Yopal — ese trámite toma 15 a 30 días hábiles antes de poder radicar el traspaso.',
         ],
       },
     ],

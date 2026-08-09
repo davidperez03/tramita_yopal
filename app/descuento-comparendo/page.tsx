@@ -88,8 +88,11 @@ export default function DescuentoComparendoPage() {
                 </div>
 
                 <p className="mt-5 text-xs text-brand-400 border-l-2 border-amber-500/60 pl-3">
-                  El descuento exige completar el curso pedagógico presencial dentro del plazo.
-                  El porcentaje definitivo es el que refleje el SIMIT al momento del pago.
+                  El descuento exige completar el{' '}
+                  <a href="/tramites/curso-pedagogico/yopal" className="underline hover:text-brand-200 transition-colors">
+                    curso pedagógico presencial
+                  </a>{' '}
+                  dentro del plazo. El porcentaje definitivo es el que refleje el SIMIT al momento del pago.
                 </p>
               </div>
 

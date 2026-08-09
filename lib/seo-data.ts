@@ -197,7 +197,7 @@ export const SEO_SERVICES: SeoService[] = [
     name:        'Traslado de Cuenta',
     keyword:     'traslado cuenta vehículo',
     description: 'Mueve el expediente de tu vehículo entre organismos de tránsito de cualquier ciudad de Colombia.',
-    duration:    '1 a 2 días hábiles',
+    duration:    '15 a 30 días hábiles',
     waMessage:   'Hola, necesito cotizar un traslado de cuenta.',
     requisitos: [
       'Cédula del propietario (copia legible por ambas caras)',
@@ -232,8 +232,8 @@ export const SEO_SERVICES: SeoService[] = [
     slug:        'duplicado-placas',
     name:        'Duplicado de Placas',
     keyword:     'duplicado placas vehículo',
-    description: 'Repón tus placas en caso de pérdida, robo o daño de forma ágil y sin complicaciones.',
-    duration:    '1 a 2 días hábiles',
+    description: 'Repón tus placas en caso de pérdida, robo o daño. Radicación y documento de tránsito restringido inmediatos; las placas físicas llegan en 15 a 30 días hábiles.',
+    duration:    'Radicación inmediata · placas físicas en 15 a 30 días hábiles',
     waMessage:   'Hola, necesito cotizar un duplicado de placas.',
     requisitos: [
       'Cédula del propietario (copia legible por ambas caras)',
@@ -245,14 +245,15 @@ export const SEO_SERVICES: SeoService[] = [
     pasos: [
       'Te ayudamos a formalizar la denuncia de pérdida o hurto si aún no la tienes.',
       'Verificamos el vehículo en el RUNT y te damos la cotización cerrada.',
-      'Radicamos la solicitud de duplicado ante el organismo de tránsito y pagamos los derechos.',
-      'El organismo ordena la fabricación de las placas nuevas.',
+      'Radicamos la solicitud de duplicado ante el organismo de tránsito y pagamos los derechos — la aprobación es el mismo día.',
+      'Te entregamos el documento de tránsito restringido, válido mientras se fabrican las placas nuevas.',
+      'El organismo ordena la fabricación de las placas — toma entre 15 y 30 días hábiles.',
       'Te avisamos apenas estén listas y coordinamos la entrega o el envío.',
     ],
     faqs: [
       {
         q: '¿Puedo circular mientras me entregan las placas nuevas?',
-        a: 'Circular sin placas expone a inmovilización y comparendo. Lo recomendable es mover el vehículo lo mínimo posible hasta tener el duplicado; por eso priorizamos radicar el trámite el mismo día que recibimos tus documentos.',
+        a: 'Sí. Al radicar el duplicado, el organismo de tránsito emite un documento de tránsito restringido que te permite circular legalmente mientras se fabrican las placas nuevas — proceso que toma entre 15 y 30 días hábiles. Debes portar ese documento en el vehículo.',
       },
       {
         q: 'Me robaron una sola placa, ¿debo duplicar las dos?',
@@ -331,6 +332,45 @@ export const SEO_SERVICES: SeoService[] = [
       {
         q: '¿Qué pasa si firmé un acuerdo de pago hace años y no lo cumplí?',
         a: 'El acuerdo de pago interrumpe la prescripción y el conteo de los 3 años arranca de nuevo. Igual vale la pena revisar: en muchos casos el nuevo término también ya venció.',
+      },
+    ],
+  },
+  {
+    slug:        'curso-pedagogico',
+    name:        'Curso Pedagógico de Infractor (CIA)',
+    keyword:     'curso pedagógico infractor tránsito',
+    description: 'Requisito obligatorio para acceder al descuento de tu comparendo. Te agendamos el curso presencial dentro de tu plazo legal y confirmamos el cupo.',
+    duration:    'Sujeto a disponibilidad de cupo — agéndalo apenas conozcas tu plazo',
+    waMessage:   'Hola, necesito agendar el curso pedagógico para el descuento de mi comparendo.',
+    requisitos: [
+      'Cédula del infractor (copia legible por ambas caras)',
+      'Comparendo o soporte de la infracción, si lo tienes a la mano',
+      'Conocer la fecha del comparendo — de ahí depende el plazo máximo para tomar el curso',
+      'Disponibilidad para asistir de forma presencial en la jornada asignada',
+    ],
+    pasos: [
+      'Calculamos tu plazo legal de descuento (50% o 25%) según la fecha de tu comparendo.',
+      'Verificamos cupo y agendamos el curso en un centro autorizado dentro de ese plazo.',
+      'Te confirmamos fecha, hora y lugar de la jornada presencial.',
+      'Asistes al curso — es una jornada única.',
+      'Recibimos tu certificado de asistencia y con él formalizamos el pago del comparendo con el descuento correspondiente.',
+    ],
+    faqs: [
+      {
+        q: '¿Es obligatorio el curso para acceder al descuento?',
+        a: 'Sí. La ley exige completar el curso pedagógico presencial dentro del plazo del descuento — sin el certificado de asistencia no se aplica ni el 50% ni el 25%.',
+      },
+      {
+        q: '¿Cuánto dura el curso?',
+        a: 'Es una jornada presencial única. El horario exacto lo confirma el centro autorizado según cupo disponible; te avisamos apenas quede agendado.',
+      },
+      {
+        q: '¿Hasta cuándo puedo tomar el curso?',
+        a: 'Debe hacerse dentro del plazo legal del descuento: los primeros 5 días hábiles para comparendo físico (11 para fotomulta) dan 50%; hasta el día 20 (26 para fotomulta) dan 25%. Después de eso ya no aplica el descuento. Por eso conviene agendarlo apenas conozcas tu caso.',
+      },
+      {
+        q: '¿El curso reemplaza el pago del comparendo?',
+        a: 'No. El curso es un requisito adicional para acceder al descuento — el comparendo se paga aparte, con el porcentaje de descuento ya aplicado una vez tengas el certificado de asistencia.',
       },
     ],
   },
