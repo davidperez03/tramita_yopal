@@ -131,7 +131,7 @@ export default function QuoteForm() {
 
               {form.tramite === 'Traspaso de Propiedad' && (
                 <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-xs text-amber-800 leading-relaxed">
-                  <strong>Traspaso:</strong> el avalúo vehicular (1 % del valor comercial) se paga completo al organismo de tránsito al iniciar. Tu asesor te lo detalla en la cotización.
+                  <strong>Traspaso:</strong> el avalúo vehicular (1%, la base depende del cilindraje) se paga completo al organismo de tránsito al iniciar. Tu asesor te lo detalla en la cotización.
                 </div>
               )}
 

@@ -25,7 +25,9 @@ export function MoneyInput({ name, placeholder = '0' }: { name: string; placehol
   );
 }
 
-/* ─── Input de avalúo: usuario ingresa valor comercial, sistema calcula 1% ─── */
+/* ─── Input de avalúo: usuario ingresa la base y el sistema calcula 1% ───
+   Base según cilindraje: >125cc → avalúo de la liquidación de impuestos;
+   ≤125cc → valor del contrato de compraventa. */
 export function AvaluoInput() {
   const [display, setDisplay] = useState('');
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -33,17 +35,20 @@ export function AvaluoInput() {
     const num    = digits === '' ? 0 : parseInt(digits, 10);
     setDisplay(num > 0 ? new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(num) : '');
   }
-  const comercial = display === '' ? 0 : parseInt(display.replace(/\D/g, ''), 10);
-  const avaluo1pct = Math.round(comercial * 0.01);
+  const base = display === '' ? 0 : parseInt(display.replace(/\D/g, ''), 10);
+  const avaluo1pct = Math.round(base * 0.01);
   return (
     <div>
       <div className="relative">
         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">$</span>
         <input type="text" inputMode="numeric" value={display} onChange={handleChange}
-          placeholder="Valor comercial del vehículo" className={`${inputCls} pl-6`} />
-        <input type="hidden" name="avaluo_comercial" value={comercial} />
+          placeholder="Base del avalúo (según cilindraje)" className={`${inputCls} pl-6`} />
+        <input type="hidden" name="avaluo_comercial" value={base} />
       </div>
-      {comercial > 0 && (
+      <p className="text-[11px] text-slate-400 mt-1">
+        &gt;125cc: avalúo de liquidación de impuestos · ≤125cc: valor del contrato de compraventa
+      </p>
+      {base > 0 && (
         <p className="text-xs font-semibold text-amber-700 mt-1.5">
           Avalúo a cobrar (1%): <span className="font-black">{cop(avaluo1pct)}</span>
         </p>

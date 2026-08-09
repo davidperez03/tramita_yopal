@@ -124,10 +124,12 @@ export default function Terminos() {
                   valor total cotizado al aprobar la cotización e iniciar el trámite. El 50%
                   restante se cobra únicamente cuando el organismo de tránsito aprueba y expide
                   el documento. No se cobra el total por adelantado.{' '}
-                  <strong>Excepción — Traspaso de Propiedad:</strong> el avalúo vehicular
-                  (equivalente al 1 % del valor comercial del vehículo) es exigido por el organismo
-                  de tránsito y debe pagarse en su totalidad al iniciar el trámite; este valor
-                  no hace parte del cobro de Tramita Yopal.
+                  <strong>Excepción — Traspaso de Propiedad:</strong> el avalúo vehicular (1%)
+                  es exigido por el organismo de tránsito y debe pagarse en su totalidad al iniciar
+                  el trámite; este valor no hace parte del cobro de Tramita Yopal. La base sobre la
+                  que se calcula depende del cilindraje del vehículo: avalúo según liquidación de
+                  impuestos si supera 125 cc, o valor del contrato de compraventa si es de 125 cc
+                  o menos.
                 </li>
                 <li>
                   El pago de honorarios se acuerda individualmente mediante WhatsApp antes de

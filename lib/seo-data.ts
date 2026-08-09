@@ -125,14 +125,14 @@ export const SEO_SERVICES: SeoService[] = [
     requisitos: [
       'Documentos de identidad de comprador y vendedor (copias legibles por ambas caras)',
       'Contrato de compraventa del vehículo',
-      'Contrato de de comprador y vendedor (original y autenticado)',
+      'Contrato de mandato de comprador y vendedor (original y autenticado)',
       'SOAT vigente y revisión técnico-mecánica vigente (si el vehículo ya la requiere)',
       'Paz y salvo de multas en el SIMIT de comprador y vendedor',
       'Improntas del vehículo',
       'Paz y salvo de impuesto vehicular (si aplica)'
     ],
     pasos: [
-      'Validación previa gratuita: revisamos en el RUNT el vehículo, el vendedor y el comprador — prendas, multas, embargos o cualquier bloqueo.',
+      'Validación previa gratuita: revisamos el vehículo en el RUNT (prendas, embargos) y el estado de vendedor y comprador en el SIMIT (multas a su nombre) — cualquier bloqueo te lo explicamos antes de cobrar.',
       'Recibes la cotización cerrada por WhatsApp: honorarios + derechos del organismo de tránsito, sin sorpresas.',
       'Nos haces llegar los documentos en nuestra oficina en Yopal o por mensajería desde tu municipio.',
       'Liquidamos y pagamos los derechos, radicamos el trámite en el organismo de tránsito y te vamos informando cada avance.',
@@ -149,11 +149,11 @@ export const SEO_SERVICES: SeoService[] = [
       },
       {
         q: '¿Cuánto cuesta un traspaso?',
-        a: 'Depende del avalúo del vehículo (los derechos e impuestos se liquidan sobre él) y del organismo de tránsito. Por eso hacemos la validación previa gratis: te damos una cotización cerrada antes de que pagues un peso.',
+        a: 'Depende del avalúo del vehículo y del organismo de tránsito. La base del 1% de retención en la fuente cambia según el cilindraje: sobre el avalúo de la liquidación de impuestos si supera 125 cc, o sobre el valor del contrato de compraventa si es de 125 cc o menos. Por eso hacemos la validación previa gratis: te damos una cotización cerrada antes de que pagues un peso.',
       },
       {
-        q: '¿Puedo hacer el traspaso si el vehículo tiene multas o prenda?',
-        a: 'No hasta resolverlas: el RUNT bloquea el trámite. En la validación previa detectamos esos bloqueos y te ayudamos a resolverlos — levantamiento de prenda, prescripción o acuerdo de pago de multas.',
+        q: '¿El vehículo puede tener multas y aun así hacer el traspaso?',
+        a: 'Sí. Las multas de tránsito se registran a nombre de la persona, no del vehículo — un carro puede tener comparendos en su historial y seguir habilitado para traspaso, siempre que esas multas no estén a nombre del comprador ni del vendedor. Lo que sí bloquea el trámite es una prenda vigente sobre el vehículo; si existe, primero hay que levantarla.',
       },
     ],
   },

@@ -44,7 +44,7 @@ export default function PaymentGuarantee() {
 
         <FadeIn>
           <p className="text-slate-500 text-sm leading-relaxed border-l-2 border-amber-400 pl-4">
-            <strong className="text-slate-700">Traspaso de Propiedad:</strong> el tránsito cobra un avalúo del 1 % del valor comercial del vehículo, y ese valor hay que pagarlo completo desde el inicio — no se divide en dos. No es un cobro nuestro, es lo que exige el organismo. Tu asesor te lo detalla al cotizarte.
+            <strong className="text-slate-700">Traspaso de Propiedad:</strong> el tránsito cobra un avalúo del 1% (la base depende del cilindraje del vehículo), y ese valor hay que pagarlo completo desde el inicio — no se divide en dos. No es un cobro nuestro, es lo que exige el organismo. Tu asesor te lo detalla al cotizarte.
           </p>
         </FadeIn>
 

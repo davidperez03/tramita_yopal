@@ -7,7 +7,7 @@ const waUrl = waLink('Hola, quiero más información sobre sus servicios.');
 const listItems = [
   { title: 'Sin cobro total por adelantado',   desc: 'Honorarios y derechos de trámite se dividen en dos: mitad al iniciar, mitad al aprobar. El único cobro que no se divide es el avalúo en traspaso, que lo exige el tránsito completo.' },
   { title: 'Tramitamos en ventanilla por ti', desc: 'Gestionamos tu trámite de forma presencial en el organismo de tránsito de Yopal. Tú solo envías los documentos por mensajería.' },
-  { title: 'Validación previa sin costo',     desc: 'Antes de cobrar revisamos el vehículo, el propietario y el comprador para detectar prendas, multas o restricciones.' },
+  { title: 'Validación previa sin costo',     desc: 'Antes de cobrar revisamos el vehículo (prendas, restricciones) y el estado de propietario y comprador en el SIMIT (multas a su nombre).' },
   { title: 'Trámites en Yopal, Casanare',     desc: 'Especializados en el organismo de tránsito de Yopal. ¿Vehículo de otra ciudad? Cuéntanos tu caso.' },
   { title: 'Sin letra pequeña',               desc: 'Te decimos exactamente qué necesitas, cuánto cuesta y cuánto tarda — antes de empezar.' },
 ];

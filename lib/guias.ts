@@ -53,14 +53,14 @@ export const GUIAS: Guia[] = [
       {
         titulo: '¿Cuánto cuesta el traspaso en Yopal?',
         parrafos: [
-          'El costo tiene tres componentes: los derechos del organismo de tránsito, la retención en la fuente del 1% sobre el valor del vehículo (para carros; se liquida sobre el avalúo o el valor de la venta) y los honorarios de gestión si lo haces con un tramitador.',
+          'El costo tiene tres componentes: los derechos del organismo de tránsito, la retención en la fuente del 1% sobre el valor del vehículo y los honorarios de gestión si lo haces con un tramitador. La base sobre la que se calcula ese 1% depende del cilindraje: si tu vehículo supera los 125 cc, se calcula sobre el avalúo según la liquidación de impuestos; si es de 125 cc o menos, se calcula sobre el valor indicado en el contrato de compraventa.',
           'Como los derechos cambian cada año y la retención depende del valor de tu vehículo, la única cifra seria es una cotización sobre tu caso concreto. Nosotros la damos gratis y cerrada antes de empezar: sabes el total exacto antes de pagar un peso.',
         ],
       },
       {
         titulo: 'El paso que casi nadie hace y evita el 90% de los problemas',
         parrafos: [
-          'Antes de firmar o pagar nada, revisa el historial del vehículo y de las dos personas en el RUNT y el SIMIT: prendas vigentes, embargos, multas pendientes, medidas cautelares. Cualquiera de esos bloquea el traspaso, y descubrirlo con la plata ya entregada es un dolor de cabeza.',
+          'Antes de firmar o pagar nada, revisa el vehículo en el RUNT (prendas vigentes, embargos, medidas cautelares) y el estado de comprador y vendedor en el SIMIT (multas pendientes a su nombre). Un vehículo puede tener comparendos en su historial sin que eso bloquee el traspaso — lo que sí bloquea es una prenda vigente o que las multas estén a nombre de una de las dos partes. Descubrir un bloqueo con la plata ya entregada es un dolor de cabeza; por eso revisamos todo antes.',
           'Esa validación previa la hacemos gratis. Si aparece un bloqueo, te decimos exactamente cómo resolverlo (levantamiento de prenda, prescripción de comparendos, acuerdo de pago) y en qué orden.',
         ],
       },
@@ -79,18 +79,18 @@ export const GUIAS: Guia[] = [
       {
         titulo: '¿Cuánto tarda?',
         parrafos: [
-          'Con los documentos completos y sin bloqueos, la radicación y aprobación toma normalmente 1 a 2 días hábiles en el organismo de tránsito de Yopal. Si el vehículo está matriculado en otra ciudad, primero hay que trasladar la cuenta a Yopal — ese trámite toma 15 a 30 días hábiles antes de poder radicar el traspaso.',
+          'Con los documentos completos y sin bloqueos, la radicación y aprobación toma normalmente 1 a 2 días hábiles en el organismo de tránsito de Yopal.',
         ],
       },
     ],
     faqs: [
       {
-        q: '¿Puedo hacer el traspaso si el vehículo está matriculado en otra ciudad?',
-        a: 'Sí. Se gestiona primero el traslado de cuenta al organismo de tránsito de Yopal y luego el traspaso. Nosotros manejamos los dos trámites como un solo proceso.',
+        q: '¿El vendedor puede hacer el traspaso sin el comprador (o viceversa)?',
+        a: 'Con los documentos firmados y autenticados por ambas partes, ninguno tiene que ir en persona: nosotros radicamos en ventanilla. Si una de las partes tiene dificultad para firmar o autenticar sus documentos, cuéntanos tu caso y te decimos cómo proceder.',
       },
       {
-        q: '¿El vendedor puede hacer el traspaso sin el comprador (o viceversa)?',
-        a: 'Con los documentos firmados y autenticados por ambas partes, ninguno tiene que ir en persona: nosotros radicamos en ventanilla. Si una de las partes no colabora, existe la figura del traspaso a persona indeterminada para el vendedor — consúltanos tu caso.',
+        q: '¿El vehículo puede tener multas y aun así hacer el traspaso?',
+        a: 'Sí. Las multas de tránsito se registran a nombre de la persona, no del vehículo — un carro puede tener comparendos en su historial y seguir habilitado para traspaso, siempre que esas multas no estén a nombre del comprador ni del vendedor. Lo que sí bloquea el trámite es una prenda vigente sobre el vehículo.',
       },
       {
         q: '¿Qué pasa con el SOAT y el impuesto vehicular después del traspaso?',

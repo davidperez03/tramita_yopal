@@ -130,7 +130,7 @@ export function AddTramiteForm() {
               {esTraspaso && (
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">
-                    Valor comercial del vehículo
+                    Base del avalúo
                   </label>
                   <AvaluoInput />
                 </div>
@@ -138,7 +138,9 @@ export function AddTramiteForm() {
             </div>
             {esTraspaso && (
               <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
-                El avalúo (1% del valor comercial) se cobra completo al iniciar — no entra en el 50/50.
+                El avalúo (1%) se cobra completo al iniciar — no entra en el 50/50. Base: avalúo de
+                liquidación de impuestos si el vehículo supera 125cc, o valor del contrato de
+                compraventa si es de 125cc o menos.
               </p>
             )}
           </div>

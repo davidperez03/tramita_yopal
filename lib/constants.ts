@@ -86,7 +86,7 @@ export const FAQS = [
   },
   {
     question: '¿Cómo funciona la validación previa?',
-    answer: 'Antes de iniciar verificamos que el propietario, el comprador y el vehículo no tengan impedimentos — multas, prendas activas, restricciones en el RUNT — que puedan bloquear el proceso a mitad de camino. Así evitamos sorpresas costosas. Esta revisión es completamente gratuita.',
+    answer: 'Antes de iniciar verificamos el vehículo en el RUNT (prendas activas, restricciones) y el estado de propietario y comprador en el SIMIT (multas a su nombre) — cualquier impedimento que pueda bloquear el proceso a mitad de camino. Un vehículo puede tener multas en su historial sin que eso bloquee el trámite, siempre que no estén a nombre de quien compra o vende. Así evitamos sorpresas costosas. Esta revisión es completamente gratuita.',
   },
   {
     question: '¿Cómo envío mis documentos si vivo lejos?',
@@ -118,11 +118,11 @@ export const FAQS = [
   },
   {
     question: '¿Cuánto debo pagar por adelantado?',
-    answer: 'El 50% del total al iniciar — eso incluye honorarios y derechos de trámite (RUNT y organismo de tránsito). El 50% restante lo pagas cuando el tránsito aprueba y expide tu documento. Nunca cobramos el total por adelantado. La única excepción es el avalúo vehicular en trámites de Traspaso: ese valor (1% del valor comercial del vehículo) se paga completo al iniciar porque así lo exige el organismo de tránsito.',
+    answer: 'El 50% del total al iniciar — eso incluye honorarios y derechos de trámite (RUNT y organismo de tránsito). El 50% restante lo pagas cuando el tránsito aprueba y expide tu documento. Nunca cobramos el total por adelantado. La única excepción es el avalúo vehicular en trámites de Traspaso: ese valor (1% de la base según el cilindraje del vehículo) se paga completo al iniciar porque así lo exige el organismo de tránsito.',
   },
   {
     question: '¿Cuánto cuesta un traspaso de vehículo en Yopal?',
-    answer: 'El costo total tiene dos partes: (1) honorarios más derechos de trámite (RUNT y organismo de tránsito), que se dividen en 50% al iniciar y 50% al aprobar; y (2) el avalúo vehicular, que es el 1% del valor comercial del vehículo y se paga completo al iniciar — ese valor va directo al organismo de tránsito. Escríbenos con los datos del vehículo y te damos el desglose exacto en menos de 30 minutos.',
+    answer: 'El costo total tiene dos partes: (1) honorarios más derechos de trámite (RUNT y organismo de tránsito), que se dividen en 50% al iniciar y 50% al aprobar; y (2) el avalúo vehicular (1%), que se paga completo al iniciar y va directo al organismo de tránsito — la base cambia según el cilindraje: avalúo de liquidación de impuestos si supera 125 cc, o valor del contrato de compraventa si es de 125 cc o menos. Escríbenos con los datos del vehículo y te damos el desglose exacto en menos de 30 minutos.',
   },
 ];
 
@@ -155,10 +155,10 @@ página, o escribir al WhatsApp ${BUSINESS.phone} si no lo tiene.
 
 SERVICIO DIFERENCIADOR — VALIDACIÓN PREVIA:
 Tramita Yopal valida al comprador, al vendedor y al vehículo ANTES de iniciar el trámite:
-- Prendas activas no levantadas
-- Multas o restricciones en el RUNT
+- Vehículo (RUNT): prendas activas no levantadas, embargos, restricciones
+- Comprador y vendedor (SIMIT): multas pendientes a su nombre
+- IMPORTANTE: las multas se registran a la PERSONA, no al vehículo — un carro puede tener comparendos en su historial y aun así hacerse el traspaso, siempre que esas multas no estén a nombre del comprador ni del vendedor. Lo único que bloquea siempre por el lado del vehículo es una prenda vigente.
 - Documentos del propietario/comprador en orden
-- Impedimentos que puedan bloquear el trámite a mitad de proceso
 
 SERVICIOS:
 ${SERVICES.filter(s => s.id !== 'otros').map(s => `- ${s.name}${s.duration ? ` — ${s.duration}` : ''}: ${s.description}`).join('\n')}
