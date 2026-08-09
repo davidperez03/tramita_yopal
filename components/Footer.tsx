@@ -66,6 +66,7 @@ export default function Footer() {
                 { href: '/seguimiento', label: 'Seguir mi trámite' },
                 { href: '/#validar',  label: 'Validar mi caso' },
                 { href: '/prescripcion-comparendos', label: 'Consultar multas' },
+                { href: '/descuento-comparendo', label: 'Pagar comparendo con descuento' },
                 { href: '/#proceso',  label: 'Cómo trabajamos' },
                 { href: '/#faq',      label: 'Preguntas frecuentes' },
                 { href: '/#cotizar',  label: 'Cotizar' },

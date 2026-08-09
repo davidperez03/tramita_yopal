@@ -54,7 +54,7 @@ export default function Services() {
                   <span className="hidden sm:block text-xs text-slate-400">
                     {s.duration ?? 'Según el caso'}
                   </span>
-                  <span className="text-sm font-semibold text-brand-700 group-hover:text-brand-900 transition-colors justify-self-start sm:justify-self-end">
+                  <span className="text-sm font-semibold text-brand-700 group-hover:text-brand-900 transition-colors justify-self-start sm:justify-self-end whitespace-nowrap">
                     {isOtros ? 'Preguntar por WhatsApp' : 'Ver trámite'} →
                   </span>
                 </Link>

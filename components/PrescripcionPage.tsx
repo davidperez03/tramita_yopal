@@ -238,6 +238,25 @@ export default function PrescripcionPage() {
               </div>
             ))}
           </div>
+
+          {/* Cruce con descuento: comparendo reciente ≠ prescripción */}
+          <div className="mt-10 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <p className="font-semibold text-slate-900 text-sm mb-1">
+                ¿Tu comparendo es reciente?
+              </p>
+              <p className="text-slate-500 text-sm">
+                Si te lo impusieron hace días, no aplica prescripción — pero puedes pagarlo
+                con hasta el 50% de descuento si actúas dentro del plazo legal.
+              </p>
+            </div>
+            <a
+              href="/descuento-comparendo"
+              className="flex-shrink-0 text-sm font-semibold text-brand-700 hover:text-brand-900 transition-colors whitespace-nowrap"
+            >
+              Verificar mi descuento →
+            </a>
+          </div>
         </div>
       </section>
 
