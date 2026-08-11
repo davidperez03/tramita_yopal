@@ -376,7 +376,7 @@ export const SEO_SERVICES: SeoService[] = [
       },
       {
         q: '¿El curso reemplaza el pago del comparendo?',
-        a: 'No. El curso es un requisito adicional para acceder al descuento — el comparendo se paga aparte, con el porcentaje de descuento ya aplicado una vez tengas el certificado de asistencia.',
+        a: 'No, son dos pagos distintos: el curso (según el centro autorizado) y el comparendo con el descuento ya aplicado. La suma de ambos equivale al 50% o al 25% del valor total, según el plazo en que estés — no es un gasto adicional que se come el descuento.',
       },
     ],
   },

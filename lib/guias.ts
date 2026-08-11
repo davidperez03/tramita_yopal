@@ -291,7 +291,7 @@ export const GUIAS: Guia[] = [
     faqs: [
       {
         q: '¿El curso pedagógico tiene costo aparte?',
-        a: 'Depende del centro autorizado donde se agende. Te confirmamos el valor exacto junto con la fecha y el cupo antes de agendar.',
+        a: 'Sí, pero no es un gasto adicional al descuento: la suma del valor del curso más el comparendo ya con el descuento aplicado equivale al 50% o al 25% del valor total, según el plazo en que estés. Te confirmamos el desglose exacto (curso + comparendo) antes de agendar, sin sorpresas.',
       },
       {
         q: '¿Puedo pagar el comparendo sin hacer el curso?',
