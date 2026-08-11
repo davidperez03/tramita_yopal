@@ -1,11 +1,13 @@
 -- ============================================================
--- TRAMITA YOPAL — Schema completo v8
+-- TRAMITA YOPAL — Schema completo v9
 -- Base creada desde cero: pegar todo en Supabase > SQL Editor
 -- Auth: Supabase Auth (sin tabla sessions)
 -- v6: tramites normalizado (cliente solo vía cliente_id),
 --     notificaciones WhatsApp, rate_limits
 -- v7: roles admin/tramitador + tramites.asignado_a
 -- v8: comparendo_solicitudes.cliente_id (cliente línea comparendos)
+-- v9: pago_inicial_monto / pago_final_monto — el cliente no siempre
+--     paga exactamente 50/50; guarda el monto real recibido
 --
 -- ROLES: se guardan en app_metadata.role de Supabase Auth.
 -- Un usuario SIN role es tramitador (mínimo privilegio).
@@ -101,17 +103,21 @@ create table if not exists tramites (
   costo_envio           integer     not null default 0,
   costo_imprevistos     integer     not null default 0,
 
-  -- Pagos (política 50/50)
-  -- pago1 = floor((honorarios + derechos) / 2) + avaluo
-  -- pago2 = (honorarios + derechos) - floor((honorarios + derechos) / 2)
+  -- Pagos (sugerido 50/50, pero el cliente a veces paga distinto)
+  -- pago1 sugerido = floor((honorarios + derechos) / 2) + avaluo
+  -- pago2 sugerido = (honorarios + derechos) - floor((honorarios + derechos) / 2)
+  -- *_monto guarda lo realmente recibido; si es null, se asume el sugerido
+  -- (compatibilidad con trámites ya marcados antes de esta columna).
   pago_inicial          boolean     not null default false,
   pago_inicial_fecha    date,
   pago_inicial_metodo   text
                         check (pago_inicial_metodo in ('efectivo','transferencia','nequi','daviplata','otro')),
+  pago_inicial_monto    integer,
   pago_final            boolean     not null default false,
   pago_final_fecha      date,
   pago_final_metodo     text
                         check (pago_final_metodo in ('efectivo','transferencia','nequi','daviplata','otro')),
+  pago_final_monto      integer,
 
   -- Cancelación
   cancelacion_motivo    text,
@@ -123,6 +129,10 @@ create table if not exists tramites (
   -- Soft-delete
   deleted_at            timestamptz
 );
+
+-- Para bases creadas antes de v9:
+alter table tramites add column if not exists pago_inicial_monto integer;
+alter table tramites add column if not exists pago_final_monto integer;
 
 alter table tramites enable row level security;
 -- Sin políticas públicas — solo service_role.

@@ -28,13 +28,16 @@ export type Tramite = {
   costo_envio: number;
   costo_imprevistos: number;
 
-  // Pagos del cliente
+  // Pagos del cliente — *_monto es lo realmente recibido; si es null,
+  // se asume el valor sugerido de calcPagos (50/50 + avalúo)
   pago_inicial: boolean;
   pago_inicial_fecha: string | null;
   pago_inicial_metodo: string | null;
+  pago_inicial_monto: number | null;
   pago_final: boolean;
   pago_final_fecha: string | null;
   pago_final_metodo: string | null;
+  pago_final_monto: number | null;
 
   cancelacion_motivo: string | null;
   pago_devuelto: boolean;
@@ -91,11 +94,26 @@ export const ESTADO_CONFIG = {
   },
 } satisfies Record<TramiteEstado, { label: string; badge: string; pillActive: string; band: string }>;
 
+// Split 50/50 sugerido — el punto de partida que se muestra al marcar un
+// pago, pero el cliente no siempre paga exactamente esto (ver montoPago*).
 export function calcPagos(t: Pick<Tramite, 'valor_honorarios' | 'valor_derechos' | 'valor_avaluo'>) {
   const base      = t.valor_honorarios + t.valor_derechos;
   const pago1base = Math.floor(base / 2);
   const pago2base = base - pago1base;
   return { pago1: pago1base + t.valor_avaluo, pago2: pago2base, total: base + t.valor_avaluo };
+}
+
+// Monto realmente recibido en cada cuota. Si nunca se registró un monto
+// distinto (trámites viejos, o el cliente pagó justo el sugerido), cae
+// al valor 50/50 de calcPagos.
+type TramiteParaMontos = Pick<Tramite, 'valor_honorarios' | 'valor_derechos' | 'valor_avaluo' | 'pago_inicial_monto' | 'pago_final_monto'>;
+
+export function montoPagoInicial(t: TramiteParaMontos): number {
+  return t.pago_inicial_monto ?? calcPagos(t).pago1;
+}
+
+export function montoPagoFinal(t: TramiteParaMontos): number {
+  return t.pago_final_monto ?? calcPagos(t).pago2;
 }
 
 export function calcNeto(t: Pick<Tramite, 'valor_honorarios' | 'costo_tramitador' | 'costo_envio' | 'costo_imprevistos'>) {

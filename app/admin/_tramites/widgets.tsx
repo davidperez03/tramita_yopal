@@ -61,11 +61,25 @@ export function PaySlot({ label, amount, paid, date, metodo, onToggle, disabled 
   );
 }
 
-/* ─── Selector de método ─── */
-export function MetodoSelector({ label, onConfirm, onCancel }: {
-  label: string; onConfirm: (m: string) => void; onCancel: () => void;
+/* ─── Selector de método + monto ───
+   El cliente no siempre paga exactamente el 50/50 sugerido — a veces da
+   un poco más. El monto viene precargado con el sugerido pero es editable. */
+export function MetodoSelector({ label, sugerido, montoFijo, onConfirm, onCancel }: {
+  label: string; sugerido: number; montoFijo?: boolean;
+  onConfirm: (m: string, monto: number) => void; onCancel: () => void;
 }) {
   const [metodo, setMetodo] = useState('');
+  const [montoTexto, setMontoTexto] = useState(
+    sugerido > 0 ? new Intl.NumberFormat('es-CO').format(sugerido) : '',
+  );
+  const monto = montoFijo ? sugerido : (montoTexto === '' ? 0 : parseInt(montoTexto.replace(/\D/g, ''), 10));
+
+  function handleMontoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const digits = e.target.value.replace(/\D/g, '');
+    const num    = digits === '' ? 0 : parseInt(digits, 10);
+    setMontoTexto(num > 0 ? new Intl.NumberFormat('es-CO').format(num) : '');
+  }
+
   return (
     <div className="bg-brand-50 border border-brand-200 rounded-2xl p-4 space-y-3">
       <p className="text-xs font-bold text-brand-700 uppercase tracking-wide">Método — {label}</p>
@@ -79,8 +93,29 @@ export function MetodoSelector({ label, onConfirm, onCancel }: {
           </button>
         ))}
       </div>
+      {montoFijo ? (
+        <p className="text-sm font-bold text-brand-800">
+          Monto: {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(sugerido)}
+        </p>
+      ) : (
+        <div>
+          <label className="block text-[11px] font-bold text-brand-600 uppercase tracking-wide mb-1">
+            Monto recibido
+          </label>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">$</span>
+            <input type="text" inputMode="numeric" value={montoTexto} onChange={handleMontoChange}
+              className="w-full border border-brand-200 rounded-xl pl-6 pr-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          </div>
+          {monto !== sugerido && (
+            <p className="text-[11px] text-amber-700 mt-1">
+              Distinto al sugerido ({new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(sugerido)})
+            </p>
+          )}
+        </div>
+      )}
       <div className="flex gap-2">
-        <button type="button" disabled={!metodo} onClick={() => onConfirm(metodo)}
+        <button type="button" disabled={!metodo || monto <= 0} onClick={() => onConfirm(metodo, monto)}
           className="text-xs font-bold px-4 py-2 bg-brand-950 text-white rounded-xl disabled:opacity-40 hover:bg-brand-800 transition-colors">
           Confirmar pago
         </button>

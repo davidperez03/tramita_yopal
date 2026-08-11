@@ -105,7 +105,7 @@ export default async function AdminPage({
   }
 
   const TRAMITE_COLS =
-    'id, created_at, updated_at, cliente_id, cliente:clientes(nombre, telefono, ciudad), asignado_a, placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento';
+    'id, created_at, updated_at, cliente_id, cliente:clientes(nombre, telefono, ciudad), asignado_a, placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_inicial_monto, pago_final, pago_final_fecha, pago_final_metodo, pago_final_monto, cancelacion_motivo, pago_devuelto, codigo_seguimiento';
 
   const [reviewsRes, tramitesRes, comparendosRes, clientesRes] = await Promise.all([
     supabaseAdmin

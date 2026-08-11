@@ -4,11 +4,11 @@ import { useState, useTransition } from 'react';
 import { cop, fmtDate } from '@/lib/format';
 import {
   type Tramite, type TramiteEstado, type HistorialEntry, type TramitadorOption,
-  ESTADO_CONFIG, calcPagos, calcNeto,
+  ESTADO_CONFIG, calcPagos, calcNeto, montoPagoInicial, montoPagoFinal,
 } from '@/lib/domain/tramite';
 import {
   updateEstado, togglePago, deleteTramite, cancelTramite, togglePagoDevuelto,
-  asignarTramitador,
+  asignarTramitador, marcarPagoCompleto,
 } from '../tramites-actions';
 import { cx, Badge, Err } from '../ui';
 import { PagoIcon, PaySlot, MetodoSelector, EstadoPills, HistorialMini, CodigoCopy } from './widgets';
@@ -22,7 +22,7 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
   const [isPending, startTransition]                = useTransition();
   const [expanded, setExpanded]                     = useState(false);
   const [pagoError, setPagoError]                   = useState<string | null>(null);
-  const [selectingMethodFor, setSelectingMethodFor] = useState<'pago_inicial' | 'pago_final' | null>(null);
+  const [selectingMethodFor, setSelectingMethodFor] = useState<'pago_inicial' | 'pago_final' | 'completo' | null>(null);
   const [showCancelForm, setShowCancelForm]          = useState(false);
   const [cancelMotivo, setCancelMotivo]             = useState('');
   const [cancelError, setCancelError]               = useState<string | null>(null);
@@ -38,6 +38,9 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
     const currentValue = campo === 'pago_inicial' ? t.pago_inicial : t.pago_final;
     setPagoError(null);
     if (currentValue) {
+      // Desmarcar un pago ya registrado es delicado (es dinero real) —
+      // exige confirmación explícita para evitar un clic accidental.
+      if (!confirm('¿Seguro que quieres desmarcar este pago? Esto borra el monto y método registrados.')) return;
       startTransition(async () => {
         const res = await togglePago(t.id, campo, false);
         if (res?.error) setPagoError(res.error);
@@ -47,13 +50,15 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
     }
   }
 
-  function handlePagoConMetodo(metodo: string) {
+  function handlePagoConMetodo(metodo: string, monto: number) {
     const campo = selectingMethodFor;
     if (!campo) return;
     setSelectingMethodFor(null);
     setPagoError(null);
     startTransition(async () => {
-      const res = await togglePago(t.id, campo, true, metodo);
+      const res = campo === 'completo'
+        ? await marcarPagoCompleto(t.id, metodo)
+        : await togglePago(t.id, campo, true, metodo, monto);
       if (res?.error) setPagoError(res.error);
     });
   }
@@ -205,20 +210,36 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Pagos</p>
               {selectingMethodFor ? (
                 <MetodoSelector
-                  label={selectingMethodFor === 'pago_inicial' ? 'Pago 1' : 'Pago 2'}
+                  label={
+                    selectingMethodFor === 'pago_inicial' ? 'Pago 1' :
+                    selectingMethodFor === 'pago_final'   ? 'Pago 2' : 'Pago completo'
+                  }
+                  sugerido={
+                    selectingMethodFor === 'pago_inicial' ? pago1 :
+                    selectingMethodFor === 'pago_final'   ? pago2 : total
+                  }
+                  montoFijo={selectingMethodFor === 'completo'}
                   onConfirm={handlePagoConMetodo}
                   onCancel={() => setSelectingMethodFor(null)}
                 />
               ) : (
-                <div className="flex gap-3">
-                  <PaySlot label="Pago 1" amount={pago1} paid={t.pago_inicial}
-                    date={t.pago_inicial_fecha} metodo={t.pago_inicial_metodo}
-                    onToggle={() => handlePagoToggle('pago_inicial')}
-                    disabled={isPending || bloqueado || cancelado} />
-                  <PaySlot label="Pago 2" amount={pago2} paid={t.pago_final}
-                    date={t.pago_final_fecha} metodo={t.pago_final_metodo}
-                    onToggle={() => handlePagoToggle('pago_final')}
-                    disabled={isPending || bloqueado || cancelado} />
+                <div className="space-y-2">
+                  <div className="flex gap-3">
+                    <PaySlot label="Pago 1" amount={t.pago_inicial ? montoPagoInicial(t) : pago1} paid={t.pago_inicial}
+                      date={t.pago_inicial_fecha} metodo={t.pago_inicial_metodo}
+                      onToggle={() => handlePagoToggle('pago_inicial')}
+                      disabled={isPending || bloqueado || cancelado} />
+                    <PaySlot label="Pago 2" amount={t.pago_final ? montoPagoFinal(t) : pago2} paid={t.pago_final}
+                      date={t.pago_final_fecha} metodo={t.pago_final_metodo}
+                      onToggle={() => handlePagoToggle('pago_final')}
+                      disabled={isPending || bloqueado || cancelado} />
+                  </div>
+                  {!t.pago_inicial && !t.pago_final && !bloqueado && !cancelado && (
+                    <button type="button" onClick={() => setSelectingMethodFor('completo')} disabled={isPending}
+                      className="text-xs font-semibold text-brand-600 hover:text-brand-800 transition-colors disabled:opacity-40">
+                      ¿Pagó todo de una vez? Marcar pago completo →
+                    </button>
+                  )}
                 </div>
               )}
               <Err msg={pagoError} />

@@ -6,6 +6,7 @@ import { requireAdmin, requireUser } from '@/lib/auth';
 import { randomBytes } from 'crypto';
 import { notificarCambioEstado } from '@/lib/notificaciones';
 import { findOrCreateCliente } from '@/lib/clientes';
+import { calcPagos } from '@/lib/domain/tramite';
 import type { TramiteEstado } from '@/lib/domain/tramite';
 
 function generateCodigo(): string {
@@ -131,11 +132,15 @@ export async function cancelTramite(id: string, motivo: string) {
   return { success: true };
 }
 
+// campo/monto: el cliente no siempre paga exactamente el 50/50 sugerido
+// (a veces da un poco más, o paga todo de una vez) — monto guarda lo
+// realmente recibido; si no se indica, se asume el valor sugerido.
 export async function togglePago(
   id: string,
   campo: 'pago_inicial' | 'pago_final',
   value: boolean,
   metodo?: string,
+  monto?: number,
 ) {
   await requireAdmin();
 
@@ -150,8 +155,9 @@ export async function togglePago(
     }
   }
 
-  const fechaCampo = campo === 'pago_inicial' ? 'pago_inicial_fecha' : 'pago_final_fecha';
+  const fechaCampo  = campo === 'pago_inicial' ? 'pago_inicial_fecha'  : 'pago_final_fecha';
   const metodoCampo = campo === 'pago_inicial' ? 'pago_inicial_metodo' : 'pago_final_metodo';
+  const montoCampo  = campo === 'pago_inicial' ? 'pago_inicial_monto'  : 'pago_final_monto';
 
   const updates: Record<string, unknown> = {
     [campo]:      value,
@@ -162,8 +168,42 @@ export async function togglePago(
   if (value && metodo) updates[metodoCampo] = metodo;
   if (!value)           updates[metodoCampo] = null;
 
+  if (value) {
+    updates[montoCampo] = monto != null ? Math.min(Math.max(Math.round(monto), 0), MAX_VALOR) : null;
+  } else {
+    updates[montoCampo] = null;
+  }
+
   const { error } = await supabaseAdmin.from('tramites').update(updates).eq('id', id);
   if (error) return { error: 'Error al actualizar pago.' };
+  revalidatePath('/admin');
+  return { success: true };
+}
+
+// Para clientes que pagan el total en un solo momento: marca las dos
+// cuotas de una vez (pago_final queda con monto 0 porque ya está
+// cubierto por el pago inicial).
+export async function marcarPagoCompleto(id: string, metodo: string) {
+  await requireAdmin();
+
+  const { data: t, error: fetchError } = await supabaseAdmin
+    .from('tramites')
+    .select('valor_honorarios, valor_derechos, valor_avaluo')
+    .eq('id', id)
+    .single();
+  if (fetchError || !t) return { error: 'No se encontró el trámite.' };
+
+  const { total } = calcPagos(t);
+  const hoy = new Date().toISOString().split('T')[0];
+  const ahora = new Date().toISOString();
+
+  const { error } = await supabaseAdmin.from('tramites').update({
+    pago_inicial: true, pago_inicial_fecha: hoy, pago_inicial_metodo: metodo, pago_inicial_monto: total,
+    pago_final:   true, pago_final_fecha: hoy,   pago_final_metodo: metodo,   pago_final_monto: 0,
+    updated_at: ahora,
+  }).eq('id', id);
+
+  if (error) return { error: 'Error al registrar el pago completo.' };
   revalidatePath('/admin');
   return { success: true };
 }

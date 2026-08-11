@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { getSessionInfo } from '@/lib/auth';
-import { calcPagos, calcNeto, type Tramite } from '@/lib/domain/tramite';
+import { calcPagos, calcNeto, montoPagoInicial, montoPagoFinal, type Tramite } from '@/lib/domain/tramite';
 
 function csvRow(fields: (string | number | boolean | null | undefined)[]) {
   return fields
@@ -24,7 +24,7 @@ export async function GET() {
   const { data, error } = await supabaseAdmin
     .from('tramites')
     .select(
-      'id, created_at, updated_at, cliente:clientes(nombre, telefono, ciudad, cedula), placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_final, pago_final_fecha, pago_final_metodo, cancelacion_motivo, pago_devuelto, codigo_seguimiento',
+      'id, created_at, updated_at, cliente:clientes(nombre, telefono, ciudad, cedula), placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_inicial_monto, pago_final, pago_final_fecha, pago_final_metodo, pago_final_monto, cancelacion_motivo, pago_devuelto, codigo_seguimiento',
     )
     .is('deleted_at', null)
     .order('created_at', { ascending: false });
@@ -36,8 +36,8 @@ export async function GET() {
     'placa', 'tipos', 'estado',
     'honorarios', 'derechos', 'avaluo', 'total',
     'costo_tramitador', 'costo_envio', 'costo_imprevistos', 'neto_honorarios',
-    'pago_inicial', 'pago_inicial_fecha', 'pago_inicial_metodo',
-    'pago_final', 'pago_final_fecha', 'pago_final_metodo',
+    'pago_inicial', 'pago_inicial_fecha', 'pago_inicial_metodo', 'pago_inicial_monto',
+    'pago_final', 'pago_final_fecha', 'pago_final_metodo', 'pago_final_monto',
     'cancelacion_motivo', 'pago_devuelto', 'codigo_seguimiento',
   ]);
 
@@ -51,8 +51,8 @@ export async function GET() {
       t.placa, t.tipos.join(' + '), t.estado,
       t.valor_honorarios, t.valor_derechos, t.valor_avaluo, total,
       t.costo_tramitador, t.costo_envio, t.costo_imprevistos, calcNeto(t),
-      t.pago_inicial, t.pago_inicial_fecha, t.pago_inicial_metodo,
-      t.pago_final, t.pago_final_fecha, t.pago_final_metodo,
+      t.pago_inicial, t.pago_inicial_fecha, t.pago_inicial_metodo, t.pago_inicial ? montoPagoInicial(t) : '',
+      t.pago_final, t.pago_final_fecha, t.pago_final_metodo, t.pago_final ? montoPagoFinal(t) : '',
       t.cancelacion_motivo, t.pago_devuelto, t.codigo_seguimiento,
     ]);
   });
