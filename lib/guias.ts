@@ -235,4 +235,78 @@ export const GUIAS: Guia[] = [
     servicioSlug: 'levantamiento-prenda',
     waMessage:    'Hola, leí la guía de levantamiento de prenda y quiero cotizar el mío.',
   },
+  {
+    slug:        'pagar-comparendo-descuento-yopal',
+    titulo:      'Cómo pagar un comparendo con descuento en Yopal (2026): plazos, porcentajes y curso pedagógico',
+    tituloCorto: 'Pagar tu comparendo con descuento, paso a paso',
+    descripcion: 'Guía completa del descuento por pronto pago de comparendos en Yopal: cuánto puedes ahorrar, los plazos exactos según el tipo de comparendo, el curso pedagógico obligatorio y cómo no perder el plazo.',
+    actualizado: '2026-08-09',
+    minutos:     5,
+    intro: [
+      'Un comparendo de tránsito no hay que pagarlo por el valor completo si actúas rápido: la ley permite un descuento de hasta el 50% por pronto pago. El problema es que el plazo corre en días hábiles desde el momento de la infracción, y mucha gente lo pierde por no saber exactamente cuánto tiempo le queda.',
+      'En esta guía te explicamos los plazos exactos, por qué el curso pedagógico es un paso obligatorio (no opcional) y cómo lo gestionamos contigo sin que se te venza el descuento.',
+    ],
+    secciones: [
+      {
+        titulo: '¿Cómo funciona el descuento por pronto pago?',
+        parrafos: [
+          'La Ley 769 de 2002 (Código Nacional de Tránsito) y sus modificaciones establecen un descuento escalonado según qué tan rápido pagues después de la infracción. El conteo es en días hábiles, no calendario, y empieza el día siguiente al comparendo.',
+          'El porcentaje que aparece en cualquier calculadora (incluida la nuestra) es una estimación basada en la fecha. El definitivo es el que refleje el SIMIT al momento en que liquides y pagues.',
+        ],
+      },
+      {
+        titulo: 'Plazos y porcentajes exactos',
+        parrafos: ['Los plazos son distintos según el tipo de comparendo:'],
+        lista: [
+          'Comparendo físico (impuesto por un agente): 50% de descuento en los primeros 5 días hábiles; 25% entre el día hábil 6 y el 20.',
+          'Fotomulta (cámara o detector electrónico): 50% de descuento en los primeros 11 días hábiles; 25% entre el día hábil 12 y el 26.',
+          'Después de esos plazos, ya no aplica ningún descuento — se paga el valor completo.',
+        ],
+      },
+      {
+        titulo: 'El curso pedagógico: el paso que no puedes saltarte',
+        parrafos: [
+          'Aquí es donde más gente pierde el descuento sin darse cuenta: la ley exige completar un curso pedagógico presencial obligatorio dentro del mismo plazo del descuento. Sin el certificado de asistencia, el porcentaje no se aplica aunque hayas pagado a tiempo.',
+          'El curso es una jornada única y hay que agendarlo con cupo disponible en un centro autorizado — por eso conviene hacerlo apenas conozcas tu caso, no en los últimos días del plazo.',
+        ],
+      },
+      {
+        titulo: 'Cómo lo gestionamos contigo',
+        parrafos: ['El proceso completo, para que no se te pase ningún plazo:'],
+        lista: [
+          '1. Nos das la fecha exacta de tu comparendo y el tipo (físico o fotomulta).',
+          '2. Calculamos automáticamente los días hábiles transcurridos y tu porcentaje de descuento vigente.',
+          '3. Agendamos tu curso pedagógico dentro del plazo, en un centro autorizado.',
+          '4. Recibimos tu certificado de asistencia.',
+          '5. Formalizamos el pago del comparendo con el descuento ya aplicado.',
+        ],
+      },
+      {
+        titulo: '¿Y si ya se venció el plazo del descuento?',
+        parrafos: [
+          'Si ya pasaron los días hábiles del descuento, lo pierdes — pero eso no significa que no haya nada que hacer. Si el comparendo tiene más de 3 años, puede aplicar la prescripción: un trámite distinto que elimina la multa por completo, no solo un porcentaje. Vale la pena revisar tu caso.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: '¿El curso pedagógico tiene costo aparte?',
+        a: 'Depende del centro autorizado donde se agende. Te confirmamos el valor exacto junto con la fecha y el cupo antes de agendar.',
+      },
+      {
+        q: '¿Puedo pagar el comparendo sin hacer el curso?',
+        a: 'Sí, pero sin el certificado de asistencia el sistema no aplica el descuento — pagarías el valor completo.',
+      },
+      {
+        q: '¿Qué pasa si mi comparendo es una fotomulta y no me he enterado hasta ahora?',
+        a: 'Las fotomultas se notifican por correo certificado, pero a veces la notificación no llega o se pierde. Consulta tu cédula en el SIMIT para saber la fecha real de notificación, de la que dependen tus días hábiles disponibles.',
+      },
+      {
+        q: '¿El descuento aplica igual en todo Colombia?',
+        a: 'El marco legal (Ley 769 de 2002) es nacional, pero la gestión del curso pedagógico y del pago depende de la autoridad de tránsito que impuso el comparendo. Nosotros gestionamos casos del organismo de tránsito de Yopal y coordinamos con otras autoridades cuando aplica.',
+      },
+    ],
+    servicioSlug: 'curso-pedagogico',
+    waMessage:    'Hola, leí la guía de descuento de comparendos y quiero verificar mi plazo.',
+  },
 ];

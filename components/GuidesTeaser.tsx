@@ -25,7 +25,7 @@ export default function GuidesTeaser() {
         </FadeIn>
 
         <FadeInStagger className="border-t-2 border-brand-950" stagger={0.06}>
-          {GUIAS.slice(0, 3).map((g) => (
+          {GUIAS.slice(0, 4).map((g) => (
             <FadeInItem key={g.slug}>
               <Link
                 href={`/guias/${g.slug}`}
