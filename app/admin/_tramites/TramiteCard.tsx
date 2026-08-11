@@ -14,6 +14,7 @@ import {
 import { cx, Badge, Err } from '../ui';
 import { PagoIcon, PaySlot, MetodoSelector, EstadoPills, HistorialMini, CodigoCopy } from './widgets';
 import { CostosForm } from './CostosForm';
+import { useToast } from '../Toast';
 
 export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, tramitadores }: {
   t: Tramite; hasTramiteComp: boolean; historial: HistorialEntry[];
@@ -29,6 +30,7 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
   const [cancelError, setCancelError]               = useState<string | null>(null);
   const [pendingEstado, setPendingEstado]           = useState<TramiteEstado | null>(null);
   const [estadoNota, setEstadoNota]                 = useState('');
+  const toast = useToast();
 
   const { pago1, pago2, total } = calcPagos(t);
   const bloqueado = t.estado === 'entregado';
@@ -44,7 +46,8 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
       if (!confirm('¿Seguro que quieres desmarcar este pago? Esto borra el monto y método registrados.')) return;
       startTransition(async () => {
         const res = await togglePago(t.id, campo, false);
-        if (res?.error) setPagoError(res.error);
+        if (res?.error) { setPagoError(res.error); toast(res.error, 'error'); }
+        else toast('Pago desmarcado');
       });
     } else {
       setSelectingMethodFor(campo);
@@ -60,7 +63,8 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
       const res = campo === 'completo'
         ? await marcarPagoCompleto(t.id, metodo)
         : await togglePago(t.id, campo, true, metodo, monto);
-      if (res?.error) setPagoError(res.error);
+      if (res?.error) { setPagoError(res.error); toast(res.error, 'error'); }
+      else toast(campo === 'completo' ? 'Pago completo registrado ✓' : 'Pago registrado ✓');
     });
   }
 
@@ -72,9 +76,11 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
 
   function confirmEstado() {
     if (!pendingEstado) return;
+    const nuevoEstado = pendingEstado;
     startTransition(async () => {
-      const res = await updateEstado(t.id, pendingEstado, estadoNota);
-      if (res?.error) setPagoError(res.error);
+      const res = await updateEstado(t.id, nuevoEstado, estadoNota);
+      if (res?.error) { setPagoError(res.error); toast(res.error, 'error'); }
+      else toast(`Estado actualizado a "${ESTADO_CONFIG[nuevoEstado].label}" ✓`);
       setPendingEstado(null);
       setEstadoNota('');
     });
@@ -85,7 +91,8 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
     setCancelError(null);
     startTransition(async () => {
       const res = await cancelTramite(t.id, cancelMotivo);
-      if (res?.error) { setCancelError(res.error); return; }
+      if (res?.error) { setCancelError(res.error); toast(res.error, 'error'); return; }
+      toast('Trámite cancelado');
       setShowCancelForm(false);
       setCancelMotivo('');
     });

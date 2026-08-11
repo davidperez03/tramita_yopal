@@ -1,6 +1,7 @@
 'use client';
 
-import { useTransition, useState } from 'react';
+import { useTransition, useState, useEffect, useRef } from 'react';
+import { motion, useMotionValue, useTransform, animate } from 'motion/react';
 
 export function cx(...cls: (string | false | null | undefined)[]) {
   return cls.filter(Boolean).join(' ');
@@ -27,12 +28,37 @@ export function Badge({ v = 'ghost', children }: { v?: BV; children: React.React
   );
 }
 
+// ── Contador animado ─────────────────────────────────────────
+// Anima de su valor anterior al nuevo cada vez que `value` cambia —
+// hace que el panel se sienta vivo (y confiable, como un dashboard
+// financiero de verdad) en vez de datos que aparecen de golpe.
+function AnimatedNumber({ value, format }: { value: number; format?: (n: number) => string }) {
+  const motionValue        = useMotionValue(0);
+  const display            = useTransform(motionValue, v => format ? format(Math.round(v)) : Math.round(v).toLocaleString('es-CO'));
+  const yaAnimoUnaVez       = useRef(false);
+
+  useEffect(() => {
+    const controls = animate(motionValue, value, {
+      duration: yaAnimoUnaVez.current ? 0.6 : 0.9,
+      ease: [0.21, 0.47, 0.32, 0.98],
+    });
+    yaAnimoUnaVez.current = true;
+    return () => controls.stop();
+  }, [value, motionValue]);
+
+  return <motion.span>{display}</motion.span>;
+}
+
 // ── Stat ─────────────────────────────────────────────────────
-export function Stat({ label, value, accent }: { label: string; value: string | number; accent?: string }) {
+export function Stat({ label, value, format, accent }: {
+  label: string; value: number; format?: (n: number) => string; accent?: string;
+}) {
   return (
     <div className="bg-white border border-slate-200/70 rounded-2xl px-5 py-4 shadow-sm">
       <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{label}</p>
-      <p className={cx('text-[26px] font-black leading-none tabular-nums mt-2', accent ?? 'text-slate-900')}>{value}</p>
+      <p className={cx('text-[26px] font-black leading-none tabular-nums mt-2', accent ?? 'text-slate-900')}>
+        <AnimatedNumber value={value} format={format} />
+      </p>
     </div>
   );
 }

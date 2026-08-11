@@ -110,9 +110,9 @@ export default function TramitesPanel({
       {/* Métricas */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <Stat label="Trámites"   value={enPeriodo.length} />
-        <Stat label="Cobrado"    value={cop(cobrado)} accent="text-emerald-700" />
-        <Stat label="Honorarios" value={cop(honorariosCobrados)} accent="text-brand-700" />
-        <Stat label="Por cobrar" value={cop(pendiente)} accent={pendiente > 0 ? 'text-amber-600' : 'text-slate-400'} />
+        <Stat label="Cobrado"    value={cobrado} format={cop} accent="text-emerald-700" />
+        <Stat label="Honorarios" value={honorariosCobrados} format={cop} accent="text-brand-700" />
+        <Stat label="Por cobrar" value={pendiente} format={cop} accent={pendiente > 0 ? 'text-amber-600' : 'text-slate-400'} />
       </div>
 
       {/* Alertas */}

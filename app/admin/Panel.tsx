@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { SERVICE_NAMES } from '@/lib/constants';
+import { ToastProvider } from './Toast';
 import { fmtDate, fmtDatetime } from '@/lib/format';
 import {
   approveReview, hideReview, deleteReview, addReview,
@@ -347,6 +349,7 @@ export default function Panel({
   };
 
   return (
+    <ToastProvider>
     <div className="flex min-h-screen bg-slate-50">
 
       {/* ── Sidebar lg+ ────────────────────────────────────────────────────── */}
@@ -406,7 +409,16 @@ export default function Panel({
 
       {/* ── Content ─────────────────────────────────────────────────────────── */}
       <main className="flex-1 lg:ml-60 min-h-screen">
-        <div className="pt-[104px] lg:pt-0 px-4 sm:px-6 lg:px-8 py-6 lg:py-8 w-full space-y-6">
+        <div className="pt-[104px] lg:pt-0 px-4 sm:px-6 lg:px-8 py-6 lg:py-8 w-full">
+        <AnimatePresence mode="wait">
+        <motion.div
+          key={tab}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.18, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="space-y-6"
+        >
 
           {/* Trámites */}
           {tab === 'tramites' && (
@@ -510,9 +522,11 @@ export default function Panel({
             </>
           )}
 
-
+        </motion.div>
+        </AnimatePresence>
         </div>
       </main>
     </div>
+    </ToastProvider>
   );
 }

@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
 import { ESTADO_CONFIG, type TramiteEstado } from '@/lib/domain/tramite';
 import { fmtDate, fmtDatetime } from '@/lib/format';
+import { ProgressFill } from './ProgressFill';
 
 const FLOW: TramiteEstado[] = ['recibido', 'en_proceso', 'aprobado', 'entregado'];
 
@@ -132,12 +133,9 @@ export default async function SeguimientoPage({
               <div className="relative mx-4">
                 {/* Fondo gris de la línea */}
                 <div className="absolute top-[14px] left-0 right-0 h-0.5 bg-slate-100" />
-                {/* Progreso en color */}
+                {/* Progreso en color — anima el llenado al cargar */}
                 {flowIndex > 0 && (
-                  <div
-                    className={`absolute top-[14px] left-0 h-0.5 ${cfg.band} transition-all duration-500`}
-                    style={{ width: `${progressPct}%` }}
-                  />
+                  <ProgressFill pct={progressPct} colorClass={cfg.band} />
                 )}
 
                 {/* Pasos */}

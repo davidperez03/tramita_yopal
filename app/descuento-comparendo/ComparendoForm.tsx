@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { BUSINESS } from '@/lib/constants';
 import { WhatsAppIcon } from '@/components/WhatsAppIcon';
 import { solicitarDescuento } from './actions';
@@ -209,25 +210,37 @@ export default function ComparendoForm() {
         <input type="date" name="fecha_comparendo" required
           value={fecha} onChange={e => setFecha(e.target.value)}
           className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white" />
-        {fecha && isFutureDate(fecha) && (
-          <div className="mt-2 flex items-start gap-3 border border-red-200 bg-red-50 rounded-xl px-4 py-3 text-red-700">
-            <div className="w-2 h-2 rounded-full mt-1 flex-shrink-0 bg-red-400" />
-            <p className="text-sm font-bold">Fecha no válida — el comparendo no puede ser futuro</p>
-          </div>
-        )}
-        {fecha && !isFutureDate(fecha) && ui && (
-          <div className={`mt-2 flex items-start gap-3 border rounded-xl px-4 py-3 ${ui.cls}`}>
-            <div className={`w-2 h-2 rounded-full mt-1 flex-shrink-0 ${ui.dot}`} />
-            <div>
-              <p className="text-sm font-bold">{ui.label}</p>
-              <p className="text-xs mt-0.5 opacity-80">
-                {diasHabilesDesde(fecha) === 0
-                  ? 'Comparendo de hoy — aún no han transcurrido días hábiles'
-                  : `${diasHabilesDesde(fecha)} días hábiles transcurridos · ${ui.sub}`}
-              </p>
-            </div>
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          {fecha && isFutureDate(fecha) && (
+            <motion.div key="futuro"
+              initial={{ opacity: 0, y: -6, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.12 } }}
+              transition={{ duration: 0.22, ease: [0.21, 0.47, 0.32, 0.98] }}
+              className="mt-2 flex items-start gap-3 border border-red-200 bg-red-50 rounded-xl px-4 py-3 text-red-700">
+              <div className="w-2 h-2 rounded-full mt-1 flex-shrink-0 bg-red-400" />
+              <p className="text-sm font-bold">Fecha no válida — el comparendo no puede ser futuro</p>
+            </motion.div>
+          )}
+          {fecha && !isFutureDate(fecha) && ui && (
+            <motion.div key={descuento}
+              initial={{ opacity: 0, y: -6, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.12 } }}
+              transition={{ duration: 0.28, ease: [0.21, 0.47, 0.32, 0.98] }}
+              className={`mt-2 flex items-start gap-3 border rounded-xl px-4 py-3 ${ui.cls}`}>
+              <div className={`w-2 h-2 rounded-full mt-1 flex-shrink-0 ${ui.dot}`} />
+              <div>
+                <p className="text-sm font-bold">{ui.label}</p>
+                <p className="text-xs mt-0.5 opacity-80">
+                  {diasHabilesDesde(fecha) === 0
+                    ? 'Comparendo de hoy — aún no han transcurrido días hábiles'
+                    : `${diasHabilesDesde(fecha)} días hábiles transcurridos · ${ui.sub}`}
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Datos */}
