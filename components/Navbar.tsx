@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { BUSINESS, waLink, WA_MESSAGES } from '@/lib/constants';
+import { waLink, WA_MESSAGES } from '@/lib/constants';
 import Image from 'next/image';
 import { WhatsAppIcon } from './WhatsAppIcon';
 

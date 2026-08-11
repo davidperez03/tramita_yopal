@@ -23,7 +23,7 @@ Lo que **falta es configuración externa** (Supabase, Vercel, Meta, Google), no 
 
 1. Crea un proyecto nuevo en [supabase.com](https://supabase.com) (región recomendada: `us-east-1`).
 2. Ve a **SQL Editor** → pega **todo** el contenido de `supabase/schema.sql` → Run.
-   Es un solo archivo (v7); no hay migraciones separadas.
+   Es un solo archivo (v9); no hay migraciones separadas.
 3. Ve a **Authentication → Users → Add user** y crea tu usuario admin con correo y contraseña.
 4. **CRÍTICO — márcate como admin.** En SQL Editor ejecuta (con tu correo):
 
@@ -116,9 +116,9 @@ El código ya está instrumentado.
 En orden de impacto sugerido:
 
 1. **Plantillas aprobadas de WhatsApp** (cuando Meta apruebe la cuenta) — ver paso 3.6.
-2. **Vehículos + recordatorios de vencimiento** (SOAT/tecnomecánica): tabla `vehiculos`,
-   cron diario que encola recordatorios a 30/15/5 días. Diseño en `docs/plan-base-datos.md` §2 y §4.
-3. **Documentos adjuntos** por trámite (bucket privado + URLs firmadas) — diseño en §6 del plan.
+2. **Vehículos + recordatorios de vencimiento** (SOAT/tecnomecánica): tabla `vehiculos` nueva,
+   cron diario que encola recordatorios a 30/15/5 días. Sin diseñar aún en detalle.
+3. **Documentos adjuntos** por trámite (bucket privado + URLs firmadas). Sin diseñar aún.
 4. **Más guías SEO** (2–3 por mes).
 5. **Paginación server-side del panel** cuando pasen de ~500 trámites.
 6. Eliminar `CALLMEBOT_API_KEY` cuando las notificaciones Cloud API estén activas
@@ -138,8 +138,10 @@ guías con el siguiente deploy. No hay más copias que mantener.
 
 ## Archivos clave para orientarse
 
-- `supabase/schema.sql` — toda la base de datos (v7), único archivo SQL.
-- `docs/plan-base-datos.md` — diseño y estado de las fases de datos.
+- `supabase/schema.sql` — toda la base de datos (v9), único archivo SQL.
+- `lib/reglas-negocio.ts` — reglas legales/financieras compartidas (base del
+  avalúo, umbrales de descuento de comparendos, texto de multas) — cambiar
+  aquí, no archivo por archivo.
 - `lib/seo-data.ts` — ciudades, servicios y su contenido SEO. `lib/guias.ts` — guías.
 - `lib/notificaciones.ts` + `lib/whatsapp.ts` — mensajes al cliente.
 - `app/admin/` — panel (admin y tramitador). `lib/auth.ts` — roles.

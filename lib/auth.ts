@@ -30,7 +30,3 @@ export async function requireUser(): Promise<SessionInfo> {
   if (!s) redirect('/admin');
   return s;
 }
-
-export async function isAuthed(): Promise<boolean> {
-  return !!(await getSessionInfo());
-}

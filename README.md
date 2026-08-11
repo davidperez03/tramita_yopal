@@ -43,6 +43,7 @@ CRON_SECRET=                     # Protege /api/cron/notificaciones (Vercel lo e
 CALLMEBOT_API_KEY=               # Notificación WhatsApp interna (opcional)
 SENTRY_ORG=                      # Sentry (opcional, solo build)
 SENTRY_PROJECT=
+NEXT_PUBLIC_SENTRY_DSN=          # Sentry (opcional, captura de errores en runtime)
 ```
 
 Sin `WHATSAPP_*` las notificaciones quedan encoladas (estado `pendiente` en la
@@ -50,7 +51,7 @@ tabla `notificaciones`) y se envían cuando se configuren las credenciales.
 
 ## Base de datos (Supabase)
 
-- `supabase/schema.sql` — schema completo (v7). La base se crea desde cero:
+- `supabase/schema.sql` — schema completo (v9). La base se crea desde cero:
   pegar todo el archivo en Supabase > SQL Editor. Único archivo fuente, sin migraciones.
 
 ## Roles

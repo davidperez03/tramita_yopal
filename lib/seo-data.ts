@@ -1,3 +1,5 @@
+import { REGLA_AVALUO } from './reglas-negocio';
+
 export type City = {
   name: string;
   slug: string;
@@ -153,7 +155,7 @@ export const SEO_SERVICES: SeoService[] = [
       },
       {
         q: '¿Cuánto cuesta un traspaso?',
-        a: 'Depende del avalúo del vehículo y del organismo de tránsito. La base del 1% de retención en la fuente cambia según el cilindraje: sobre el avalúo de la liquidación de impuestos si supera 125 cc, o sobre el valor del contrato de compraventa si es de 125 cc o menos. Por eso hacemos la validación previa gratis: te damos una cotización cerrada antes de que pagues un peso.',
+        a: `Depende del avalúo del vehículo y del organismo de tránsito. Sobre la base del 1% de retención en la fuente: ${REGLA_AVALUO.larga}. Por eso hacemos la validación previa gratis: te damos una cotización cerrada antes de que pagues un peso.`,
       },
       {
         q: '¿El vehículo puede tener multas y aun así hacer el traspaso?',

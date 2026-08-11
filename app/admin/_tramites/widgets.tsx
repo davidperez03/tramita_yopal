@@ -95,7 +95,7 @@ export function MetodoSelector({ label, sugerido, montoFijo, onConfirm, onCancel
       </div>
       {montoFijo ? (
         <p className="text-sm font-bold text-brand-800">
-          Monto: {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(sugerido)}
+          Monto: {cop(sugerido)}
         </p>
       ) : (
         <div>
@@ -109,7 +109,7 @@ export function MetodoSelector({ label, sugerido, montoFijo, onConfirm, onCancel
           </div>
           {monto !== sugerido && (
             <p className="text-[11px] text-amber-700 mt-1">
-              Distinto al sugerido ({new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(sugerido)})
+              Distinto al sugerido ({cop(sugerido)})
             </p>
           )}
         </div>

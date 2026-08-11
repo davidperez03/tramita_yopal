@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { cop } from '@/lib/format';
+import { REGLA_AVALUO } from '@/lib/reglas-negocio';
 
 export const inputCls =
   'w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white';
@@ -26,8 +27,8 @@ export function MoneyInput({ name, placeholder = '0' }: { name: string; placehol
 }
 
 /* ─── Input de avalúo: usuario ingresa la base y el sistema calcula 1% ───
-   Base según cilindraje: >125cc → avalúo de la liquidación de impuestos;
-   ≤125cc → valor del contrato de compraventa. */
+   Base: liquidación de impuesto vehicular si el vehículo la tiene, o el
+   valor del contrato de compraventa si está exento. Ver lib/reglas-negocio.ts. */
 export function AvaluoInput() {
   const [display, setDisplay] = useState('');
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -42,11 +43,11 @@ export function AvaluoInput() {
       <div className="relative">
         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">$</span>
         <input type="text" inputMode="numeric" value={display} onChange={handleChange}
-          placeholder="Base del avalúo (según cilindraje)" className={`${inputCls} pl-6`} />
+          placeholder="Base del avalúo" className={`${inputCls} pl-6`} />
         <input type="hidden" name="avaluo_comercial" value={base} />
       </div>
       <p className="text-[11px] text-slate-400 mt-1">
-        &gt;125cc: avalúo de liquidación de impuestos · ≤125cc: valor del contrato de compraventa
+        {REGLA_AVALUO.corta}
       </p>
       {base > 0 && (
         <p className="text-xs font-semibold text-amber-700 mt-1.5">

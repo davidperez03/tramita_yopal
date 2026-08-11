@@ -3,6 +3,7 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { BUSINESS, SERVICES, waLink } from '@/lib/constants';
+import { REGLA_AVALUO } from '@/lib/reglas-negocio';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
 import { Tag, Zap, Truck, ShieldCheck } from 'lucide-react';
@@ -154,7 +155,7 @@ export default function QuoteForm() {
 
               {form.tramite === 'Traspaso de Propiedad' && (
                 <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-xs text-amber-800 leading-relaxed">
-                  <strong>Traspaso:</strong> el avalúo vehicular (1%, la base depende del cilindraje) se paga completo al organismo de tránsito al iniciar. Tu asesor te lo detalla en la cotización.
+                  <strong>Traspaso:</strong> el avalúo vehicular (1%, {REGLA_AVALUO.corta}) se paga completo al organismo de tránsito al iniciar. Tu asesor te lo detalla en la cotización.
                 </div>
               )}
 

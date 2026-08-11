@@ -99,7 +99,7 @@ const jsonLd = [
         name: '¿Cuánto tiempo tarda tramitar la prescripción?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'El proceso en el organismo de tránsito de Yopal tarda entre 5 y 15 días hábiles dependiendo del volumen de casos. Te informamos el tiempo exacto en tu cotización.',
+          text: 'El proceso en el organismo de tránsito de Yopal tarda entre 15 y 30 días hábiles dependiendo del volumen de casos. Te informamos el tiempo exacto en tu cotización.',
         },
       },
     ],

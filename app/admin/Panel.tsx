@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { SERVICE_NAMES } from '@/lib/constants';
-import { fmtDatetime } from '@/lib/format';
+import { fmtDate, fmtDatetime } from '@/lib/format';
 import {
   approveReview, hideReview, deleteReview, addReview,
   logout, updateComparendoEstado, deleteComparendo,
@@ -226,9 +226,7 @@ const DESC_V: Record<string, Parameters<typeof Badge>[0]['v']> = {
 function ComparendoCard({ c, hasTramite }: { c: Comparendo; hasTramite: boolean }) {
   const { isPending, error, run } = useAction();
   const cfg   = ESTADO_COMP_CFG[c.estado] ?? ESTADO_COMP_CFG.pendiente;
-  const fecha = new Date(c.fecha_comparendo + 'T12:00:00').toLocaleDateString('es-CO', {
-    day: '2-digit', month: 'short', year: 'numeric',
-  });
+  const fecha = fmtDate(c.fecha_comparendo + 'T12:00:00');
 
   return (
     <div className={cx(

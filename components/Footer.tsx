@@ -39,7 +39,9 @@ export default function Footer() {
 
           {/* Trámites */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-3">Trámites</h4>
+            <h4 className="text-white font-semibold text-sm mb-3">
+              <a href="/tramites" className="hover:text-brand-300 transition-colors">Trámites</a>
+            </h4>
             <ul className="space-y-2">
               {SERVICES.map((s) => {
                 const href = s.id === 'prescripcion-comparendos'

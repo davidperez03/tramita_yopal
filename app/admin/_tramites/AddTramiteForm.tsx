@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { SERVICE_NAMES_WITH_OTHER } from '@/lib/constants';
+import { REGLA_AVALUO } from '@/lib/reglas-negocio';
 import { createTramite } from '../tramites-actions';
 import { cx } from '../ui';
 import { inputCls, MoneyInput, AvaluoInput } from './inputs';
@@ -138,9 +139,7 @@ export function AddTramiteForm() {
             </div>
             {esTraspaso && (
               <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
-                El avalúo (1%) se cobra completo al iniciar — no entra en el 50/50. Base: avalúo de
-                liquidación de impuestos si el vehículo supera 125cc, o valor del contrato de
-                compraventa si es de 125cc o menos.
+                El avalúo (1%) se cobra completo al iniciar — no entra en el 50/50. Base: {REGLA_AVALUO.corta}.
               </p>
             )}
           </div>

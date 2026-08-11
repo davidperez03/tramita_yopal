@@ -1,4 +1,5 @@
 import { SEO_SERVICES } from './seo-data';
+import { REGLA_AVALUO } from './reglas-negocio';
 
 export const BUSINESS = {
   name: 'Tramita Yopal',
@@ -118,11 +119,11 @@ export const FAQS = [
   },
   {
     question: '¿Cuánto debo pagar por adelantado?',
-    answer: 'El 50% del total al iniciar — eso incluye honorarios y derechos de trámite (RUNT y organismo de tránsito). El 50% restante lo pagas cuando el tránsito aprueba y expide tu documento. Nunca cobramos el total por adelantado. La única excepción es el avalúo vehicular en trámites de Traspaso: ese valor (1% de la base según el cilindraje del vehículo) se paga completo al iniciar porque así lo exige el organismo de tránsito.',
+    answer: `El 50% del total al iniciar — eso incluye honorarios y derechos de trámite (RUNT y organismo de tránsito). El 50% restante lo pagas cuando el tránsito aprueba y expide tu documento. Nunca cobramos el total por adelantado. La única excepción es el avalúo vehicular en trámites de Traspaso: ese valor (1%, ${REGLA_AVALUO.corta}) se paga completo al iniciar porque así lo exige el organismo de tránsito.`,
   },
   {
     question: '¿Cuánto cuesta un traspaso de vehículo en Yopal?',
-    answer: 'El costo total tiene dos partes: (1) honorarios más derechos de trámite (RUNT y organismo de tránsito), que se dividen en 50% al iniciar y 50% al aprobar; y (2) el avalúo vehicular (1%), que se paga completo al iniciar y va directo al organismo de tránsito — la base cambia según el cilindraje: avalúo de liquidación de impuestos si supera 125 cc, o valor del contrato de compraventa si es de 125 cc o menos. Escríbenos con los datos del vehículo y te damos el desglose exacto en menos de 30 minutos.',
+    answer: `El costo total tiene dos partes: (1) honorarios más derechos de trámite (RUNT y organismo de tránsito), que se dividen en 50% al iniciar y 50% al aprobar; y (2) el avalúo vehicular (1%), que se paga completo al iniciar y va directo al organismo de tránsito — ${REGLA_AVALUO.corta}. Escríbenos con los datos del vehículo y te damos el desglose exacto en menos de 30 minutos.`,
   },
 ];
 
@@ -180,7 +181,8 @@ POLÍTICA DE COBRO (MUY IMPORTANTE):
 
 AVALÚO EN TRASPASO DE PROPIEDAD (ÚNICA EXCEPCIÓN AL 50/50):
 - En los trámites de Traspaso, el organismo de tránsito exige el pago del avalúo vehicular
-- El avalúo equivale al 1% del valor comercial del vehículo y debe pagarse en su TOTALIDAD al iniciar el trámite
+- El avalúo equivale al 1% y debe pagarse en su TOTALIDAD al iniciar el trámite
+- Base del 1%: ${REGLA_AVALUO.larga}
 - Es el ÚNICO cobro que no va en el 50/50 — todo lo demás (honorarios + derechos de trámite) sí se divide
 
 INSTRUCCIONES:

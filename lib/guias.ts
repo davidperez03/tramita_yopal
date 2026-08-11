@@ -1,4 +1,5 @@
 import { SEO_SERVICES } from './seo-data';
+import { REGLA_AVALUO } from './reglas-negocio';
 
 // Requisitos desde el catálogo único (lib/seo-data.ts) — así las guías
 // siempre muestran la misma lista que las páginas de servicio y el chatbot.
@@ -53,7 +54,7 @@ export const GUIAS: Guia[] = [
       {
         titulo: '¿Cuánto cuesta el traspaso en Yopal?',
         parrafos: [
-          'El costo tiene tres componentes: los derechos del organismo de tránsito, la retención en la fuente del 1% sobre el valor del vehículo y los honorarios de gestión si lo haces con un tramitador. La base sobre la que se calcula ese 1% depende del cilindraje: si tu vehículo supera los 125 cc, se calcula sobre el avalúo según la liquidación de impuestos; si es de 125 cc o menos, se calcula sobre el valor indicado en el contrato de compraventa.',
+          `El costo tiene tres componentes: los derechos del organismo de tránsito, la retención en la fuente del 1% sobre el valor del vehículo y los honorarios de gestión si lo haces con un tramitador. Sobre ese 1%: ${REGLA_AVALUO.larga}.`,
           'Como los derechos cambian cada año y la retención depende del valor de tu vehículo, la única cifra seria es una cotización sobre tu caso concreto. Nosotros la damos gratis y cerrada antes de empezar: sabes el total exacto antes de pagar un peso.',
         ],
       },
