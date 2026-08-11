@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'motion/react';
 import { type TramiteEstado, ESTADOS, ESTADO_CONFIG } from '@/lib/domain/tramite';
 
 export function BulkActionsBar({
@@ -17,7 +18,13 @@ export function BulkActionsBar({
   onClear: () => void;
 }) {
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white rounded-2xl shadow-2xl px-5 py-4 w-[min(520px,90vw)]">
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 24 }}
+      transition={{ duration: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white rounded-2xl shadow-2xl px-5 py-4 w-[min(520px,90vw)]"
+    >
       <div className="flex items-start gap-4">
         <div className="flex-1 space-y-2.5">
           <p className="text-xs font-bold text-white/60 uppercase tracking-wider">
@@ -75,6 +82,6 @@ export function BulkActionsBar({
           ×
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

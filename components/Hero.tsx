@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { BUSINESS, waLink, WA_MESSAGES, SERVICES } from '@/lib/constants';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { EASE_OUT } from '@/lib/animations';

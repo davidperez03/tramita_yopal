@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { AnimatePresence } from 'motion/react';
 import { cop } from '@/lib/format';
 import {
   type Tramite, type TramiteEstado, type HistorialEntry, type TramitadorOption, ESTADOS,
@@ -233,19 +234,21 @@ export default function TramitesPanel({
       )}
 
       {/* Barra flotante de acción masiva */}
-      {selected.size > 0 && (
-        <BulkActionsBar
-          count={selected.size}
-          bulkEstado={bulkEstado}
-          bulkNota={bulkNota}
-          isPending={isBulkPending}
-          onSelectEstado={setBulkEstado}
-          onNotaChange={setBulkNota}
-          onConfirm={confirmBulk}
-          onReset={() => { setBulkEstado(null); setBulkNota(''); }}
-          onClear={clearSelection}
-        />
-      )}
+      <AnimatePresence>
+        {selected.size > 0 && (
+          <BulkActionsBar
+            count={selected.size}
+            bulkEstado={bulkEstado}
+            bulkNota={bulkNota}
+            isPending={isBulkPending}
+            onSelectEstado={setBulkEstado}
+            onNotaChange={setBulkNota}
+            onConfirm={confirmBulk}
+            onReset={() => { setBulkEstado(null); setBulkNota(''); }}
+            onClear={clearSelection}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

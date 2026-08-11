@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { cop, fmtDate } from '@/lib/format';
 import {
   type Tramite, type TramiteEstado, type HistorialEntry, type TramitadorOption,
@@ -151,7 +152,15 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
       </button>
 
       {/* Cuerpo expandido */}
+      <AnimatePresence initial={false}>
       {expanded && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.22, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="overflow-hidden"
+        >
         <div className="border-t border-slate-100 divide-y divide-slate-100">
 
           {/* Info del cliente — tira horizontal */}
@@ -389,7 +398,9 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
             </div>
           )}
         </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </div>
   );
 }
