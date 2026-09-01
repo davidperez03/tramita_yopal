@@ -1,4 +1,4 @@
-import { REGLA_AVALUO } from './reglas-negocio';
+import { REGLA_AVALUO, CALE_INFO } from './reglas-negocio';
 
 export type City = {
   name: string;
@@ -379,6 +379,150 @@ export const SEO_SERVICES: SeoService[] = [
       {
         q: '¿El curso reemplaza el pago del comparendo?',
         a: 'No, son dos pagos distintos: el curso (según el centro autorizado) y el comparendo con el descuento ya aplicado. La suma de ambos equivale al 50% o al 25% del valor total, según el plazo en que estés — no es un gasto adicional que se come el descuento.',
+      },
+    ],
+  },
+  {
+    slug:        'licencia-primera-vez',
+    name:        'Licencia de Conducción — Primera Vez',
+    keyword:     'licencia de conducción primera vez RNC',
+    description: 'Te acompañamos en todo el proceso ante el RNC: inscripción en el RUNT, agendamiento del examen médico y del curso en centro autorizado, y radicación de tu licencia nueva.',
+    duration:    '8 a 15 días hábiles, según cupos del centro médico y del centro de enseñanza',
+    waMessage:   'Hola, quiero información para sacar mi licencia de conducción por primera vez.',
+    esTramitePersonal: true,
+    requisitos: [
+      'Cédula de ciudadanía original (18 años para vehículo particular, 16 para motocicleta)',
+      'Saber leer y escribir',
+      'Estar a paz y salvo en el SIMIT — sin comparendos pendientes a tu nombre',
+      'Inscripción vigente en el RUNT (te ayudamos a completarla si no la tienes)',
+      'Examen médico y de aptitud en un Centro de Reconocimiento de Conductores (CRC/IPS) autorizado',
+      'Curso teórico-práctico aprobado en un Centro de Enseñanza Automovilística (CEA) autorizado',
+    ],
+    pasos: [
+      'Verificamos tu inscripción en el RUNT y te ayudamos a completarla si te falta.',
+      'Te orientamos y agendamos tu cita de examen médico en un Centro de Reconocimiento de Conductores (CRC/IPS) autorizado — el examen lo presentas tú directamente allí.',
+      'Te ayudamos a agendar el curso en un Centro de Enseñanza Automovilística (CEA) autorizado — el curso y su evaluación los presentas tú directamente en el centro.',
+      'Verificamos que los resultados (aptitud médica + certificado del CEA) queden cargados correctamente en el RUNT.',
+      'Radicamos la solicitud de expedición ante el organismo de tránsito y hacemos seguimiento hasta que tu licencia esté lista.',
+    ],
+    faqs: [
+      {
+        q: '¿Qué hace exactamente Tramita Yopal en este trámite?',
+        a: 'Te acompañamos y asesoramos: inscripción en el RUNT, agendamiento en el CRC/IPS y en el CEA, verificación de que todo quede bien cargado, y radicación ante el organismo de tránsito. El examen médico y el curso/evaluación los presentas tú directamente en el CRC y el CEA — no los hacemos nosotros por ti.',
+      },
+      {
+        q: '¿Es cierto que ahora hay que pasar por un centro CALE aparte del CEA?',
+        a: `Esa era la idea, pero aún no está en operación. ${CALE_INFO.estado} (${CALE_INFO.circular}). Mientras tanto, el proceso sigue siendo el de siempre: examen médico en el CRC y curso en el CEA.`,
+      },
+      {
+        q: '¿Cuánto cuesta sacar la licencia por primera vez?',
+        a: `Hoy el valor total ronda ${CALE_INFO.costoActual} (incluye inscripción RUNT, examen médico, curso en el CEA y derechos ante el organismo de tránsito) — varía según ciudad y categoría. Justamente por eso el Ministerio aplazó los CALE: con ellos en operación el trámite podría subir a ${CALE_INFO.costoConCale}. Te cotizamos el valor exacto según tu caso.`,
+      },
+      {
+        q: '¿Por qué conviene tramitarla ahora?',
+        a: `${CALE_INFO.leyVigente}. El aplazamiento es temporal, así que el valor actual (${CALE_INFO.costoActual}) no está garantizado por mucho tiempo — mientras no haya fecha de entrada en operación, conviene adelantar el trámite bajo el esquema y el costo de hoy.`,
+      },
+    ],
+  },
+  {
+    slug:        'recategorizacion-licencia',
+    name:        'Recategorización de Licencia de Conducción',
+    keyword:     'recategorización licencia de conducción RNC',
+    description: 'Te acompañamos para agregar o cambiar de categoría en tu licencia (por ejemplo de A2 a B1 o C1): agendamiento del examen médico, el curso correspondiente y radicación ante el RNC.',
+    duration:    '8 a 15 días hábiles, según cupos del centro médico y del centro de enseñanza',
+    waMessage:   'Hola, quiero recategorizar mi licencia de conducción.',
+    esTramitePersonal: true,
+    requisitos: [
+      'Cédula de ciudadanía original',
+      'Licencia de conducción vigente',
+      'Estar a paz y salvo en el SIMIT — sin comparendos pendientes a tu nombre',
+      'Examen médico y de aptitud en un Centro de Reconocimiento de Conductores (CRC/IPS) autorizado para la nueva categoría',
+      'Curso correspondiente a la nueva categoría, aprobado en un Centro de Enseñanza Automovilística (CEA) autorizado',
+    ],
+    pasos: [
+      'Revisamos tu licencia actual y confirmamos los requisitos exactos de la categoría a la que quieres pasar.',
+      'Te orientamos y agendamos tu cita de examen médico en un Centro de Reconocimiento de Conductores (CRC/IPS) autorizado — el examen lo presentas tú directamente allí.',
+      'Te ayudamos a agendar el curso de la nueva categoría en un Centro de Enseñanza Automovilística (CEA) autorizado — el curso y su evaluación los presentas tú directamente en el centro.',
+      'Verificamos que los resultados queden cargados correctamente en el RUNT.',
+      'Radicamos la solicitud de recategorización ante el organismo de tránsito y hacemos seguimiento hasta la expedición.',
+    ],
+    faqs: [
+      {
+        q: '¿La recategorización también se ve afectada por los CALE?',
+        a: `Sí — junto con la licencia por primera vez, es uno de los ${CALE_INFO.tramitesAfectados} que exigirán el examen independiente de los CALE cuando entren en operación. Por ahora ${CALE_INFO.estado} (${CALE_INFO.circular}), así que el proceso sigue siendo el de siempre: examen médico en el CRC y curso en el CEA.`,
+      },
+      {
+        q: '¿Qué hace Tramita Yopal en este trámite?',
+        a: 'Te acompañamos y asesoramos: confirmamos requisitos de la nueva categoría, agendamos en el CRC/IPS y en el CEA, y radicamos ante el organismo de tránsito. El examen médico y el curso/evaluación de la nueva categoría los presentas tú directamente.',
+      },
+      {
+        q: '¿Cuánto cuesta recategorizar la licencia?',
+        a: `Varía según la categoría de origen y destino. El costo actual del proceso completo ronda ${CALE_INFO.costoActual}; con los CALE en operación podría subir a ${CALE_INFO.costoConCale}. Te cotizamos el valor exacto según tu caso.`,
+      },
+    ],
+  },
+  {
+    slug:        'renovacion-licencia',
+    name:        'Renovación de Licencia de Conducción',
+    keyword:     'renovación licencia de conducción RNC',
+    description: 'Tu licencia está vencida o por vencer. Te acompañamos en la renovación ante el RNC — este trámite no exige examen CALE, sea cual sea la categoría.',
+    duration:    'Sujeto a agenda del organismo de tránsito — normalmente más rápido que una licencia nueva, al no requerir curso en el CEA',
+    waMessage:   'Hola, necesito renovar mi licencia de conducción.',
+    esTramitePersonal: true,
+    requisitos: [
+      'Cédula de ciudadanía original',
+      'Licencia de conducción anterior (física o su número, si la perdiste)',
+      'Estar a paz y salvo en el SIMIT — sin comparendos pendientes a tu nombre',
+      'Examen médico y de aptitud vigente en un Centro de Reconocimiento de Conductores (CRC/IPS) autorizado',
+    ],
+    pasos: [
+      'Revisamos tu licencia actual y confirmamos que no tengas comparendos pendientes que bloqueen el trámite.',
+      'Te orientamos y agendamos tu cita de examen médico en un Centro de Reconocimiento de Conductores (CRC/IPS) autorizado — el examen lo presentas tú directamente allí.',
+      'Verificamos que el resultado del examen quede cargado correctamente en el RUNT.',
+      'Radicamos la solicitud de renovación ante el organismo de tránsito y hacemos seguimiento hasta la expedición.',
+    ],
+    faqs: [
+      {
+        q: '¿La renovación exige el examen de los CALE?',
+        a: `No. ${CALE_INFO.tramitesLibres}. La renovación solo requiere el examen médico vigente en el CRC — no pasa por el CEA ni por los CALE.`,
+      },
+      {
+        q: '¿Qué pasa si mi licencia lleva mucho tiempo vencida?',
+        a: 'El organismo de tránsito puede pedir requisitos adicionales según cuánto tiempo lleve vencida. Revisamos tu caso puntual y te confirmamos exactamente qué necesitas antes de radicar, para que no tengas sorpresas.',
+      },
+      {
+        q: '¿Qué hace Tramita Yopal en este trámite?',
+        a: 'Te acompañamos y asesoramos: confirmamos que estés a paz y salvo, agendamos tu examen médico en el CRC/IPS, verificamos que quede cargado en el RUNT y radicamos ante el organismo de tránsito.',
+      },
+    ],
+  },
+  {
+    slug:        'duplicado-licencia',
+    name:        'Duplicado de Licencia de Conducción',
+    keyword:     'duplicado licencia de conducción RNC',
+    description: 'Licencia perdida, robada o deteriorada. Te acompañamos en la reexpedición ante el RNC — es la misma licencia vigente, sin examen médico ni curso.',
+    duration:    'Sujeto a agenda del organismo de tránsito',
+    waMessage:   'Hola, necesito el duplicado de mi licencia de conducción.',
+    esTramitePersonal: true,
+    requisitos: [
+      'Cédula de ciudadanía original',
+      'Denuncio por pérdida o hurto, si aplica (te orientamos sobre cómo hacerlo)',
+      'Inscripción vigente en el RUNT',
+    ],
+    pasos: [
+      'Verificamos tu registro vigente en el RUNT y el estado real de tu licencia.',
+      'Te orientamos sobre el denuncio por pérdida o hurto, si lo necesitas.',
+      'Radicamos la solicitud de duplicado ante el organismo de tránsito.',
+      'Hacemos seguimiento hasta que el duplicado esté listo para entrega.',
+    ],
+    faqs: [
+      {
+        q: '¿El duplicado requiere examen médico o curso?',
+        a: `No. El duplicado es la reexpedición del mismo documento vigente, no una nueva evaluación — ${CALE_INFO.tramitesLibres}.`,
+      },
+      {
+        q: '¿Necesito hacer el denuncio antes de pedir el duplicado?',
+        a: 'Si fue robada, sí se recomienda. Si simplemente la perdiste o se deterioró, en la mayoría de casos basta con la solicitud ante el organismo de tránsito — te confirmamos qué aplica a tu caso.',
       },
     ],
   },

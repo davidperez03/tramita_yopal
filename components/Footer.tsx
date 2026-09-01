@@ -69,6 +69,7 @@ export default function Footer() {
                 { href: '/#validar',  label: 'Validar mi caso' },
                 { href: '/prescripcion-comparendos', label: 'Consultar multas' },
                 { href: '/descuento-comparendo', label: 'Pagar comparendo con descuento' },
+                { href: '/licencias', label: 'Licencias y RNC' },
                 { href: '/#proceso',  label: 'Cómo trabajamos' },
                 { href: '/#faq',      label: 'Preguntas frecuentes' },
                 { href: '/#cotizar',  label: 'Cotizar' },

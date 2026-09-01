@@ -12,6 +12,7 @@ const navLinks = [
   { href: '#tramites', label: 'Trámites' },
   { href: '/prescripcion-comparendos', label: 'Multas prescritas' },
   { href: '/descuento-comparendo',     label: 'Pagar con descuento' },
+  { href: '/licencias',                label: 'Licencias' },
   { href: '/guias',    label: 'Guías' },
   { href: '/seguimiento', label: 'Seguimiento' },
   { href: '#faq',      label: 'FAQ' },
