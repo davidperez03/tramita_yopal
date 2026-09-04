@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { GUIAS } from '@/lib/guias';
-import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
+import { FadeIn, FadeInStagger, FadeInItem } from '../FadeIn';
 
 export default function GuidesTeaser() {
   return (

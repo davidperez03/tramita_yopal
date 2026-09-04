@@ -133,7 +133,7 @@ export const GUIAS: Guia[] = [
         titulo: 'La prescripción NO es automática',
         parrafos: [
           'Este es el punto que más confunde. Aunque tu multa tenga 5 o 10 años, seguirá apareciendo en el SIMIT hasta que la autoridad de tránsito declare la prescripción mediante una resolución. Hay que solicitarla formalmente, sustentarla y hacerle seguimiento.',
-          'Mientras la multa siga reportada, no puedes hacer traspasos ni renovar la licencia en la mayoría de los casos, y el cobro puede escalar a embargo de cuentas o de salario.',
+          'Mientras la multa siga reportada, no puedes hacer traspasos ni refrendar la licencia en la mayoría de los casos, y el cobro puede escalar a embargo de cuentas o de salario.',
         ],
       },
       {

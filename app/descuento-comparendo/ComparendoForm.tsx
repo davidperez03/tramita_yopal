@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { BUSINESS } from '@/lib/constants';
 import { WhatsAppIcon } from '@/components/WhatsAppIcon';
-import { solicitarDescuento } from './actions';
 
 type Tipo = 'fisico' | 'fotomulta';
 type Descuento = '50%' | '25%' | 'ninguno';
@@ -53,6 +52,17 @@ function isFutureDate(fechaStr: string): boolean {
   return fecha > hoy;
 }
 
+// Para la fecha del curso CIA — al revés que el comparendo: aquí lo que
+// no puede pasar es que sea una fecha ya vencida. El atributo `min` del
+// input ya lo evita en la mayoría de navegadores, pero no en todos
+// (algunos permiten escribir la fecha a mano), así que se valida también.
+function isPastDate(fechaStr: string): boolean {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const fecha = new Date(fechaStr + 'T00:00:00');
+  return fecha < hoy;
+}
+
 function calcDescuento(fecha: string, tipo: Tipo): Descuento {
   const dias = diasHabilesDesde(fecha);
   if (tipo === 'fisico') {
@@ -82,7 +92,10 @@ type DatosEnviados = {
   fechaCurso?: string;
 };
 
-function Exito({ datos }: { datos: DatosEnviados }) {
+// Todo el caso se envía como mensaje de WhatsApp — no queda nada guardado
+// en base de datos. Así, cada envío completado genera un mensaje real,
+// sin depender de un panel que alguien tenga que revisar.
+function buildWaUrl(datos: DatosEnviados): string {
   const tipoLabel  = datos.tipo === 'fisico' ? 'Físico' : 'Fotomulta';
   const fechaLabel = new Date(datos.fecha + 'T12:00:00').toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
   const fechaCursoLabel = datos.fechaCurso
@@ -90,17 +103,26 @@ function Exito({ datos }: { datos: DatosEnviados }) {
     : null;
 
   const lineas = [
-    `Hola, acabo de registrar mi caso de comparendo:`,
-    `Nombre: ${datos.nombre}`,
-    `Tipo: ${tipoLabel}`,
-    `Fecha comparendo: ${fechaLabel}`,
-    datos.cedula       ? `Cédula: ${datos.cedula}`                          : null,
-    datos.numero       ? `N° comparendo: ${datos.numero}`                   : null,
-    datos.descuento !== 'ninguno' ? `Descuento estimado: ${datos.descuento}` : null,
-    fechaCursoLabel    ? `Fecha preferida curso CIA: ${fechaCursoLabel}`     : null,
-  ].filter(Boolean).join('\n');
+    `🚨 *Caso de comparendo — descuento por pronto pago*`,
+    ``,
+    `*Nombre:* ${datos.nombre}`,
+    `*Tipo:* ${tipoLabel}`,
+    `*Fecha del comparendo:* ${fechaLabel}`,
+    datos.cedula ? `*Cédula:* ${datos.cedula}`           : null,
+    datos.numero ? `*N° comparendo:* ${datos.numero}`    : null,
+    datos.descuento !== 'ninguno'
+      ? `*Descuento estimado:* ${datos.descuento}`
+      : `⚠️ *El plazo de descuento ya venció* — quiero saber si mi comparendo aplica para prescripción`,
+    fechaCursoLabel ? `*Fecha preferida curso CIA:* ${fechaCursoLabel}` : null,
+    ``,
+    `¿Me ayudan a confirmar y agendar?`,
+  ].filter((l) => l !== null).join('\n');
 
-  const waUrl = `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(lineas)}`;
+  return `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(lineas)}`;
+}
+
+function Exito({ datos }: { datos: DatosEnviados }) {
+  const waUrl = buildWaUrl(datos);
 
   return (
     <div className="space-y-5">
@@ -109,9 +131,9 @@ function Exito({ datos }: { datos: DatosEnviados }) {
           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd"/>
         </svg>
         <div>
-          <p className="font-bold text-emerald-900 text-sm">¡Solicitud registrada!</p>
+          <p className="font-bold text-emerald-900 text-sm">¡Listo!</p>
           <p className="text-xs text-emerald-700 mt-0.5 leading-relaxed">
-            Para confirmar tu caso y agendar, envíanos el mensaje por WhatsApp:
+            Deberías haber visto abrirse WhatsApp con tu caso ya escrito. Si no se abrió, usa el botón:
           </p>
         </div>
       </div>
@@ -150,32 +172,32 @@ function Exito({ datos }: { datos: DatosEnviados }) {
 }
 
 export default function ComparendoForm() {
-  const [isPending, startTransition] = useTransition();
   const [tipo, setTipo]              = useState<Tipo>('fisico');
   const [fecha, setFecha]            = useState('');
   const [fechaCurso, setFechaCurso]      = useState('');
   const [horaCurso, setHoraCurso]        = useState('');
   const [horaPersonalizada, setHoraPersonalizada] = useState('');
   const [datosEnviados, setDatosEnviados] = useState<DatosEnviados | null>(null);
-  const [error, setError]            = useState('');
 
   const descuento = fecha ? calcDescuento(fecha, tipo) : null;
   const ui        = descuento ? DESCUENTO_UI[descuento] : null;
 
+  // Todo va directo a WhatsApp al enviar — no se guarda nada en base de
+  // datos, así cada envío completado genera un mensaje real de inmediato.
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd     = new FormData(e.currentTarget);
+    const fd         = new FormData(e.currentTarget);
     const nombre     = fd.get('nombre') as string;
     const tel        = fd.get('telefono') as string;
     const cedula     = fd.get('cedula') as string;
     const numero     = fd.get('numero_comparendo') as string;
     const fechaCurso = fd.get('fecha_curso') as string;
-    fd.set('descuento_estimado', descuento ?? '');
-    startTransition(async () => {
-      const res = await solicitarDescuento(fd);
-      if (res.error) { setError(res.error); return; }
-      setDatosEnviados({ nombre, telefono: tel, tipo, fecha, cedula, numero, descuento: descuento ?? 'ninguno', fechaCurso: fechaCurso || undefined });
-    });
+    const datos: DatosEnviados = {
+      nombre, telefono: tel, tipo, fecha, cedula, numero,
+      descuento: descuento ?? 'ninguno', fechaCurso: fechaCurso || undefined,
+    };
+    window.open(buildWaUrl(datos), '_blank');
+    setDatosEnviados(datos);
   }
 
   if (datosEnviados) return <Exito datos={datosEnviados} />;
@@ -279,7 +301,21 @@ export default function ComparendoForm() {
           min={new Date().toISOString().split('T')[0]}
           className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white" />
 
-        {fechaCurso && (
+        <AnimatePresence mode="wait">
+          {fechaCurso && isPastDate(fechaCurso) && (
+            <motion.div key="curso-pasado"
+              initial={{ opacity: 0, y: -6, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.12 } }}
+              transition={{ duration: 0.22, ease: [0.21, 0.47, 0.32, 0.98] }}
+              className="mt-2 flex items-start gap-3 border border-red-200 bg-red-50 rounded-xl px-4 py-3 text-red-700">
+              <div className="w-2 h-2 rounded-full mt-1 flex-shrink-0 bg-red-400" />
+              <p className="text-sm font-bold">Fecha no válida — el curso no se puede agendar en el pasado</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {fechaCurso && !isPastDate(fechaCurso) && (
           <div className="mt-3">
             <p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">Hora preferida</p>
             <div className="grid grid-cols-4 gap-2">
@@ -315,11 +351,9 @@ export default function ComparendoForm() {
         </p>
       </div>
 
-      {error && <p className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">{error}</p>}
-
-      <button type="submit" disabled={isPending || (!!fecha && isFutureDate(fecha))}
+      <button type="submit" disabled={(!!fecha && isFutureDate(fecha)) || (!!fechaCurso && isPastDate(fechaCurso))}
         className="w-full bg-brand-950 hover:bg-brand-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-2xl text-sm transition-colors">
-        {isPending ? 'Enviando...' : 'Solicitar asesoría gratuita →'}
+        Solicitar asesoría gratuita →
       </button>
     </form>
   );

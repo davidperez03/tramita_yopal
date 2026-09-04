@@ -4,14 +4,15 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { waLink, WA_MESSAGES } from '@/lib/constants';
 import Image from 'next/image';
-import { WhatsAppIcon } from './WhatsAppIcon';
+import { WhatsAppIcon } from '../WhatsAppIcon';
 
 const navLinks = [
-  { href: '/rna',         label: 'RNA' },
-  { href: '/rnc',         label: 'RNC' },
-  { href: '/comparendos', label: 'Comparendos' },
-  { href: '/guias',       label: 'Guías' },
-  { href: '/seguimiento', label: 'Seguimiento' },
+  { href: '/',             label: 'Inicio' },
+  { href: '/rna',          label: 'RNA' },
+  { href: '/rnc',          label: 'RNC' },
+  { href: '/comparendos',  label: 'Comparendos' },
+  { href: '/guias',        label: 'Guías' },
+  { href: '/seguimiento',  label: 'Seguimiento' },
 ];
 
 const waUrl = waLink(WA_MESSAGES.cotizar);

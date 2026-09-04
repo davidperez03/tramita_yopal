@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'Tramita Yopal — Trámites vehiculares en Yopal, Casanare';
+export const alt = 'Tramita Yopal — Vehículo, licencia y comparendos en Yopal, Casanare';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -43,11 +43,11 @@ export default function Image() {
           <div style={{ fontSize: 72, fontWeight: 900, color: '#ffffff', lineHeight: 1.05 }}>
             Tus trámites
             <br />
-            vehiculares{' '}
+            de tránsito,{' '}
             <span style={{ color: '#fbbf24' }}>sin enredos</span>
           </div>
           <div style={{ fontSize: 28, color: '#a5b4fc', fontWeight: 400, maxWidth: 700 }}>
-            Gestión 100% remota desde Yopal · Validación previa gratuita · Tarjeta a domicilio
+            Gestión 100% remota desde Yopal · Vehículo, licencia y comparendos
           </div>
         </div>
 
@@ -60,7 +60,7 @@ export default function Image() {
 
           {/* Servicios */}
           <div style={{ display: 'flex', gap: 10 }}>
-            {['Traspaso', 'Prenda', 'Placas', 'Comparendos'].map((s) => (
+            {['RNA', 'RNC', 'Comparendos'].map((s) => (
               <div
                 key={s}
                 style={{

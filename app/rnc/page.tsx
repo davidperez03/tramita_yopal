@@ -2,21 +2,22 @@ import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { IdCard } from 'lucide-react';
-import { BUSINESS, waLink } from '@/lib/constants';
+import { BUSINESS } from '@/lib/constants';
 import { CITIES, SEO_SERVICES, CATEGORIAS } from '@/lib/seo-data';
 import { CALE_INFO } from '@/lib/reglas-negocio';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { WhatsAppIcon } from '@/components/WhatsAppIcon';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import { TramiteCard } from '@/components/cards/TramiteCard';
+import { FaqAccordion } from '@/components/cards/FaqAccordion';
 import { FadeIn, FadeInStagger, FadeInItem } from '@/components/FadeIn';
 
-// Solo lo genuinamente neutral entre categorías. AboutUs, Validator,
-// Process, TrackingPromo, PaymentGuarantee, WhyUs, GuidesTeaser y FAQ
-// están escritos en clave de vehículo (RUNT, prendas, "tarjeta de
-// propiedad"...) — no aplican aquí, quedan solo en /rna.
-const QuoteForm = dynamic(() => import('@/components/QuoteForm'));
-const Reviews   = dynamic(() => import('@/components/Reviews'));
-const Contact   = dynamic(() => import('@/components/Contact'));
+// AboutUs, Validator, Process, TrackingPromo, PaymentGuarantee, WhyUs y
+// FAQ están escritos en clave de vehículo (RUNT, prendas, "tarjeta de
+// propiedad"...) — no aplican aquí, quedan solo en /rna. GuidesTeaser
+// vive en la home (no es de una sola categoría).
+const QuoteForm = dynamic(() => import('@/components/sections/QuoteForm'));
+const Reviews   = dynamic(() => import('@/components/sections/Reviews'));
+const Contact   = dynamic(() => import('@/components/sections/Contact'));
 
 const siteUrl = `https://${BUSINESS.domain}`;
 const CAT = CATEGORIAS.rnc;
@@ -25,7 +26,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: 'RNC — Registro Nacional de Conductores | Tramita Yopal',
   description:
-    'Acompañamiento en licencia de conducción por primera vez, recategorización, renovación y duplicado ante el RNC en Yopal, Casanare. Infórmate sobre los CALE antes de tramitar.',
+    'Acompañamiento en licencia de conducción por primera vez, recategorización, refrendación y duplicado ante el RNC en Yopal, Casanare. Infórmate sobre los CALE antes de tramitar.',
+  keywords: [
+    'RNC Yopal', 'Registro Nacional de Conductores Yopal', 'licencia de conducción Yopal',
+    'licencia de conducción primera vez Yopal', 'recategorización licencia de conducción Yopal',
+    'refrendación licencia de conducción Yopal', 'duplicado licencia de conducción Yopal',
+    'CALE licencia de conducción Colombia', 'CALE Centros de Apoyo Logístico de Evaluación',
+    'RUNT licencia Yopal', 'CRC examen médico conducción Yopal', 'CEA curso conducción Yopal',
+  ],
   alternates: { canonical: `${siteUrl}/rnc` },
   openGraph: {
     title: 'RNC — Registro Nacional de Conductores | Tramita Yopal',
@@ -52,23 +60,48 @@ const CALE_FAQS = [
   },
   {
     q: '¿A qué trámites afectarán los CALE?',
-    a: `A ${CALE_INFO.tramitesAfectados}. La renovación y el duplicado no requieren examen, con o sin CALE.`,
+    a: `A ${CALE_INFO.tramitesAfectados}. La refrendación y el duplicado no requieren examen, con o sin CALE.`,
   },
   {
     q: '¿Por qué conviene tramitar la licencia ahora?',
-    a: `Por costo, no por una fecha límite: hoy el trámite completo ronda ${CALE_INFO.costoActual}, y con los CALE en operación podría subir a ${CALE_INFO.costoConCale}. ${CALE_INFO.leyVigente}, así que ese aumento sigue en camino — solo está en pausa mientras el Ministerio revisa la estructura y el costo.`,
+    a: `Por costo, no por una fecha límite: ${CALE_INFO.riesgoCosto}. ${CALE_INFO.leyVigente}, así que ese aumento sigue en camino — solo está en pausa mientras el Ministerio revisa la estructura y el costo.`,
   },
 ];
 
 export default function RncPage() {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Tramita Yopal', item: siteUrl },
-      { '@type': 'ListItem', position: 2, name: 'RNC', item: `${siteUrl}/rnc` },
-    ],
-  };
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Tramita Yopal', item: siteUrl },
+        { '@type': 'ListItem', position: 2, name: 'RNC', item: `${siteUrl}/rnc` },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Trámites de licencia de conducción (RNC) en Yopal, Casanare',
+      itemListElement: RNC_SERVICES.map((s, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'Service',
+          name: s.name,
+          description: s.description,
+          url: `${siteUrl}/tramites/${s.slug}/${MAIN_CITY.slug}`,
+          provider: {
+            '@type': 'LocalBusiness',
+            name: BUSINESS.name,
+            telephone: `+${BUSINESS.whatsapp}`,
+            address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, addressRegion: BUSINESS.department, addressCountry: 'CO' },
+          },
+          areaServed: { '@type': 'State', name: BUSINESS.department },
+          offers: { '@type': 'Offer', description: 'Asesoría gratuita sin compromiso', priceCurrency: 'COP' },
+        },
+      })),
+    },
+  ];
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
@@ -138,7 +171,7 @@ export default function RncPage() {
             <FadeIn>
               <h2 className="text-2xl font-extrabold text-slate-900 mb-3">¿Qué es el RNC?</h2>
               <p className="text-slate-600 leading-relaxed">
-                El Registro Nacional de Conductores (RNC) es el registro dentro del RUNT donde queda tu perfil como conductor: licencias, categorías, restricciones y comparendos asociados a tu cédula. Cualquier trámite sobre tu licencia — sacarla, recategorizarla, renovarla o duplicarla — se gestiona a través del RNC.
+                El Registro Nacional de Conductores (RNC) es el registro dentro del RUNT donde queda tu perfil como conductor: licencias, categorías, restricciones y comparendos asociados a tu cédula. Cualquier trámite sobre tu licencia — sacarla, recategorizarla, refrendarla o duplicarla — se gestiona a través del RNC.
               </p>
             </FadeIn>
           </div>
@@ -152,64 +185,18 @@ export default function RncPage() {
                 Trámites de licencia que gestionamos
               </h2>
             </FadeIn>
-            <FadeInStagger className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" stagger={0.08}>
-              {RNC_SERVICES.map((service) => (
-                <FadeInItem key={service.slug}>
-                  <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden h-full">
-                    <div className="p-6">
-                      <h3 className="text-lg font-bold text-slate-900 mb-2">{service.name}</h3>
-                      <p className="text-slate-500 text-sm leading-relaxed mb-4">{service.description}</p>
-                      <p className="text-xs text-slate-400 mb-5">
-                        Tiempo estimado: <span className="font-semibold text-slate-600">{service.duration}</span>
-                      </p>
-                      <div className="flex flex-col gap-2">
-                        <Link
-                          href={`/tramites/${service.slug}/${MAIN_CITY.slug}`}
-                          className="text-center bg-brand-950 hover:bg-brand-800 text-white font-semibold text-sm py-2.5 px-4 rounded-xl transition-colors"
-                        >
-                          Ver detalle
-                        </Link>
-                        <a
-                          href={waLink(service.waMessage)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-2 border border-slate-200 hover:border-wa text-slate-600 hover:text-wa font-semibold text-sm py-2.5 px-4 rounded-xl transition-colors"
-                        >
-                          <WhatsAppIcon className="w-4 h-4" />
-                          Consultar
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </FadeInItem>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {RNC_SERVICES.map((service, i) => (
+                <TramiteCard
+                  key={service.slug}
+                  service={service}
+                  href={`/tramites/${service.slug}/${MAIN_CITY.slug}`}
+                  ctaLabel="Ver detalle"
+                  waLabel="Consultar"
+                  index={i}
+                />
               ))}
-            </FadeInStagger>
-          </div>
-        </section>
-
-        {/* FAQ CALE */}
-        <section className="py-14 sm:py-20 bg-white border-t border-slate-100">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <FadeIn>
-              <h2 className="text-2xl font-extrabold text-slate-900 mb-8">
-                Preguntas frecuentes sobre los CALE
-              </h2>
-            </FadeIn>
-            <FadeInStagger className="space-y-3" stagger={0.06}>
-              {CALE_FAQS.map((f) => (
-                <FadeInItem key={f.q}>
-                  <details className="group bg-[#fafaf7] rounded-2xl border border-slate-100 overflow-hidden">
-                    <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none font-semibold text-sm text-slate-900 hover:text-brand-700 transition-colors">
-                      {f.q}
-                      <svg className="w-4 h-4 text-slate-300 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </summary>
-                    <p className="px-6 pb-5 text-sm text-slate-600 leading-relaxed">{f.a}</p>
-                  </details>
-                </FadeInItem>
-              ))}
-            </FadeInStagger>
+            </div>
           </div>
         </section>
 
@@ -228,8 +215,27 @@ export default function RncPage() {
           </div>
         </section>
 
-        <QuoteForm />
+        <QuoteForm categoria="rnc" />
         <Reviews />
+
+        {/* FAQ va al final — después de generar confianza, justo antes del contacto */}
+        <section className="py-14 sm:py-20 bg-white border-t border-slate-100">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn>
+              <h2 className="text-2xl font-extrabold text-slate-900 mb-8">
+                Preguntas frecuentes sobre los CALE
+              </h2>
+            </FadeIn>
+            <FadeInStagger className="space-y-3" stagger={0.06}>
+              {CALE_FAQS.map((f) => (
+                <FadeInItem key={f.q}>
+                  <FaqAccordion q={f.q} a={f.a} bg="fafaf7" />
+                </FadeInItem>
+              ))}
+            </FadeInStagger>
+          </div>
+        </section>
+
         <Contact />
       </main>
       <Footer />

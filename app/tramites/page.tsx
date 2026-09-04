@@ -3,10 +3,11 @@ import Link from 'next/link';
 import { Car, IdCard, AlertTriangle } from 'lucide-react';
 import { BUSINESS, waLink } from '@/lib/constants';
 import { CITIES, SEO_SERVICES, CATEGORIAS, type Categoria } from '@/lib/seo-data';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 import { WhatsAppIcon } from '@/components/WhatsAppIcon';
-import { FadeIn, FadeInStagger, FadeInItem } from '@/components/FadeIn';
+import { TramiteCard } from '@/components/cards/TramiteCard';
+import { FadeIn } from '@/components/FadeIn';
 
 const siteUrl = `https://${BUSINESS.domain}`;
 
@@ -15,6 +16,11 @@ export const metadata: Metadata = {
   title: 'Todos los Trámites | Tramita Yopal',
   description:
     'Todos los trámites que gestionamos en Yopal, Casanare, organizados por sistema: vehículo (RNA), licencia de conducción (RNC) y comparendos y multas.',
+  keywords: [
+    'trámites Yopal', 'trámites de tránsito Yopal', 'RNA Yopal', 'RNC Yopal',
+    'trámites vehiculares Casanare', 'licencia de conducción Yopal', 'comparendos Yopal',
+    'organismo de tránsito Yopal', 'RUNT Yopal', 'gestor de trámites Yopal',
+  ],
   alternates: { canonical: `${siteUrl}/tramites` },
   openGraph: {
     title: 'Todos los Trámites | Tramita Yopal',
@@ -36,14 +42,39 @@ const ICONS: Record<Categoria, typeof Car> = {
 };
 
 export default function TramitesPage() {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Tramita Yopal', item: siteUrl },
-      { '@type': 'ListItem', position: 2, name: 'Trámites', item: `${siteUrl}/tramites` },
-    ],
-  };
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Tramita Yopal', item: siteUrl },
+        { '@type': 'ListItem', position: 2, name: 'Trámites', item: `${siteUrl}/tramites` },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Todos los trámites — Tramita Yopal',
+      itemListElement: SEO_SERVICES.map((s, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'Service',
+          name: s.name,
+          description: s.description,
+          url: `${siteUrl}/tramites/${s.slug}/${MAIN_CITY.slug}`,
+          provider: {
+            '@type': 'LocalBusiness',
+            name: BUSINESS.name,
+            telephone: `+${BUSINESS.whatsapp}`,
+            address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, addressRegion: BUSINESS.department, addressCountry: 'CO' },
+          },
+          areaServed: { '@type': 'State', name: BUSINESS.department },
+          offers: { '@type': 'Offer', description: 'Cotización gratuita sin compromiso', priceCurrency: 'COP' },
+        },
+      })),
+    },
+  ];
 
   return (
     <>
@@ -93,57 +124,19 @@ export default function TramitesPage() {
                   </div>
                 </FadeIn>
 
-                <FadeInStagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" stagger={0.06}>
-                  {services.map((service) => (
-                    <FadeInItem key={service.slug}>
-                      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden h-full flex flex-col">
-                        <div className="p-6 flex-1 flex flex-col">
-                          <h3 className="text-lg font-bold text-slate-900 mb-2">{service.name}</h3>
-                          <p className="text-slate-500 text-sm leading-relaxed mb-4">{service.description}</p>
-                          <p className="text-xs text-slate-400 mb-5">
-                            Tiempo estimado: <span className="font-semibold text-slate-600">{service.duration}</span>
-                          </p>
-                          <div className="flex flex-col gap-2 mt-auto">
-                            <Link
-                              href={`/tramites/${service.slug}/${MAIN_CITY.slug}`}
-                              className="text-center bg-brand-950 hover:bg-brand-800 text-white font-semibold text-sm py-2.5 px-4 rounded-xl transition-colors"
-                            >
-                              Ver en Yopal
-                            </Link>
-                            <a
-                              href={waLink(service.waMessage)}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2 border border-slate-200 hover:border-wa text-slate-600 hover:text-wa font-semibold text-sm py-2.5 px-4 rounded-xl transition-colors"
-                            >
-                              <WhatsAppIcon className="w-4 h-4" />
-                              Cotizar
-                            </a>
-                          </div>
-                        </div>
-
-                        {/* Ciudades */}
-                        <div className="border-t border-slate-100 px-6 py-4 bg-slate-50">
-                          <p className="text-xs text-slate-400 mb-2 font-medium">Atendemos en:</p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {CITIES.slice(0, 8).map((city) => (
-                              <Link
-                                key={city.slug}
-                                href={`/tramites/${service.slug}/${city.slug}`}
-                                className="text-xs text-brand-600 hover:text-brand-800 hover:underline transition-colors"
-                              >
-                                {city.name}
-                              </Link>
-                            ))}
-                            {CITIES.length > 8 && (
-                              <span className="text-xs text-slate-400">+{CITIES.length - 8} más</span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </FadeInItem>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {services.map((service, i) => (
+                    <TramiteCard
+                      key={service.slug}
+                      service={service}
+                      href={`/tramites/${service.slug}/${MAIN_CITY.slug}`}
+                      ctaLabel="Ver en Yopal"
+                      waLabel="Cotizar"
+                      cities={CITIES}
+                      index={i}
+                    />
                   ))}
-                </FadeInStagger>
+                </div>
               </div>
             </section>
           );

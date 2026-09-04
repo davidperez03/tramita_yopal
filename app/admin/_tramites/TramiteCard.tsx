@@ -11,13 +11,13 @@ import {
   updateEstado, togglePago, deleteTramite, cancelTramite, togglePagoDevuelto,
   asignarTramitador, marcarPagoCompleto,
 } from '../tramites-actions';
-import { cx, Badge, Err } from '../ui';
+import { cx, Err } from '../ui';
 import { PagoIcon, PaySlot, MetodoSelector, EstadoPills, HistorialMini, CodigoCopy } from './widgets';
 import { CostosForm } from './CostosForm';
 import { useToast } from '../Toast';
 
-export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, tramitadores }: {
-  t: Tramite; hasTramiteComp: boolean; historial: HistorialEntry[];
+export function TramiteCard({ t, historial, selected, onToggle, tramitadores }: {
+  t: Tramite; historial: HistorialEntry[];
   selected: boolean; onToggle: () => void;
   tramitadores: TramitadorOption[];
 }) {
@@ -142,7 +142,6 @@ export function TramiteCard({ t, hasTramiteComp, historial, selected, onToggle, 
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${cfg.badge}`}>
               {cfg.label}
             </span>
-            {hasTramiteComp && <Badge v="warn">Comparendo</Badge>}
           </div>
           {/* Derecha: pagos + chevron */}
           <div className="flex items-center gap-2 flex-shrink-0">

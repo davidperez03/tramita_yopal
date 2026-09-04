@@ -62,30 +62,6 @@ export async function deleteReview(id: string) {
   return { success: true };
 }
 
-export async function updateComparendoEstado(
-  id: string,
-  estado: 'pendiente' | 'en_gestion' | 'atendido',
-) {
-  await requireAdmin();
-  const { error } = await supabaseAdmin
-    .from('comparendo_solicitudes')
-    .update({ estado })
-    .eq('id', id);
-  if (error) return { error: 'Error al actualizar estado.' };
-  revalidatePath('/admin');
-  return { success: true };
-}
-
-export async function deleteComparendo(id: string) {
-  await requireAdmin();
-  const { error } = await supabaseAdmin
-    .from('comparendo_solicitudes')
-    .update({ deleted_at: new Date().toISOString() })
-    .eq('id', id);
-  if (error) return { error: 'Error al eliminar la solicitud.' };
-  revalidatePath('/admin');
-  return { success: true };
-}
 
 export async function addReview(formData: FormData) {
   await requireAdmin();

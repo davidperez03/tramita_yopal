@@ -1,5 +1,5 @@
 import { waLink } from '@/lib/constants';
-import { FadeIn } from './FadeIn';
+import { FadeIn } from '../FadeIn';
 import { PackageCheck, Truck, CheckCircle2 } from 'lucide-react';
 
 const waUrl = waLink('Hola, quiero más información sobre sus servicios.');

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { BUSINESS, waLink } from '@/lib/constants';
-import { FadeIn } from './FadeIn';
+import { FadeIn } from '../FadeIn';
 
 const waUrl = waLink('Hola, quiero saber más sobre sus servicios.');
 

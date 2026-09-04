@@ -46,7 +46,7 @@ export const CATEGORIAS: Record<Categoria, {
     label: 'Registro Nacional de Conductores',
     sigla: 'RNC',
     short: 'Licencia de conducción',
-    description: 'Todo lo que se hace sobre tu licencia: primera vez, recategorización, renovación y duplicado.',
+    description: 'Todo lo que se hace sobre tu licencia: primera vez, recategorización, refrendación y duplicado.',
     href: '/rnc',
   },
   comparendos: {
@@ -456,11 +456,11 @@ export const SEO_SERVICES: SeoService[] = [
       },
       {
         q: '¿Cuánto cuesta sacar la licencia por primera vez?',
-        a: `Hoy el valor total ronda ${CALE_INFO.costoActual} (incluye inscripción RUNT, examen médico, curso en el CEA y derechos ante el organismo de tránsito) — varía según ciudad y categoría. Justamente por eso el Ministerio aplazó los CALE: con ellos en operación el trámite podría subir a ${CALE_INFO.costoConCale}. Te cotizamos el valor exacto según tu caso.`,
+        a: `El valor total incluye inscripción RUNT, examen médico, curso en el CEA y derechos ante el organismo de tránsito — varía según ciudad y categoría, así que no damos una cifra única. Te cotizamos el valor exacto según tu caso. Ten en cuenta que ${CALE_INFO.riesgoCosto}.`,
       },
       {
         q: '¿Por qué conviene tramitarla ahora?',
-        a: `${CALE_INFO.leyVigente}. El aplazamiento es temporal, así que el valor actual (${CALE_INFO.costoActual}) no está garantizado por mucho tiempo — mientras no haya fecha de entrada en operación, conviene adelantar el trámite bajo el esquema y el costo de hoy.`,
+        a: `${CALE_INFO.leyVigente}. El aplazamiento es temporal — mientras no haya fecha de entrada en operación, conviene adelantar el trámite bajo el esquema de hoy, antes de que ${CALE_INFO.riesgoCosto}.`,
       },
     ],
   },
@@ -469,7 +469,7 @@ export const SEO_SERVICES: SeoService[] = [
     categoria:   'rnc',
     name:        'Recategorización de Licencia de Conducción',
     keyword:     'recategorización licencia de conducción RNC',
-    description: 'Te acompañamos para agregar o cambiar de categoría en tu licencia (por ejemplo de A2 a B1 o C1): agendamiento del examen médico, el curso correspondiente y radicación ante el RNC.',
+    description: 'Te acompañamos para agregar o cambiar de categoría en tu licencia: agendamiento del examen médico, el curso correspondiente y radicación ante el RNC.',
     duration:    'Sujeto a la agenda del CRC y del CEA — no depende de nosotros, por eso no fijamos un plazo exacto',
     waMessage:   'Hola, quiero recategorizar mi licencia de conducción.',
     esTramitePersonal: true,
@@ -498,18 +498,18 @@ export const SEO_SERVICES: SeoService[] = [
       },
       {
         q: '¿Cuánto cuesta recategorizar la licencia?',
-        a: `Varía según la categoría de origen y destino. El costo actual del proceso completo ronda ${CALE_INFO.costoActual}; con los CALE en operación podría subir a ${CALE_INFO.costoConCale}. Te cotizamos el valor exacto según tu caso.`,
+        a: `Varía según la categoría de origen y destino, así que no damos una cifra única — te cotizamos el valor exacto según tu caso. Ten en cuenta que ${CALE_INFO.riesgoCosto}.`,
       },
     ],
   },
   {
-    slug:        'renovacion-licencia',
+    slug:        'refrendacion-licencia',
     categoria:   'rnc',
-    name:        'Renovación de Licencia de Conducción',
-    keyword:     'renovación licencia de conducción RNC',
-    description: 'Tu licencia está vencida o por vencer. Te acompañamos en la renovación ante el RNC — este trámite no exige examen CALE, sea cual sea la categoría.',
+    name:        'Refrendación de Licencia de Conducción',
+    keyword:     'refrendación licencia de conducción RNC',
+    description: 'Tu licencia está vencida o por vencer. Te acompañamos en la refrendación ante el RNC — este trámite no exige examen CALE, sea cual sea la categoría.',
     duration:    'Sujeto a agenda del organismo de tránsito — normalmente más rápido que una licencia nueva, al no requerir curso en el CEA',
-    waMessage:   'Hola, necesito renovar mi licencia de conducción.',
+    waMessage:   'Hola, necesito refrendar mi licencia de conducción.',
     esTramitePersonal: true,
     requisitos: [
       'Cédula de ciudadanía original',
@@ -521,12 +521,12 @@ export const SEO_SERVICES: SeoService[] = [
       'Revisamos tu licencia actual y confirmamos que no tengas comparendos pendientes que bloqueen el trámite.',
       'Te orientamos y agendamos tu cita de examen médico en un Centro de Reconocimiento de Conductores (CRC/IPS) autorizado — el examen lo presentas tú directamente allí.',
       'Verificamos que el resultado del examen quede cargado correctamente en el RUNT.',
-      'Radicamos la solicitud de renovación ante el organismo de tránsito y hacemos seguimiento hasta la expedición.',
+      'Radicamos la solicitud de refrendación ante el organismo de tránsito y hacemos seguimiento hasta la expedición.',
     ],
     faqs: [
       {
-        q: '¿La renovación exige el examen de los CALE?',
-        a: `No. ${CALE_INFO.tramitesLibres}. La renovación solo requiere el examen médico vigente en el CRC — no pasa por el CEA ni por los CALE.`,
+        q: '¿La refrendación exige el examen de los CALE?',
+        a: `No. ${CALE_INFO.tramitesLibres}. La refrendación solo requiere el examen médico vigente en el CRC — no pasa por el CEA ni por los CALE.`,
       },
       {
         q: '¿Qué pasa si mi licencia lleva mucho tiempo vencida?',

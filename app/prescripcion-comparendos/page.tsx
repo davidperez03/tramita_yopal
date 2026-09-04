@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { BUSINESS } from '@/lib/constants';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import PrescripcionPage from '@/components/PrescripcionPage';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import PrescripcionPage from '@/components/templates/PrescripcionPage';
 
 const siteUrl = `https://${BUSINESS.domain}`;
 

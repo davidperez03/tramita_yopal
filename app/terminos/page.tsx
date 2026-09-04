@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { BUSINESS } from '@/lib/constants';
 import { REGLA_AVALUO } from '@/lib/reglas-negocio';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Términos y Condiciones | Tramita Yopal',
-  description: 'Términos y condiciones del servicio de gestión de trámites vehiculares de Tramita Yopal.',
+  description: 'Términos y condiciones del servicio de gestión de trámites de vehículo, licencia de conducción y comparendos de Tramita Yopal.',
   robots: { index: false, follow: false },
 };
 
@@ -20,7 +20,7 @@ export default function Terminos() {
             Términos y Condiciones
           </h1>
           <p className="text-slate-400 text-sm mb-10">
-            Última actualización: julio de 2026
+            Última actualización: septiembre de 2026
           </p>
 
           <div className="prose prose-slate max-w-none space-y-8 text-slate-700 leading-relaxed">
@@ -29,7 +29,8 @@ export default function Terminos() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">1. Descripción del servicio</h2>
               <p>
                 <strong>Tramita Yopal</strong> es un servicio de gestión y asesoría en trámites
-                vehiculares operado desde {BUSINESS.location}, Colombia. Actuamos como intermediarios
+                del vehículo (RNA), de la licencia de conducción (RNC) y de comparendos de tránsito,
+                operado desde {BUSINESS.location}, Colombia. Actuamos como intermediarios
                 entre el usuario y los organismos de tránsito competentes, facilitando la presentación
                 de documentos y el seguimiento de trámites.
               </p>
@@ -42,10 +43,9 @@ export default function Terminos() {
             <section>
               <h2 className="text-xl font-bold text-slate-900 mb-3">2. Alcance del servicio</h2>
               <ul className="space-y-2 list-disc pl-5">
-                <li>Asesoría sobre documentos requeridos para cada trámite vehicular.</li>
-                <li>Verificación previa del estado del vehículo, propietario y posibles impedimentos.</li>
-                <li>Gestión presencial del trámite ante el organismo de tránsito de Yopal, Casanare.</li>
-                <li>Envío de la tarjeta de propiedad al domicilio del cliente en territorio colombiano.</li>
+                <li>Asesoría sobre documentos requeridos para cada trámite.</li>
+                <li><strong>Vehículo (RNA):</strong> verificación previa del estado del vehículo, propietario y posibles impedimentos; gestión presencial del trámite ante el organismo de tránsito de Yopal, Casanare; envío de la tarjeta de propiedad al domicilio del cliente en territorio colombiano.</li>
+                <li><strong>Licencia de conducción (RNC):</strong> acompañamiento en la inscripción del cliente en el RUNT, agendamiento de citas ante el Centro de Reconocimiento de Conductores (CRC) y el Centro de Enseñanza Automovilística (CEA), y radicación de la solicitud ante el organismo de tránsito. El examen médico y el curso/evaluación los presenta el cliente directamente en el CRC y el CEA — Tramita Yopal no los realiza ni los garantiza.</li>
                 <li>Verificación gratuita de multas y comparendos por número de cédula.</li>
                 <li>Tramitación de prescripción de comparendos de tránsito cuando aplique.</li>
                 <li>Asesoría y gestión para el pago de comparendos con descuento del 50 % o 25 %, conforme a la Ley 769 de 2002 y sus modificaciones.</li>
@@ -94,6 +94,15 @@ export default function Terminos() {
                   son estimados y no constituyen garantía.
                 </li>
                 <li>
+                  <strong>Licencia de conducción — examen médico y curso:</strong> Tramita Yopal
+                  no realiza ni controla el examen médico del Centro de Reconocimiento de
+                  Conductores (CRC) ni el curso o evaluación del Centro de Enseñanza Automovilística
+                  (CEA); ambos dependen exclusivamente de esas entidades. Tramita Yopal tampoco
+                  controla ni garantiza el costo o la fecha de entrada en operación de los CALE
+                  (Centros de Apoyo Logístico de Evaluación) cuando el Ministerio de Transporte los
+                  active.
+                </li>
+                <li>
                   <strong>Prescripción de comparendos:</strong> La verificación es gratuita pero
                   el resultado depende del historial real del usuario. La declaración de prescripción
                   tiene un costo separado que se cotiza individualmente.
@@ -121,14 +130,19 @@ export default function Terminos() {
                   antes de iniciar cualquier gestión.
                 </li>
                 <li>
-                  <strong>Política de cobro en dos etapas:</strong> el cliente paga el 50% del
-                  valor total cotizado al aprobar la cotización e iniciar el trámite. El 50%
-                  restante se cobra únicamente cuando el organismo de tránsito aprueba y expide
-                  el documento. No se cobra el total por adelantado.{' '}
+                  <strong>Trámites de vehículo (RNA) — cobro en dos etapas:</strong> el cliente
+                  paga el 50% del valor total cotizado al aprobar la cotización e iniciar el
+                  trámite. El 50% restante se cobra únicamente cuando el organismo de tránsito
+                  aprueba y expide el documento. No se cobra el total por adelantado.{' '}
                   <strong>Excepción — Traspaso de Propiedad:</strong> el avalúo vehicular (1%)
                   es exigido por el organismo de tránsito y debe pagarse en su totalidad al iniciar
                   el trámite; este valor no hace parte del cobro de Tramita Yopal. Sobre la base de
                   ese 1%: {REGLA_AVALUO.larga}.
+                </li>
+                <li>
+                  <strong>Trámites de licencia (RNC) y comparendos — pago único:</strong> a
+                  diferencia de los trámites de RNA, estos se cobran en un solo pago, cuyo momento
+                  y valor se confirman con el cliente antes de iniciar la gestión.
                 </li>
                 <li>
                   El pago de honorarios se acuerda individualmente mediante WhatsApp antes de

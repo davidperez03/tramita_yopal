@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { BUSINESS, waLink, WA_MESSAGES } from '@/lib/constants';
 import { CATEGORIAS } from '@/lib/seo-data';
-import { WhatsAppIcon } from './WhatsAppIcon';
+import { WhatsAppIcon } from '../WhatsAppIcon';
 
 const waUrl = waLink(WA_MESSAGES.cotizar);
 
@@ -24,8 +24,8 @@ export default function Footer() {
               />
             </div>
             <p className="text-sm leading-relaxed">
-              Gestión de trámites vehiculares con validación previa de compradores,
-              vendedores y vehículo. Atendemos desde {BUSINESS.location} para todo Colombia.
+              Gestión de trámites de tu vehículo (RNA), tu licencia (RNC) y tus
+              comparendos, con validación previa gratuita. Atendemos desde {BUSINESS.location} para todo Colombia.
             </p>
             <a
               href={waUrl}

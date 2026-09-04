@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { BUSINESS } from '@/lib/constants';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 import ComparendoForm from './ComparendoForm';
+import { FaqAccordion } from '@/components/cards/FaqAccordion';
 
 const siteUrl = `https://${BUSINESS.domain}`;
 const pageUrl = `${siteUrl}/descuento-comparendo`;
@@ -218,15 +219,7 @@ export default function DescuentoComparendoPage() {
             </h2>
             <div className="space-y-3">
               {FAQS.map((f) => (
-                <details key={f.q} className="group bg-white rounded-2xl border border-slate-100 overflow-hidden">
-                  <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none font-semibold text-sm text-slate-900 hover:text-emerald-700 transition-colors">
-                    {f.q}
-                    <svg className="w-4 h-4 text-slate-300 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <p className="px-6 pb-5 text-sm text-slate-600 leading-relaxed">{f.a}</p>
-                </details>
+                <FaqAccordion key={f.q} q={f.q} a={f.a} bg="white" accent="emerald" />
               ))}
             </div>
 

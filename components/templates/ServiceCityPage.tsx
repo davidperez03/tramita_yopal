@@ -2,8 +2,10 @@ import Link from 'next/link';
 import { Car, IdCard, AlertTriangle } from 'lucide-react';
 import { BUSINESS, waLink } from '@/lib/constants';
 import { CITIES, SEO_SERVICES, CATEGORIAS, type City, type SeoService, type Categoria } from '@/lib/seo-data';
-import { WhatsAppIcon } from './WhatsAppIcon';
-import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
+import { WhatsAppIcon } from '../WhatsAppIcon';
+import { OpcionCard } from '../cards/OpcionCard';
+import { FaqAccordion } from '../cards/FaqAccordion';
+import { FadeIn, FadeInStagger, FadeInItem } from '../FadeIn';
 
 type Props = { service: SeoService; city: City };
 
@@ -206,15 +208,7 @@ export default function ServiceCityPage({ service, city }: Props) {
           <FadeInStagger className="space-y-3" stagger={0.06}>
             {service.faqs.map((f) => (
               <FadeInItem key={f.q}>
-                <details className="group bg-white rounded-2xl border border-slate-100 overflow-hidden">
-                  <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none font-semibold text-sm text-slate-900 hover:text-brand-700 transition-colors">
-                    {f.q}
-                    <svg className="w-4 h-4 text-slate-300 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <p className="px-6 pb-5 text-sm text-slate-600 leading-relaxed">{f.a}</p>
-                </details>
+                <FaqAccordion q={f.q} a={f.a} bg="white" />
               </FadeInItem>
             ))}
           </FadeInStagger>
@@ -257,24 +251,18 @@ export default function ServiceCityPage({ service, city }: Props) {
               Otros trámites en {city.name}
             </h2>
           </FadeIn>
-          <FadeInStagger className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" stagger={0.06}>
-            {otherServices.map((s) => (
-              <FadeInItem key={s.slug}>
-                <Link
-                  href={`/tramites/${s.slug}/${city.slug}`}
-                  className="block bg-white rounded-2xl border border-slate-100 p-5 hover:border-brand-300 hover:shadow-md transition-all group h-full"
-                >
-                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-brand-700 transition-colors mb-1">
-                    {s.name}
-                  </h3>
-                  <p className="text-xs text-slate-500 leading-relaxed mb-3 line-clamp-2">{s.description}</p>
-                  <span className="text-xs font-semibold text-brand-600 group-hover:text-brand-800 transition-colors">
-                    Ver trámite →
-                  </span>
-                </Link>
-              </FadeInItem>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {otherServices.map((s, i) => (
+              <OpcionCard
+                key={s.slug}
+                href={`/tramites/${s.slug}/${city.slug}`}
+                titulo={s.name}
+                descripcion={s.description}
+                cta="Ver trámite"
+                index={i}
+              />
             ))}
-          </FadeInStagger>
+          </div>
         </div>
       </section>
 

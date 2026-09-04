@@ -1,6 +1,6 @@
 import { BUSINESS, waLink } from '@/lib/constants';
-import { WhatsAppIcon } from './WhatsAppIcon';
-import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
+import { WhatsAppIcon } from '../WhatsAppIcon';
+import { FadeIn, FadeInStagger, FadeInItem } from '../FadeIn';
 
 const waUrl = waLink('Hola, me gustaría obtener más información sobre sus servicios.');
 

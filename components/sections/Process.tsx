@@ -1,5 +1,5 @@
 import { PROCESS_STEPS, waLink } from '@/lib/constants';
-import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
+import { FadeIn, FadeInStagger, FadeInItem } from '../FadeIn';
 
 const waUrl = waLink('Hola, quiero iniciar un trámite vehicular.');
 

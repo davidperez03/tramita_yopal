@@ -2,27 +2,26 @@ import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Car } from 'lucide-react';
-import { BUSINESS, waLink } from '@/lib/constants';
+import { BUSINESS } from '@/lib/constants';
 import { CITIES, SEO_SERVICES, CATEGORIAS } from '@/lib/seo-data';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { WhatsAppIcon } from '@/components/WhatsAppIcon';
-import { FadeIn, FadeInStagger, FadeInItem } from '@/components/FadeIn';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import { TramiteCard } from '@/components/cards/TramiteCard';
+import { FadeIn } from '@/components/FadeIn';
 
 // Contenido general (quiénes somos, proceso, garantías, formulario,
 // reseñas, FAQ, contacto) — el mismo que antes vivía solo en la home,
 // ahora dentro de cada categoría en vez de saturar la portada.
-const AboutUs         = dynamic(() => import('@/components/AboutUs'));
-const Validator        = dynamic(() => import('@/components/Validator'));
-const Process          = dynamic(() => import('@/components/Process'));
-const TrackingPromo    = dynamic(() => import('@/components/TrackingPromo'));
-const PaymentGuarantee = dynamic(() => import('@/components/PaymentGuarantee'));
-const QuoteForm        = dynamic(() => import('@/components/QuoteForm'));
-const WhyUs            = dynamic(() => import('@/components/WhyUs'));
-const Reviews          = dynamic(() => import('@/components/Reviews'));
-const GuidesTeaser     = dynamic(() => import('@/components/GuidesTeaser'));
-const FAQ              = dynamic(() => import('@/components/FAQ'));
-const Contact          = dynamic(() => import('@/components/Contact'));
+const AboutUs         = dynamic(() => import('@/components/sections/AboutUs'));
+const Validator        = dynamic(() => import('@/components/sections/Validator'));
+const Process          = dynamic(() => import('@/components/sections/Process'));
+const TrackingPromo    = dynamic(() => import('@/components/sections/TrackingPromo'));
+const PaymentGuarantee = dynamic(() => import('@/components/sections/PaymentGuarantee'));
+const QuoteForm        = dynamic(() => import('@/components/sections/QuoteForm'));
+const WhyUs            = dynamic(() => import('@/components/sections/WhyUs'));
+const Reviews          = dynamic(() => import('@/components/sections/Reviews'));
+const FAQ              = dynamic(() => import('@/components/sections/FAQ'));
+const Contact          = dynamic(() => import('@/components/sections/Contact'));
 
 const siteUrl = `https://${BUSINESS.domain}`;
 const CAT = CATEGORIAS.rna;
@@ -32,6 +31,12 @@ export const metadata: Metadata = {
   title: 'RNA — Registro Nacional Automotor | Tramita Yopal',
   description:
     'Trámites sobre tu vehículo ante el RNA en Yopal, Casanare: traspaso de propiedad, levantamiento de prenda, traslado de cuenta, duplicado de placas y cambio de servicio.',
+  keywords: [
+    'RNA Yopal', 'Registro Nacional Automotor Yopal', 'traspaso vehículo Yopal',
+    'levantamiento de prenda Yopal', 'traslado de cuenta vehículo Casanare',
+    'duplicado de placas Yopal', 'cambio de servicio vehículo Yopal',
+    'trámites RUNT Yopal', 'gestor vehicular Casanare', 'trámites vehiculares Yopal',
+  ],
   alternates: { canonical: `${siteUrl}/rna` },
   openGraph: {
     title: 'RNA — Registro Nacional Automotor | Tramita Yopal',
@@ -48,14 +53,39 @@ const MAIN_CITY = CITIES.find((c) => c.isOfficeCity)!;
 const RNA_SERVICES = SEO_SERVICES.filter((s) => s.categoria === 'rna');
 
 export default function RnaPage() {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Tramita Yopal', item: siteUrl },
-      { '@type': 'ListItem', position: 2, name: 'RNA', item: `${siteUrl}/rna` },
-    ],
-  };
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Tramita Yopal', item: siteUrl },
+        { '@type': 'ListItem', position: 2, name: 'RNA', item: `${siteUrl}/rna` },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Trámites del vehículo (RNA) en Yopal, Casanare',
+      itemListElement: RNA_SERVICES.map((s, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'Service',
+          name: s.name,
+          description: s.description,
+          url: `${siteUrl}/tramites/${s.slug}/${MAIN_CITY.slug}`,
+          provider: {
+            '@type': 'LocalBusiness',
+            name: BUSINESS.name,
+            telephone: `+${BUSINESS.whatsapp}`,
+            address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, addressRegion: BUSINESS.department, addressCountry: 'CO' },
+          },
+          areaServed: { '@type': 'State', name: BUSINESS.department },
+          offers: { '@type': 'Offer', description: 'Cotización gratuita sin compromiso', priceCurrency: 'COP' },
+        },
+      })),
+    },
+  ];
 
   return (
     <>
@@ -96,57 +126,19 @@ export default function RnaPage() {
                 Trámites que gestionamos
               </h2>
             </FadeIn>
-            <FadeInStagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" stagger={0.08}>
-              {RNA_SERVICES.map((service) => (
-                <FadeInItem key={service.slug}>
-                  <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden h-full flex flex-col">
-                    <div className="p-6 flex-1 flex flex-col">
-                      <h3 className="text-lg font-bold text-slate-900 mb-2">{service.name}</h3>
-                      <p className="text-slate-500 text-sm leading-relaxed mb-4">{service.description}</p>
-                      <p className="text-xs text-slate-400 mb-5">
-                        Tiempo estimado: <span className="font-semibold text-slate-600">{service.duration}</span>
-                      </p>
-                      <div className="flex flex-col gap-2 mt-auto">
-                        <Link
-                          href={`/tramites/${service.slug}/${MAIN_CITY.slug}`}
-                          className="text-center bg-brand-950 hover:bg-brand-800 text-white font-semibold text-sm py-2.5 px-4 rounded-xl transition-colors"
-                        >
-                          Ver en Yopal
-                        </Link>
-                        <a
-                          href={waLink(service.waMessage)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-2 border border-slate-200 hover:border-wa text-slate-600 hover:text-wa font-semibold text-sm py-2.5 px-4 rounded-xl transition-colors"
-                        >
-                          <WhatsAppIcon className="w-4 h-4" />
-                          Cotizar
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Ciudades */}
-                    <div className="border-t border-slate-100 px-6 py-4 bg-slate-50">
-                      <p className="text-xs text-slate-400 mb-2 font-medium">Atendemos en:</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {CITIES.slice(0, 8).map((city) => (
-                          <Link
-                            key={city.slug}
-                            href={`/tramites/${service.slug}/${city.slug}`}
-                            className="text-xs text-brand-600 hover:text-brand-800 hover:underline transition-colors"
-                          >
-                            {city.name}
-                          </Link>
-                        ))}
-                        {CITIES.length > 8 && (
-                          <span className="text-xs text-slate-400">+{CITIES.length - 8} más</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </FadeInItem>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {RNA_SERVICES.map((service, i) => (
+                <TramiteCard
+                  key={service.slug}
+                  service={service}
+                  href={`/tramites/${service.slug}/${MAIN_CITY.slug}`}
+                  ctaLabel="Ver en Yopal"
+                  waLabel="Cotizar"
+                  cities={CITIES}
+                  index={i}
+                />
               ))}
-            </FadeInStagger>
+            </div>
           </div>
         </section>
 
@@ -170,10 +162,10 @@ export default function RnaPage() {
         <Process />
         <TrackingPromo />
         <PaymentGuarantee />
-        <QuoteForm />
+        <QuoteForm categoria="rna" />
         <WhyUs />
         <Reviews />
-        <GuidesTeaser />
+        {/* FAQ va al final — después de generar confianza, justo antes del contacto */}
         <FAQ />
         <Contact />
       </main>

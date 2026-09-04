@@ -1,5 +1,5 @@
 import { waLink } from '@/lib/constants';
-import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
+import { FadeIn, FadeInStagger, FadeInItem } from '../FadeIn';
 import { Shield, UserCheck, CreditCard, AlertCircle } from 'lucide-react';
 
 const waUrl = waLink('Hola, quiero que validen mi caso antes de iniciar el trámite.');

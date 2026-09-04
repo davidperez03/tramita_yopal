@@ -12,9 +12,9 @@ const siteUrl = `https://${BUSINESS.domain}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Trámites Vehiculares en Yopal | Tramita Yopal',
+  title: 'Vehículo, Licencia y Comparendos en Yopal | Tramita Yopal',
   description:
-    'Traspaso, levantamiento de prenda y duplicado de placas en Yopal, Casanare. ✓ Validación previa gratis ✓ Gestión remota ✓ Envío de tarjeta a domicilio ✓ Respuesta en 30 min.',
+    'Trámites de vehículo (RNA), licencia de conducción (RNC) y comparendos en Yopal, Casanare. ✓ Validación previa gratis ✓ Gestión remota ✓ Respuesta en 30 min.',
   keywords: [
     'trámites vehiculares Yopal',
     'traspaso vehículo Yopal',
@@ -32,6 +32,13 @@ export const metadata: Metadata = {
     'comparendos prescritos Casanare',
     'multas tránsito prescritas Colombia',
     'traspaso carro sin ir al tránsito Yopal',
+    'licencia de conducción Yopal',
+    'RNC Yopal',
+    'registro nacional de conductores Yopal',
+    'refrendación licencia de conducción',
+    'recategorización licencia de conducción Yopal',
+    'CALE licencia de conducción Colombia',
+    'pago comparendo con descuento Yopal',
     'tramitayopal',
   ],
   authors: [{ name: 'Tramita Yopal' }],
@@ -46,9 +53,9 @@ export const metadata: Metadata = {
     languages: { 'es-CO': siteUrl },
   },
   openGraph: {
-    title: 'Trámites Vehiculares en Yopal | Tramita Yopal',
+    title: 'Vehículo, Licencia y Comparendos en Yopal | Tramita Yopal',
     description:
-      'Gestor de trámites vehiculares en Yopal, Casanare. Validación previa gratuita, gestión 100% remota y envío de tarjeta de propiedad a domicilio. Cotiza en 30 min.',
+      'Gestión de trámites de vehículo, licencia de conducción y comparendos en Yopal, Casanare. Validación previa gratuita, gestión 100% remota. Cotiza en 30 min.',
     url: siteUrl,
     siteName: 'Tramita Yopal',
     locale: 'es_CO',
@@ -57,8 +64,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tramita Yopal | Trámites Vehiculares en Yopal',
-    description: 'Trámites vehiculares sin complicaciones desde Yopal, Casanare. Validación previa incluida.',
+    title: 'Tramita Yopal | Vehículo, Licencia y Comparendos',
+    description: 'Trámites de vehículo, licencia de conducción y comparendos en Yopal, Casanare. Validación previa incluida.',
   },
   verification: {
     google: 'zXw5jnuy3eETCwiaejtv9WnjvJGzEHpz1tT9Bj9fzGo',

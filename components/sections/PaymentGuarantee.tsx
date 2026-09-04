@@ -1,4 +1,4 @@
-import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
+import { FadeIn, FadeInStagger, FadeInItem } from '../FadeIn';
 import { REGLA_AVALUO } from '@/lib/reglas-negocio';
 
 export default function PaymentGuarantee() {

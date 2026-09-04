@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { BUSINESS } from '@/lib/constants';
 import { CITIES, SEO_SERVICES } from '@/lib/seo-data';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import ServiceCityPage from '@/components/ServiceCityPage';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import ServiceCityPage from '@/components/templates/ServiceCityPage';
 
 type Params = { servicio: string; ciudad: string };
 

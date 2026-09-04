@@ -21,12 +21,11 @@ function norm(s: string) {
 }
 
 export default function TramitesPanel({
-  tramites, total, limit, comparendosByPhone, historial, tramitadores,
+  tramites, total, limit, historial, tramitadores,
 }: {
   tramites: Tramite[];
   total: number;
   limit: number;
-  comparendosByPhone: Map<string, true>;
   historial: HistorialEntry[];
   tramitadores: TramitadorOption[];
 }) {
@@ -223,7 +222,6 @@ export default function TramitesPanel({
             <TramiteCard
               key={t.id}
               t={t}
-              hasTramiteComp={!!(t.cliente?.telefono && comparendosByPhone.has(t.cliente.telefono))}
               historial={historialMap.get(t.id) ?? []}
               selected={selected.has(t.id)}
               onToggle={() => toggleSelect(t.id)}

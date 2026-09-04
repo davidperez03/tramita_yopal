@@ -2,8 +2,8 @@
 
 import { useState, FormEvent } from 'react';
 import { waLink } from '@/lib/constants';
-import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
-import { WhatsAppIcon } from './WhatsAppIcon';
+import { FadeIn, FadeInStagger, FadeInItem } from '../FadeIn';
+import { WhatsAppIcon } from '../WhatsAppIcon';
 
 const inputClass =
   'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent bg-white';

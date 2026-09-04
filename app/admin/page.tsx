@@ -107,7 +107,7 @@ export default async function AdminPage({
   const TRAMITE_COLS =
     'id, created_at, updated_at, cliente_id, cliente:clientes(nombre, telefono, ciudad), asignado_a, placa, tipos, estado, valor_honorarios, valor_derechos, valor_avaluo, costo_tramitador, costo_envio, costo_imprevistos, pago_inicial, pago_inicial_fecha, pago_inicial_metodo, pago_inicial_monto, pago_final, pago_final_fecha, pago_final_metodo, pago_final_monto, cancelacion_motivo, pago_devuelto, codigo_seguimiento';
 
-  const [reviewsRes, tramitesRes, comparendosRes, clientesRes] = await Promise.all([
+  const [reviewsRes, tramitesRes, clientesRes] = await Promise.all([
     supabaseAdmin
       .from('reviews')
       .select('id, name, email, rating, text, type, year, source, visible, created_at, photos', { count: 'exact' })
@@ -122,14 +122,8 @@ export default async function AdminPage({
       .order('created_at', { ascending: false })
       .limit(LIMIT),
     supabaseAdmin
-      .from('comparendo_solicitudes')
-      .select('id, created_at, cliente_id, nombre, cedula, telefono, tipo, fecha_comparendo, numero_comparendo, descuento_estimado, fecha_curso, estado', { count: 'exact' })
-      .is('deleted_at', null)
-      .order('created_at', { ascending: false })
-      .limit(LIMIT),
-    supabaseAdmin
       .from('clientes_resumen')
-      .select('id, created_at, nombre, telefono, cedula, ciudad, email, notas, tramites_total, tramites_activos, ultimo_tramite, comparendos_total', { count: 'exact' })
+      .select('id, created_at, nombre, telefono, cedula, ciudad, email, notas, tramites_total, tramites_activos, ultimo_tramite', { count: 'exact' })
       .order('ultimo_tramite', { ascending: false, nullsFirst: false })
       .limit(LIMIT),
   ]);
@@ -160,8 +154,6 @@ export default async function AdminPage({
       tramitadores={tramitadores}
       clientes={clientesRes.data ?? []}
       clientesTotal={clientesRes.count ?? 0}
-      comparendos={comparendosRes.data ?? []}
-      comparendosTotal={comparendosRes.count ?? 0}
       historial={historialRes.data ?? []}
       limit={LIMIT}
     />

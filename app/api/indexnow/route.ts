@@ -11,6 +11,10 @@ export async function GET() {
 
   const urls = [
     base,
+    `${base}/rna`,
+    `${base}/rnc`,
+    `${base}/comparendos`,
+    `${base}/tramites`,
     `${base}/prescripcion-comparendos`,
     `${base}/descuento-comparendo`,
     `${base}/guias`,

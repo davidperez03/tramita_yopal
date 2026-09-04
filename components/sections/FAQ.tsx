@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FAQS } from '@/lib/constants';
-import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
+import { FadeIn, FadeInStagger, FadeInItem } from '../FadeIn';
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null);

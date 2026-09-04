@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { BUSINESS } from '@/lib/constants';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad | Tramita Yopal',
-  description: 'Política de privacidad y tratamiento de datos personales de Tramita Yopal, conforme a la Ley 1581 de 2012.',
+  description: 'Política de privacidad y tratamiento de datos personales de Tramita Yopal para trámites de vehículo, licencia de conducción y comparendos, conforme a la Ley 1581 de 2012.',
   robots: { index: false, follow: false },
 };
 
@@ -19,7 +19,7 @@ export default function PoliticaPrivacidad() {
             Política de Privacidad
           </h1>
           <p className="text-slate-400 text-sm mb-10">
-            Última actualización: julio de 2026 · Conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013
+            Última actualización: septiembre de 2026 · Conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013
           </p>
 
           <div className="prose prose-slate max-w-none space-y-8 text-slate-700 leading-relaxed">
@@ -47,16 +47,19 @@ export default function PoliticaPrivacidad() {
                 <li className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
                   <strong className="block text-slate-900 mb-1">Clientes y gestión de trámites</strong>
                   <p className="mb-2">
-                    Cuando contratas un trámite con nosotros, registramos en nuestra base de datos tu{' '}
-                    <strong>nombre</strong>, <strong>teléfono</strong>, <strong>ciudad</strong> y, de forma
-                    opcional, tu <strong>número de cédula</strong> y <strong>correo electrónico</strong>,
-                    junto con los datos del trámite: <strong>placa del vehículo</strong>, tipo de trámite,
-                    estado, fechas y valores del servicio.
+                    Hoy la relación con el cliente empieza y se coordina directamente por{' '}
+                    <strong>WhatsApp</strong>. Cuando un trámite se formaliza, lo registramos en nuestro
+                    sistema para poder darte seguimiento: tu <strong>nombre</strong>,{' '}
+                    <strong>teléfono</strong>, <strong>ciudad</strong> y, de forma opcional, tu{' '}
+                    <strong>número de cédula</strong> y <strong>correo electrónico</strong>, junto con los
+                    datos del trámite: tipo de trámite, estado, fechas y valores del servicio, y — cuando
+                    aplica — la <strong>placa del vehículo</strong> (trámites de RNA) o la{' '}
+                    <strong>categoría de licencia</strong> (trámites de RNC).
                   </p>
                   <ul className="space-y-1 text-sm text-slate-600 list-disc pl-4">
-                    <li>Finalidad: gestionar tu trámite, mantenerte informado de su avance, emitir soportes y cumplir obligaciones legales y contables.</li>
+                    <li>Finalidad: gestionar tu trámite, mantenerte informado de su avance por WhatsApp y emitir los soportes correspondientes.</li>
                     <li>La cédula se usa exclusivamente para los trámites que la exigen ante el organismo de tránsito y el RUNT.</li>
-                    <li>Conservamos estos datos durante la relación comercial y los plazos legales aplicables; puedes solicitar su supresión cuando dejen de ser necesarios.</li>
+                    <li>Conservamos estos datos durante la relación comercial; puedes solicitar su supresión cuando dejen de ser necesarios.</li>
                   </ul>
                 </li>
 
@@ -98,23 +101,13 @@ export default function PoliticaPrivacidad() {
                 <li className="bg-blue-50 rounded-xl p-4 border border-blue-100">
                   <strong className="block text-slate-900 mb-1">Formulario de descuento en comparendos</strong>
                   <p className="mb-2">
-                    Cuando un usuario solicita asesoría para el pago de su comparendo con descuento,
-                    recopilamos su <strong>nombre</strong>, <strong>teléfono</strong>,{' '}
-                    <strong>tipo de comparendo</strong> y <strong>fecha del comparendo</strong>.
-                    De forma opcional, también puede indicar su <strong>número de cédula</strong>,
-                    el <strong>número del comparendo</strong> y una{' '}
-                    <strong>fecha y hora preferida para el curso CIA</strong>.
+                    Nombre, teléfono, tipo y fecha del comparendo y, opcionalmente, cédula y número
+                    del comparendo. El porcentaje de descuento se calcula localmente en tu navegador.
+                    Al enviar el formulario, estos datos se convierten en un mensaje de WhatsApp que
+                    se abre en tu dispositivo — igual que el formulario de cotización general.
                   </p>
                   <ul className="space-y-1 text-sm text-slate-600 list-disc pl-4">
-                    <li>Estos datos se almacenan en nuestra base de datos para gestionar la solicitud y contactar al usuario.</li>
-                    <li>El porcentaje de descuento estimado se calcula localmente en el navegador y se guarda como referencia interna.</li>
-                    <li>
-                      <strong>No se comparten con terceros</strong>, salvo con Supabase como proveedor de base de datos bajo acuerdo de confidencialidad.
-                    </li>
-                    <li>
-                      El titular puede solicitar la eliminación de sus datos en cualquier momento escribiendo a{' '}
-                      <a href={`mailto:${BUSINESS.email}`} className="text-brand-700 hover:underline">{BUSINESS.email}</a>.
-                    </li>
+                    <li>Estos datos no transitan ni se almacenan en nuestros servidores ni en base de datos alguna — solo llegan a nuestro WhatsApp cuando envías el mensaje.</li>
                   </ul>
                 </li>
 
@@ -155,10 +148,9 @@ export default function PoliticaPrivacidad() {
               <ul className="space-y-2 list-disc pl-5">
                 <li>
                   <strong>Supabase Inc.</strong> — Base de datos en la nube donde se almacenan
-                  los datos de clientes y trámites, las reseñas y las solicitudes de descuento en
-                  comparendos. Los datos se almacenan en servidores ubicados en Estados Unidos bajo
-                  el estándar de seguridad SOC 2. Supabase actúa como encargado del tratamiento,
-                  sin acceso ni uso propio de los datos.
+                  los datos de clientes y trámites, y las reseñas. Los datos se almacenan en
+                  servidores ubicados en Estados Unidos bajo el estándar de seguridad SOC 2.
+                  Supabase actúa como encargado del tratamiento, sin acceso ni uso propio de los datos.
                 </li>
                 <li>
                   <strong>WhatsApp / Meta Platforms Inc.</strong> — Plataforma de mensajería hacia

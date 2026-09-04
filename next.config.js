@@ -17,9 +17,11 @@ const nextConfig = {
   },
 
   async redirects() {
-    // /licencias se reemplazó por /rnc al dividir el catálogo en RNA/RNC/Comparendos.
     return [
+      // /licencias se reemplazó por /rnc al dividir el catálogo en RNA/RNC/Comparendos.
       { source: '/licencias', destination: '/rnc', permanent: true },
+      // El trámite se llama "refrendación", no "renovación" — corrección de nombre.
+      { source: '/tramites/renovacion-licencia/:ciudad', destination: '/tramites/refrendacion-licencia/:ciudad', permanent: true },
     ];
   },
 

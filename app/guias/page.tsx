@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { BUSINESS } from '@/lib/constants';
 import { GUIAS } from '@/lib/guias';
 import { fmtDate } from '@/lib/format';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 
 const siteUrl = `https://${BUSINESS.domain}`;
 

@@ -5,9 +5,10 @@ import { BUSINESS, waLink } from '@/lib/constants';
 import { GUIAS } from '@/lib/guias';
 import { SEO_SERVICES } from '@/lib/seo-data';
 import { fmtDate } from '@/lib/format';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 import { WhatsAppIcon } from '@/components/WhatsAppIcon';
+import { FaqAccordion } from '@/components/cards/FaqAccordion';
 
 type Params = { slug: string };
 
@@ -156,15 +157,7 @@ export default function GuiaPage({ params }: { params: Params }) {
               <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-6">Preguntas frecuentes</h2>
               <div className="space-y-3">
                 {guia.faqs.map((f) => (
-                  <details key={f.q} className="group bg-[#fafaf7] rounded-2xl border border-slate-100 overflow-hidden">
-                    <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none font-semibold text-sm text-slate-900 hover:text-brand-700 transition-colors">
-                      {f.q}
-                      <svg className="w-4 h-4 text-slate-300 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </summary>
-                    <p className="px-6 pb-5 text-sm text-slate-600 leading-relaxed">{f.a}</p>
-                  </details>
+                  <FaqAccordion key={f.q} q={f.q} a={f.a} bg="fafaf7" />
                 ))}
               </div>
             </section>

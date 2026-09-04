@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FadeIn } from './FadeIn';
+import { FadeIn } from '../FadeIn';
 
 // Demo estática del timeline de /seguimiento/[codigo]
 const DEMO_STEPS = [

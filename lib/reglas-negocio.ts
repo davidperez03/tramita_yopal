@@ -38,11 +38,14 @@ export const CALE_INFO = {
   estado:
     'el Ministerio de Transporte aplazó su entrada en operación mientras revisa la estructura y los costos que asumirían los conductores — sin fijar todavía una nueva fecha',
   tramitesAfectados: 'la licencia por primera vez y la recategorización',
-  tramitesLibres:    'la renovación y el duplicado no requieren examen, con o sin CALE',
-  costoActual:   '$1.400.000 aprox.',
-  costoConCale:  'hasta $2.200.000 aprox. (unos $800.000 más)',
+  tramitesLibres:    'la refrendación y el duplicado no requieren examen, con o sin CALE',
+  // No fijamos una cifra en pesos: los medios reportaron un estimado al
+  // momento del aplazamiento, pero no es un valor oficial ni verificado
+  // por nosotros — mejor no prometer un número que no podemos garantizar.
+  riesgoCosto:
+    'el Ministerio aplazó los CALE justamente para revisar su costo, porque el examen independiente encarecería el trámite frente al valor actual',
   leyVigente:
     'La Ley 2251 de 2022 sigue vigente — el aplazamiento es operativo, no una derogación, así que los CALE igual van a entrar en operación',
   resumenCorto:
-    'El Ministerio de Transporte aplazó el 28 de agosto de 2026 la entrada en operación de los CALE (Circular 0317), que exigirán un examen independiente para licencia por primera vez y recategorización. El aplazamiento busca revisar el costo, que podría subir de $1.400.000 a $2.200.000. No hay fecha fija de reactivación — tramitar ahora evita ese posible sobrecosto.',
+    'El Ministerio de Transporte aplazó el 28 de agosto de 2026 la entrada en operación de los CALE (Circular 0317), que exigirán un examen independiente para licencia por primera vez y recategorización. El aplazamiento busca revisar la estructura y el costo del examen, que subiría el valor del trámite frente al esquema actual. No hay fecha fija de reactivación — tramitar ahora evita ese posible sobrecosto.',
 };
