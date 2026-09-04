@@ -4,6 +4,7 @@ import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { BUSINESS, SERVICES, waLink } from '@/lib/constants';
 import { REGLA_AVALUO } from '@/lib/reglas-negocio';
+import { CATEGORIAS, type Categoria } from '@/lib/seo-data';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
 import { Tag, Zap, Truck, ShieldCheck } from 'lucide-react';
@@ -13,10 +14,17 @@ import { Tag, Zap, Truck, ShieldCheck } from 'lucide-react';
 // así que en vez de armar un WhatsApp genérico redirigimos allá.
 const OPCION_DESCUENTO_COMPARENDO = 'Pago de comparendo con descuento';
 
-const tramiteOptions = [
-  ...SERVICES.filter((s) => s.id !== 'otros').map((s) => s.name),
-  OPCION_DESCUENTO_COMPARENDO,
-  'Otro / No estoy seguro',
+// Agrupado por categoría (RNA/RNC/Comparendos) en vez de una sola lista
+// plana mezclando trámites del vehículo, de la licencia y de multas.
+const tramiteGroups: { label: string; options: string[] }[] = [
+  ...(Object.keys(CATEGORIAS) as Categoria[]).map((key) => ({
+    label: `${CATEGORIAS[key].sigla} — ${CATEGORIAS[key].short}`,
+    options: [
+      ...SERVICES.filter((s) => s.categoria === key).map((s) => s.name),
+      ...(key === 'comparendos' ? [OPCION_DESCUENTO_COMPARENDO] : []),
+    ],
+  })),
+  { label: 'Otro', options: ['Otro / No estoy seguro'] },
 ];
 
 const inputClass =
@@ -105,7 +113,11 @@ export default function QuoteForm() {
                 <label className="block text-sm font-medium text-slate-700 mb-1">Tipo de trámite *</label>
                 <select name="tramite" required value={form.tramite} onChange={handleChange} className={`${inputClass} bg-white`}>
                   <option value="">Selecciona tu trámite...</option>
-                  {tramiteOptions.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                  {tramiteGroups.map((g) => (
+                    <optgroup key={g.label} label={g.label}>
+                      {g.options.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                    </optgroup>
+                  ))}
                 </select>
               </div>
 

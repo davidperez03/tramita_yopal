@@ -1,8 +1,23 @@
 import Link from 'next/link';
-import { SERVICES, waLink, WA_MESSAGES } from '@/lib/constants';
+import { Car, IdCard, AlertTriangle } from 'lucide-react';
+import { waLink, WA_MESSAGES } from '@/lib/constants';
+import { SEO_SERVICES, CATEGORIAS, type Categoria } from '@/lib/seo-data';
 import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
 
+const ICONS: Record<Categoria, typeof Car> = {
+  rna: Car,
+  rnc: IdCard,
+  comparendos: AlertTriangle,
+};
+
 export default function Services() {
+  const categorias = (Object.keys(CATEGORIAS) as Categoria[]).map((key) => ({
+    key,
+    ...CATEGORIAS[key],
+    count: SEO_SERVICES.filter((s) => s.categoria === key).length,
+    Icon: ICONS[key],
+  }));
+
   return (
     <section id="tramites" className="py-14 sm:py-20 bg-[#fafaf7]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,54 +32,40 @@ export default function Services() {
           </p>
         </FadeIn>
 
-        {/* Índice de trámites — filas editoriales, sin tarjetas */}
-        <FadeInStagger className="border-t-2 border-brand-950" stagger={0.06}>
-          {SERVICES.map((s) => {
-            const waUrl = waLink(s.whatsappMessage);
-            const isPrescripcion = s.id === 'prescripcion-comparendos';
-            const isOtros = s.id === 'otros';
-            // El id de cada servicio del catálogo es su slug SEO
-            const href = isPrescripcion
-              ? '/prescripcion-comparendos'
-              : isOtros ? waUrl : `/tramites/${s.id}/yopal`;
-            const isExt = isOtros;
-
-            return (
-              <FadeInItem key={s.id}>
-                <Link
-                  href={href}
-                  target={isExt ? '_blank' : undefined}
-                  rel={isExt ? 'noopener noreferrer' : undefined}
-                  className="group grid grid-cols-[1fr_auto] sm:grid-cols-[3.5rem_1fr_9rem_11rem] items-center gap-x-6 gap-y-1 py-5 sm:py-6 border-b border-slate-200 hover:bg-white transition-colors"
-                >
-                  <span className="hidden sm:block text-xs font-bold tracking-widest text-slate-300 tabular-nums">
-                    {s.number}
+        <FadeInStagger className="grid sm:grid-cols-3 gap-5" stagger={0.08}>
+          {categorias.map(({ key, sigla, label, short, description, href, count, Icon }) => (
+            <FadeInItem key={key}>
+              <Link
+                href={href}
+                className="group flex flex-col h-full bg-white rounded-3xl border border-slate-100 p-7 shadow-sm hover:border-brand-300 hover:shadow-lg transition-all"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-brand-950 flex items-center justify-center mb-5 group-hover:bg-brand-800 transition-colors">
+                  <Icon className="w-6 h-6 text-gold-400" strokeWidth={1.75} />
+                </div>
+                <p className="text-[11px] font-black tracking-widest text-brand-600 uppercase mb-1.5">
+                  {sigla}
+                </p>
+                <h3 className="text-lg font-extrabold text-slate-900 leading-snug mb-2">
+                  {label}
+                </h3>
+                <p className="text-sm text-slate-500 leading-relaxed flex-1">
+                  {description}
+                </p>
+                <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-100">
+                  <span className="text-xs text-slate-400">
+                    {count} trámite{count === 1 ? '' : 's'} · {short}
                   </span>
-                  <div className="col-span-2 sm:col-span-1">
-                    <h3 className="text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-brand-700 transition-colors flex items-center gap-2.5 flex-wrap">
-                      {s.name}
-                      {isPrescripcion && (
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-gold-600 border border-gold-500/40 px-2 py-0.5 rounded">
-                          Consulta gratis
-                        </span>
-                      )}
-                    </h3>
-                    <p className="text-sm text-slate-500 leading-relaxed mt-1 max-w-xl">{s.description}</p>
-                  </div>
-                  <span className="hidden sm:block text-xs text-slate-400">
-                    {s.duration ?? 'Según el caso'}
+                  <span className="text-sm font-semibold text-brand-700 group-hover:text-brand-900 transition-colors whitespace-nowrap">
+                    Ver todos →
                   </span>
-                  <span className="text-sm font-semibold text-brand-700 group-hover:text-brand-900 transition-colors justify-self-start sm:justify-self-end whitespace-nowrap">
-                    {isOtros ? 'Preguntar por WhatsApp' : 'Ver trámite'} →
-                  </span>
-                </Link>
-              </FadeInItem>
-            );
-          })}
+                </div>
+              </Link>
+            </FadeInItem>
+          ))}
         </FadeInStagger>
 
         {/* Puerta abierta */}
-        <FadeIn delay={0.3} className="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-8 border-t border-slate-200">
+        <FadeIn delay={0.3} className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-8 border-t border-slate-200">
           <p className="text-slate-500 text-sm">
             ¿Tu vehículo <strong className="text-slate-700">no está matriculado en Yopal</strong>?
             Escríbenos y consultamos si podemos ayudarte.

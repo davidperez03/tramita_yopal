@@ -7,15 +7,11 @@ import Image from 'next/image';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
 const navLinks = [
-  { href: '#nosotros', label: 'Nosotros' },
-  { href: '#validar',  label: 'Validar mi caso' },
-  { href: '#tramites', label: 'Trámites' },
-  { href: '/prescripcion-comparendos', label: 'Multas prescritas' },
-  { href: '/descuento-comparendo',     label: 'Pagar con descuento' },
-  { href: '/licencias',                label: 'Licencias' },
-  { href: '/guias',    label: 'Guías' },
+  { href: '/rna',         label: 'RNA' },
+  { href: '/rnc',         label: 'RNC' },
+  { href: '/comparendos', label: 'Comparendos' },
+  { href: '/guias',       label: 'Guías' },
   { href: '/seguimiento', label: 'Seguimiento' },
-  { href: '#faq',      label: 'FAQ' },
 ];
 
 const waUrl = waLink(WA_MESSAGES.cotizar);
@@ -58,11 +54,7 @@ export default function Navbar() {
               <a
                 key={l.href}
                 href={h(l.href)}
-                className={`text-sm font-medium transition-colors whitespace-nowrap ${
-                  l.href === '#validar'
-                    ? 'text-gold-400 hover:text-gold-300'
-                    : 'text-brand-300 hover:text-white'
-                }`}
+                className="text-sm font-medium transition-colors whitespace-nowrap text-brand-300 hover:text-white"
               >
                 {l.label}
               </a>
@@ -80,7 +72,7 @@ export default function Navbar() {
               <WhatsAppIcon /> WhatsApp
             </a>
             <a
-              href="#cotizar"
+              href={h('#cotizar')}
               className="bg-gold-500 hover:bg-gold-600 text-brand-950 text-sm font-bold px-4 py-2 rounded-lg transition-colors"
             >
               Cotizar
@@ -113,11 +105,7 @@ export default function Navbar() {
                 key={l.href}
                 href={h(l.href)}
                 onClick={() => setOpen(false)}
-                className={`block px-4 py-2.5 font-medium transition-colors ${
-                  l.href === '#validar'
-                    ? 'text-gold-400 hover:text-gold-300'
-                    : 'text-brand-200 hover:text-white hover:bg-brand-900'
-                }`}
+                className="block px-4 py-2.5 font-medium transition-colors text-brand-200 hover:text-white hover:bg-brand-900"
               >
                 {l.label}
               </a>
@@ -127,7 +115,7 @@ export default function Navbar() {
                 className="flex items-center justify-center gap-2 bg-wa text-white font-bold py-2.5 rounded-lg">
                 <WhatsAppIcon /> WhatsApp
               </a>
-              <a href="#cotizar" onClick={() => setOpen(false)}
+              <a href={h('#cotizar')} onClick={() => setOpen(false)}
                 className="text-center bg-gold-500 text-brand-950 font-bold py-2.5 rounded-lg">
                 Cotizar
               </a>

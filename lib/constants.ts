@@ -1,4 +1,4 @@
-import { SEO_SERVICES } from './seo-data';
+import { SEO_SERVICES, type Categoria } from './seo-data';
 import { REGLA_AVALUO } from './reglas-negocio';
 
 export const BUSINESS = {
@@ -41,6 +41,7 @@ export const SERVICES = [
     description:     s.description,
     duration:        s.duration as string | null,
     whatsappMessage: s.waMessage,
+    categoria:       s.categoria as Categoria | null,
   })),
   {
     id: 'otros',
@@ -49,6 +50,7 @@ export const SERVICES = [
     description: '¿Tu trámite no está en la lista o tienes una duda? Escríbenos — te orientamos sin compromiso.',
     duration: null as string | null,
     whatsappMessage: 'Hola, tengo una consulta sobre un trámite vehicular y quiero saber si me pueden ayudar.',
+    categoria: null as Categoria | null,
   },
 ];
 

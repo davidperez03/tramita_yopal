@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { BUSINESS, SERVICES, waLink, WA_MESSAGES } from '@/lib/constants';
+import { BUSINESS, waLink, WA_MESSAGES } from '@/lib/constants';
+import { CATEGORIAS } from '@/lib/seo-data';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
 const waUrl = waLink(WA_MESSAGES.cotizar);
@@ -39,22 +40,20 @@ export default function Footer() {
 
           {/* Trámites */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-3">
-              <a href="/tramites" className="hover:text-brand-300 transition-colors">Trámites</a>
-            </h4>
+            <h4 className="text-white font-semibold text-sm mb-3">Trámites</h4>
             <ul className="space-y-2">
-              {SERVICES.map((s) => {
-                const href = s.id === 'prescripcion-comparendos'
-                  ? '/prescripcion-comparendos'
-                  : s.id === 'otros' ? '/#tramites' : `/tramites/${s.id}/yopal`;
-                return (
-                  <li key={s.id}>
-                    <a href={href} className="text-sm hover:text-white transition-colors">
-                      {s.name}
-                    </a>
-                  </li>
-                );
-              })}
+              {(Object.keys(CATEGORIAS) as (keyof typeof CATEGORIAS)[]).map((key) => (
+                <li key={key}>
+                  <a href={CATEGORIAS[key].href} className="text-sm hover:text-white transition-colors">
+                    {CATEGORIAS[key].sigla} — {CATEGORIAS[key].short}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a href="/tramites" className="text-sm hover:text-white transition-colors">
+                  Ver todos los trámites
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -63,15 +62,8 @@ export default function Footer() {
             <h4 className="text-white font-semibold text-sm mb-3">Empresa</h4>
             <ul className="space-y-2 text-sm">
               {[
-                { href: '/#nosotros', label: 'Quiénes somos' },
                 { href: '/guias',     label: 'Guías de trámites' },
                 { href: '/seguimiento', label: 'Seguir mi trámite' },
-                { href: '/#validar',  label: 'Validar mi caso' },
-                { href: '/prescripcion-comparendos', label: 'Consultar multas' },
-                { href: '/descuento-comparendo', label: 'Pagar comparendo con descuento' },
-                { href: '/licencias', label: 'Licencias y RNC' },
-                { href: '/#proceso',  label: 'Cómo trabajamos' },
-                { href: '/#faq',      label: 'Preguntas frecuentes' },
                 { href: '/#cotizar',  label: 'Cotizar' },
                 { href: '/dejar-resena', label: 'Deja tu reseña' },
               ].map((l) => (

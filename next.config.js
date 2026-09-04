@@ -16,6 +16,13 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
   },
 
+  async redirects() {
+    // /licencias se reemplazó por /rnc al dividir el catálogo en RNA/RNC/Comparendos.
+    return [
+      { source: '/licencias', destination: '/rnc', permanent: true },
+    ];
+  },
+
   async headers() {
     // Nota: script-src necesita 'unsafe-inline' por los JSON-LD y los chunks
     // inline de Next.js; 'unsafe-eval' solo lo usa el dev server.

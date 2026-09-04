@@ -31,7 +31,7 @@ export const MULTAS_SON_DE_LA_PERSONA =
 // Estado de los CALE (Centros de Apoyo Logístico de Evaluación) para
 // licencias de conducción. Verificado el 2026-09-01 — si el Ministerio de
 // Transporte anuncia una fecha de entrada en operación, actualizar aquí
-// (única fuente para lib/seo-data.ts y app/licencias/page.tsx).
+// (única fuente para lib/seo-data.ts y app/rnc/page.tsx).
 export const CALE_INFO = {
   resolucion:  'Resolución 20253040037125 de 2025',
   circular:    'Circular 0317 del 28 de agosto de 2026',

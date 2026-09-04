@@ -10,6 +10,11 @@ export type City = {
 
 export type ServiceFaq = { q: string; a: string };
 
+// Las 3 categorías en las que se divide el catálogo — separan trámites
+// del vehículo, del conductor y de infracciones para que la home y los
+// hubs no mezclen todo en una sola lista densa. Ver CATEGORIAS abajo.
+export type Categoria = 'rna' | 'rnc' | 'comparendos';
+
 export type SeoService = {
   slug: string;
   name: string;
@@ -20,10 +25,37 @@ export type SeoService = {
   requisitos: string[];
   pasos: string[];
   faqs: ServiceFaq[];
+  categoria: Categoria;
   // true para trámites de la persona (no de un vehículo matriculado en
   // algún lugar): el mensaje de WhatsApp no debe decir "mi vehículo está
   // en X" — ver ServiceCityPage.
   esTramitePersonal?: boolean;
+};
+
+export const CATEGORIAS: Record<Categoria, {
+  label: string; sigla: string; short: string; description: string; href: string;
+}> = {
+  rna: {
+    label: 'Registro Nacional Automotor',
+    sigla: 'RNA',
+    short: 'Trámites del vehículo',
+    description: 'Todo lo que se hace sobre el vehículo: traspaso de propiedad, levantamiento de prenda, traslado de cuenta, duplicado de placas y cambio de servicio.',
+    href: '/rna',
+  },
+  rnc: {
+    label: 'Registro Nacional de Conductores',
+    sigla: 'RNC',
+    short: 'Licencia de conducción',
+    description: 'Todo lo que se hace sobre tu licencia: primera vez, recategorización, renovación y duplicado.',
+    href: '/rnc',
+  },
+  comparendos: {
+    label: 'Comparendos y Multas',
+    sigla: 'Multas',
+    short: 'Comparendos y multas',
+    description: 'Consulta y gestión de comparendos: prescripción de multas, pago con descuento y curso pedagógico del infractor.',
+    href: '/comparendos',
+  },
 };
 
 export const CITIES: City[] = [
@@ -123,6 +155,7 @@ export const CITIES: City[] = [
 export const SEO_SERVICES: SeoService[] = [
   {
     slug:        'traspaso-propiedad',
+    categoria:   'rna',
     name:        'Traspaso de Propiedad',
     keyword:     'traspaso vehículo',
     description: 'Formaliza el cambio de propietario de tu vehículo. Revisamos el historial antes de empezar para evitar sorpresas.',
@@ -165,6 +198,7 @@ export const SEO_SERVICES: SeoService[] = [
   },
   {
     slug:        'levantamiento-prenda',
+    categoria:   'rna',
     name:        'Levantamiento de Prenda',
     keyword:     'levantamiento prenda vehicular',
     description: 'Libera tu vehículo de gravámenes financieros una vez cancelado el crédito. Gestionamos el trámite ante el organismo de tránsito.',
@@ -200,6 +234,7 @@ export const SEO_SERVICES: SeoService[] = [
   },
   {
     slug:        'traslado-cuenta',
+    categoria:   'rna',
     name:        'Traslado de Cuenta',
     keyword:     'traslado cuenta vehículo',
     description: 'Mueve el expediente de tu vehículo entre organismos de tránsito de cualquier ciudad de Colombia.',
@@ -236,6 +271,7 @@ export const SEO_SERVICES: SeoService[] = [
   },
   {
     slug:        'duplicado-placas',
+    categoria:   'rna',
     name:        'Duplicado de Placas',
     keyword:     'duplicado placas vehículo',
     description: 'Repón tus placas en caso de pérdida, robo o daño. Radicación y documento de tránsito restringido inmediatos; las placas físicas llegan en 15 a 30 días hábiles.',
@@ -273,6 +309,7 @@ export const SEO_SERVICES: SeoService[] = [
   },
   {
     slug:        'cambio-servicio',
+    categoria:   'rna',
     name:        'Cambio de Servicio',
     keyword:     'cambio servicio vehículo',
     description: 'Cambia la naturaleza de tu vehículo entre particular y público de forma ágil.',
@@ -305,6 +342,7 @@ export const SEO_SERVICES: SeoService[] = [
   },
   {
     slug:        'prescripcion-comparendos',
+    categoria:   'comparendos',
     name:        'Prescripción de Comparendos',
     keyword:     'prescripción comparendos tránsito',
     description: 'Las multas de más de 3 años pueden estar prescritas. Revisamos gratis y tramitamos la declaración para eliminarlas del sistema.',
@@ -344,6 +382,7 @@ export const SEO_SERVICES: SeoService[] = [
   },
   {
     slug:        'curso-pedagogico',
+    categoria:   'comparendos',
     name:        'Curso Pedagógico de Infractor (CIA)',
     keyword:     'curso pedagógico infractor tránsito',
     description: 'Requisito obligatorio para acceder al descuento de tu comparendo. Te agendamos el curso presencial dentro de tu plazo legal y confirmamos el cupo.',
@@ -384,10 +423,11 @@ export const SEO_SERVICES: SeoService[] = [
   },
   {
     slug:        'licencia-primera-vez',
+    categoria:   'rnc',
     name:        'Licencia de Conducción — Primera Vez',
     keyword:     'licencia de conducción primera vez RNC',
     description: 'Te acompañamos en todo el proceso ante el RNC: inscripción en el RUNT, agendamiento del examen médico y del curso en centro autorizado, y radicación de tu licencia nueva.',
-    duration:    '8 a 15 días hábiles, según cupos del centro médico y del centro de enseñanza',
+    duration:    'Sujeto a la agenda del CRC y del CEA — no depende de nosotros, por eso no fijamos un plazo exacto',
     waMessage:   'Hola, quiero información para sacar mi licencia de conducción por primera vez.',
     esTramitePersonal: true,
     requisitos: [
@@ -426,10 +466,11 @@ export const SEO_SERVICES: SeoService[] = [
   },
   {
     slug:        'recategorizacion-licencia',
+    categoria:   'rnc',
     name:        'Recategorización de Licencia de Conducción',
     keyword:     'recategorización licencia de conducción RNC',
     description: 'Te acompañamos para agregar o cambiar de categoría en tu licencia (por ejemplo de A2 a B1 o C1): agendamiento del examen médico, el curso correspondiente y radicación ante el RNC.',
-    duration:    '8 a 15 días hábiles, según cupos del centro médico y del centro de enseñanza',
+    duration:    'Sujeto a la agenda del CRC y del CEA — no depende de nosotros, por eso no fijamos un plazo exacto',
     waMessage:   'Hola, quiero recategorizar mi licencia de conducción.',
     esTramitePersonal: true,
     requisitos: [
@@ -463,6 +504,7 @@ export const SEO_SERVICES: SeoService[] = [
   },
   {
     slug:        'renovacion-licencia',
+    categoria:   'rnc',
     name:        'Renovación de Licencia de Conducción',
     keyword:     'renovación licencia de conducción RNC',
     description: 'Tu licencia está vencida o por vencer. Te acompañamos en la renovación ante el RNC — este trámite no exige examen CALE, sea cual sea la categoría.',
@@ -498,6 +540,7 @@ export const SEO_SERVICES: SeoService[] = [
   },
   {
     slug:        'duplicado-licencia',
+    categoria:   'rnc',
     name:        'Duplicado de Licencia de Conducción',
     keyword:     'duplicado licencia de conducción RNC',
     description: 'Licencia perdida, robada o deteriorada. Te acompañamos en la reexpedición ante el RNC — es la misma licencia vigente, sin examen médico ni curso.',

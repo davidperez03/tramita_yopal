@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { BUSINESS, waLink, WA_MESSAGES, SERVICES } from '@/lib/constants';
+import { BUSINESS, waLink, WA_MESSAGES } from '@/lib/constants';
+import { CATEGORIAS } from '@/lib/seo-data';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { EASE_OUT } from '@/lib/animations';
 
@@ -17,11 +18,11 @@ const trustPills = [
 ];
 
 const messages = [
-  { from: 'client', text: 'Hola, quiero hacer un traspaso. El carro lo tenía financiado con Bancolombia.', time: '10:14' },
-  { from: 'ty',     text: 'Hola! Antes de cotizarte revisamos el vehículo. Dame la placa y la cédula del vendedor 🔍', time: '10:15' },
-  { from: 'client', text: 'La placa es ABC123 y la cédula del vendedor es 771111.', time: '10:17' },
-  { from: 'ty',     text: '✅ Vehículo sin restricciones\n⚠️ Prenda activa en Bancolombia — hay que levantarla primero. Te explico cómo.', time: '10:28' },
-  { from: 'client', text: 'Perfecto, eso no lo sabía. ¿Me ayudan con eso también?', time: '10:29' },
+  { from: 'client', text: 'Hola, necesito ayuda con un trámite pero no sé por dónde empezar.', time: '10:14' },
+  { from: 'ty',     text: '¡Hola! Cuéntame: ¿es sobre tu vehículo (traspaso, prenda...), tu licencia, o un comparendo? Te oriento en minutos 🙂', time: '10:15' },
+  { from: 'client', text: 'Es un traspaso — el carro lo tenía financiado con Bancolombia.', time: '10:17' },
+  { from: 'ty',     text: '✅ Perfecto. Antes de cotizarte reviso el vehículo en el RUNT. Dame la placa y la cédula del vendedor 🔍', time: '10:19' },
+  { from: 'client', text: 'Claro, ahí te las paso.', time: '10:20' },
 ];
 
 export default function Hero() {
@@ -64,9 +65,9 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.1, ease }}
             >
-              Tus trámites
+              Vehículo, licencia
               <br />
-              vehiculares{' '}
+              y multas,{' '}
               <span className="relative inline-block">
                 <span className="text-gold-400">sin enredos</span>
                 <motion.svg
@@ -93,7 +94,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.25, ease }}
             >
-              Gestionamos tus trámites vehiculares en {BUSINESS.city} sin que tengas que salir de casa.
+              Gestionamos trámites de tu vehículo, tu licencia y tus comparendos en {BUSINESS.city} sin que tengas que salir de casa.
             </motion.p>
 
             {/* CTAs */}
@@ -204,13 +205,13 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Banner de servicios */}
+      {/* Banner de categorías — neutral, sin mezclar trámites individuales */}
       <div className="border-t border-brand-800 bg-brand-900/40 py-3 overflow-hidden">
         <div className="flex whitespace-nowrap animate-marquee">
-          {[...SERVICES, ...SERVICES].map((s, i) => (
+          {[...Object.values(CATEGORIAS), ...Object.values(CATEGORIAS), ...Object.values(CATEGORIAS)].map((c, i) => (
             <span key={i} className="inline-flex items-center gap-2 text-brand-400 text-sm px-6">
               <span className="w-1 h-1 rounded-full bg-gold-500 inline-block" />
-              {s.name}
+              <strong className="text-brand-200 font-bold">{c.sigla}</strong> — {c.short}
             </span>
           ))}
         </div>

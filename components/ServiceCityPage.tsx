@@ -1,20 +1,34 @@
 import Link from 'next/link';
+import { Car, IdCard, AlertTriangle } from 'lucide-react';
 import { BUSINESS, waLink } from '@/lib/constants';
-import { CITIES, SEO_SERVICES, type City, type SeoService } from '@/lib/seo-data';
+import { CITIES, SEO_SERVICES, CATEGORIAS, type City, type SeoService, type Categoria } from '@/lib/seo-data';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { FadeIn, FadeInStagger, FadeInItem } from './FadeIn';
 
 type Props = { service: SeoService; city: City };
 
 const RELATED_SERVICES_COUNT = 4;
 const NEARBY_CITIES_COUNT    = 6;
 
+const ICONS: Record<Categoria, typeof Car> = {
+  rna: Car,
+  rnc: IdCard,
+  comparendos: AlertTriangle,
+};
+
 export default function ServiceCityPage({ service, city }: Props) {
   const contexto = service.esTramitePersonal
     ? `Estoy en ${city.name}, ${city.department}.`
     : `Mi vehículo está en ${city.name}, ${city.department}.`;
   const waUrl = waLink(`${service.waMessage} ${contexto}`);
-  const otherServices = SEO_SERVICES.filter((s) => s.slug !== service.slug).slice(0, RELATED_SERVICES_COUNT);
+  // Prioriza trámites de la misma categoría (RNA/RNC/Comparendos) — no tiene
+  // sentido recomendar una licencia debajo de un traspaso de propiedad.
+  const mismaCategoria = SEO_SERVICES.filter((s) => s.slug !== service.slug && s.categoria === service.categoria);
+  const otrasCategorias = SEO_SERVICES.filter((s) => s.slug !== service.slug && s.categoria !== service.categoria);
+  const otherServices = [...mismaCategoria, ...otrasCategorias].slice(0, RELATED_SERVICES_COUNT);
   const nearbyCities  = CITIES.filter((c) => c.slug !== city.slug).slice(0, NEARBY_CITIES_COUNT);
+  const categoria     = CATEGORIAS[service.categoria];
+  const CatIcon       = ICONS[service.categoria];
 
   return (
     <>
@@ -25,16 +39,23 @@ export default function ServiceCityPage({ service, city }: Props) {
           style={{ backgroundImage: `repeating-linear-gradient(45deg,#f59e0b 0px,#f59e0b 1px,transparent 1px,transparent 20px)` }}
         />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
+          <FadeIn className="max-w-2xl">
             <nav className="flex items-center gap-1.5 text-xs text-brand-400 mb-5">
               <Link href="/" className="hover:text-white transition-colors">Tramita Yopal</Link>
               <span>/</span>
-              <Link href="/#tramites" className="hover:text-white transition-colors">Trámites</Link>
+              <Link href={categoria.href} className="hover:text-white transition-colors">{categoria.sigla}</Link>
               <span>/</span>
               <span className="text-brand-300">{service.name}</span>
               <span>/</span>
               <span className="text-white">{city.name}</span>
             </nav>
+
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+                <CatIcon className="w-4 h-4 text-gold-400" strokeWidth={1.75} />
+              </span>
+              <p className="text-xs font-black tracking-widest text-gold-400 uppercase">{categoria.label}</p>
+            </div>
 
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-[1.1] tracking-tight mb-5">
               {service.name}
@@ -71,7 +92,7 @@ export default function ServiceCityPage({ service, city }: Props) {
                 </span>
               ))}
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -80,7 +101,7 @@ export default function ServiceCityPage({ service, city }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
-            <div>
+            <FadeIn direction="left">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4">
                 {service.name} en {city.name}
               </h2>
@@ -90,9 +111,9 @@ export default function ServiceCityPage({ service, city }: Props) {
               <p className="text-slate-500 text-sm leading-relaxed">
                 {service.pasos[0]}
               </p>
-            </div>
+            </FadeIn>
 
-            <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm">
+            <FadeIn direction="right" delay={0.1} className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm">
               {[
                 { label: 'Tiempo estimado',   value: service.duration },
                 { label: 'Validación previa', value: 'Incluida, sin costo' },
@@ -117,7 +138,7 @@ export default function ServiceCityPage({ service, city }: Props) {
                   <span>→</span>
                 </a>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -127,26 +148,28 @@ export default function ServiceCityPage({ service, city }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
-            <div>
+            <FadeIn direction="left">
               <h2 className="text-2xl font-extrabold text-slate-900 mb-2">
                 Requisitos para {service.name.toLowerCase()}
               </h2>
               <p className="text-sm text-slate-500 mb-6">
                 Esto es lo que necesitas tener a la mano. Si te falta algo, te decimos cómo conseguirlo.
               </p>
-              <ul className="space-y-3">
+              <FadeInStagger className="space-y-3" stagger={0.04}>
                 {service.requisitos.map((r) => (
-                  <li key={r} className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-sm text-slate-600 leading-relaxed">{r}</span>
-                  </li>
+                  <FadeInItem key={r}>
+                    <div className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm text-slate-600 leading-relaxed">{r}</span>
+                    </div>
+                  </FadeInItem>
                 ))}
-              </ul>
-            </div>
+              </FadeInStagger>
+            </FadeIn>
 
-            <div>
+            <FadeIn direction="right" delay={0.1}>
               <h2 className="text-2xl font-extrabold text-slate-900 mb-2">
                 Cómo funciona desde {city.name}
               </h2>
@@ -155,17 +178,19 @@ export default function ServiceCityPage({ service, city }: Props) {
                   ? 'Puedes traer los documentos a nuestra oficina o enviarlos — tú eliges.'
                   : `Todo se hace a distancia: tú envías los documentos desde ${city.name} y nosotros tramitamos en Yopal.`}
               </p>
-              <ol className="space-y-4">
+              <FadeInStagger className="space-y-4" stagger={0.06}>
                 {service.pasos.map((p, i) => (
-                  <li key={i} className="flex items-start gap-4">
-                    <span className="w-7 h-7 rounded-full bg-brand-950 text-white text-xs font-black flex items-center justify-center flex-shrink-0">
-                      {i + 1}
-                    </span>
-                    <span className="text-sm text-slate-600 leading-relaxed pt-1">{p}</span>
-                  </li>
+                  <FadeInItem key={i}>
+                    <div className="flex items-start gap-4">
+                      <span className="w-7 h-7 rounded-full bg-brand-950 text-white text-xs font-black flex items-center justify-center flex-shrink-0">
+                        {i + 1}
+                      </span>
+                      <span className="text-sm text-slate-600 leading-relaxed pt-1">{p}</span>
+                    </div>
+                  </FadeInItem>
                 ))}
-              </ol>
-            </div>
+              </FadeInStagger>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -173,33 +198,39 @@ export default function ServiceCityPage({ service, city }: Props) {
       {/* Preguntas frecuentes del servicio */}
       <section className="py-14 sm:py-20 bg-[#fafaf7] border-t border-slate-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-extrabold text-slate-900 mb-8">
-            Preguntas frecuentes sobre {service.name.toLowerCase()}
-          </h2>
-          <div className="space-y-3">
+          <FadeIn>
+            <h2 className="text-2xl font-extrabold text-slate-900 mb-8">
+              Preguntas frecuentes sobre {service.name.toLowerCase()}
+            </h2>
+          </FadeIn>
+          <FadeInStagger className="space-y-3" stagger={0.06}>
             {service.faqs.map((f) => (
-              <details key={f.q} className="group bg-white rounded-2xl border border-slate-100 overflow-hidden">
-                <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none font-semibold text-sm text-slate-900 hover:text-brand-700 transition-colors">
-                  {f.q}
-                  <svg className="w-4 h-4 text-slate-300 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </summary>
-                <p className="px-6 pb-5 text-sm text-slate-600 leading-relaxed">{f.a}</p>
-              </details>
+              <FadeInItem key={f.q}>
+                <details className="group bg-white rounded-2xl border border-slate-100 overflow-hidden">
+                  <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none font-semibold text-sm text-slate-900 hover:text-brand-700 transition-colors">
+                    {f.q}
+                    <svg className="w-4 h-4 text-slate-300 flex-shrink-0 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </summary>
+                  <p className="px-6 pb-5 text-sm text-slate-600 leading-relaxed">{f.a}</p>
+                </details>
+              </FadeInItem>
             ))}
-          </div>
+          </FadeInStagger>
         </div>
       </section>
 
-      {/* ¿Vehículo matriculado en otra ciudad? */}
+      {/* ¿No estás en la ciudad sede? */}
       {!city.isOfficeCity && (
         <section className="py-10 bg-white border-y border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <FadeIn className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <p className="font-semibold text-slate-900 text-sm mb-1">
-                  ¿Tu vehículo está matriculado en otra ciudad?
+                  {service.esTramitePersonal
+                    ? `¿No estás en ${BUSINESS.city}?`
+                    : '¿Tu vehículo está matriculado en otra ciudad?'}
                 </p>
                 <p className="text-slate-500 text-sm">
                   Cuéntanos tu caso — lo revisamos y te decimos si podemos gestionarlo. Sin compromiso.
@@ -213,7 +244,7 @@ export default function ServiceCityPage({ service, city }: Props) {
               >
                 Consultar →
               </a>
-            </div>
+            </FadeIn>
           </div>
         </section>
       )}
@@ -221,46 +252,51 @@ export default function ServiceCityPage({ service, city }: Props) {
       {/* Otros trámites en esta ciudad */}
       <section className="py-14 sm:py-20 bg-[#fafaf7]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-extrabold text-slate-900 mb-8">
-            Otros trámites vehiculares en {city.name}
-          </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <FadeIn>
+            <h2 className="text-2xl font-extrabold text-slate-900 mb-8">
+              Otros trámites en {city.name}
+            </h2>
+          </FadeIn>
+          <FadeInStagger className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" stagger={0.06}>
             {otherServices.map((s) => (
-              <Link
-                key={s.slug}
-                href={`/tramites/${s.slug}/${city.slug}`}
-                className="bg-white rounded-2xl border border-slate-100 p-5 hover:border-brand-300 hover:shadow-md transition-all group"
-              >
-                <h3 className="text-sm font-bold text-slate-900 group-hover:text-brand-700 transition-colors mb-1">
-                  {s.name}
-                </h3>
-                <p className="text-xs text-slate-500 leading-relaxed mb-3 line-clamp-2">{s.description}</p>
-                <span className="text-xs font-semibold text-brand-600 group-hover:text-brand-800 transition-colors">
-                  Ver trámite →
-                </span>
-              </Link>
+              <FadeInItem key={s.slug}>
+                <Link
+                  href={`/tramites/${s.slug}/${city.slug}`}
+                  className="block bg-white rounded-2xl border border-slate-100 p-5 hover:border-brand-300 hover:shadow-md transition-all group h-full"
+                >
+                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-brand-700 transition-colors mb-1">
+                    {s.name}
+                  </h3>
+                  <p className="text-xs text-slate-500 leading-relaxed mb-3 line-clamp-2">{s.description}</p>
+                  <span className="text-xs font-semibold text-brand-600 group-hover:text-brand-800 transition-colors">
+                    Ver trámite →
+                  </span>
+                </Link>
+              </FadeInItem>
             ))}
-          </div>
+          </FadeInStagger>
         </div>
       </section>
 
       {/* Este servicio en otras ciudades */}
       <section className="py-10 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-sm text-slate-500 mb-4">
-            {service.name} en otros municipios de {city.department}:
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {nearbyCities.map((c) => (
-              <Link
-                key={c.slug}
-                href={`/tramites/${service.slug}/${c.slug}`}
-                className="text-sm text-brand-600 hover:text-brand-800 hover:underline transition-colors"
-              >
-                {c.name}
-              </Link>
-            ))}
-          </div>
+          <FadeIn>
+            <p className="text-sm text-slate-500 mb-4">
+              {service.name} en otros municipios de {city.department}:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {nearbyCities.map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/tramites/${service.slug}/${c.slug}`}
+                  className="text-sm text-brand-600 hover:text-brand-800 hover:underline transition-colors"
+                >
+                  {c.name}
+                </Link>
+              ))}
+            </div>
+          </FadeIn>
         </div>
       </section>
     </>
