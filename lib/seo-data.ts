@@ -431,7 +431,7 @@ export const SEO_SERVICES: SeoService[] = [
     waMessage:   'Hola, quiero información para sacar mi licencia de conducción por primera vez.',
     esTramitePersonal: true,
     requisitos: [
-      'Cédula de ciudadanía original (18 años para vehículo particular, 16 para motocicleta)',
+      'Cédula de ciudadanía original (16 años cumplidos para servicio particular, sea carro o moto — 18 si es para servicio público)',
       'Saber leer y escribir',
       'Estar a paz y salvo en el SIMIT — sin comparendos pendientes a tu nombre',
       'Inscripción vigente en el RUNT (te ayudamos a completarla si no la tienes)',

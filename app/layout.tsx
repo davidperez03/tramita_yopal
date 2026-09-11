@@ -104,7 +104,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       '@type': 'LocalBusiness',
       name: BUSINESS.name,
       description:
-        'Gestión de trámites vehiculares en Yopal, Casanare. Traspaso de propiedad, levantamiento de prenda, duplicado de placas, traslado de cuenta, cambio de servicio y prescripción de comparendos. Validación previa gratuita. Envío de tarjeta de propiedad a domicilio sin costo.',
+        'Gestión de trámites de vehículo (RNA), licencia de conducción (RNC) y comparendos en Yopal, Casanare. Validación previa gratuita, gestión 100% remota. En trámites de vehículo, envío de tarjeta de propiedad a domicilio sin costo.',
       url: siteUrl,
       telephone: `+${BUSINESS.whatsapp}`,
       currenciesAccepted: 'COP',
@@ -175,12 +175,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         'Duplicado de placas',
         'Cambio de servicio vehicular',
         'Prescripción de comparendos de tránsito',
+        'Descuento por pronto pago en comparendos',
+        'Licencia de conducción Colombia',
+        'Registro Nacional de Conductores (RNC)',
+        'Recategorización de licencia de conducción',
+        'Refrendación de licencia de conducción',
+        'CALE — Centros de Apoyo Logístico de Evaluación',
         'RUNT Colombia',
         'SIMIT Colombia',
       ],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
-        name: 'Trámites Vehiculares Yopal',
+        name: 'Trámites de Vehículo, Licencia y Comparendos — Yopal',
         itemListElement: SERVICES.filter((s) => s.id !== 'otros').map((s) => ({
           '@type': 'Offer',
           itemOffered: {
@@ -202,7 +208,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       '@type': 'WebSite',
       name: BUSINESS.name,
       url: siteUrl,
-      description: 'Trámites vehiculares en Yopal, Casanare. Gestión remota, validación previa gratuita y envío a domicilio.',
+      description: 'Trámites de vehículo, licencia de conducción y comparendos en Yopal, Casanare. Gestión remota y validación previa gratuita.',
       inLanguage: 'es-CO',
       potentialAction: {
         '@type': 'SearchAction',

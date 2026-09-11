@@ -1,15 +1,15 @@
 # Guía de configuración — Tramita Yopal
 
 > Paso a paso de todo lo que falta configurar para dejar el sistema 100% operativo.
-> Escrita para sobrevivir sin el contexto del chat. Última actualización: julio 2026.
+> Escrita para sobrevivir sin el contexto del chat. Última actualización: septiembre 2026.
 
 ## Estado del código (qué está hecho)
 
 | Área | Estado |
 |---|---|
-| Sitio público + 114 páginas SEO + guías (`/guias`) | ✅ Listo |
+| Sitio público organizado en RNA / RNC / Comparendos + 236 páginas SEO + guías (`/guias`) | ✅ Listo |
 | Seguridad: rate limiting durable, CSP/HSTS, validación de formularios | ✅ Listo |
-| Panel admin: trámites, clientes, comparendos, reseñas, export CSV | ✅ Listo |
+| Panel admin: trámites, clientes, reseñas, export CSV | ✅ Listo |
 | Roles admin/tramitador con panel restringido y asignación | ✅ Listo |
 | Notificaciones WhatsApp (cola + envío + cron de reintentos) | ✅ Listo (falta configurar Meta) |
 | Seguimiento público por código | ✅ Listo |
@@ -55,7 +55,7 @@ Lo que **falta es configuración externa** (Supabase, Vercel, Meta, Google), no 
    | `INDEXNOW_KEY` | `tramitayopal2024` (o la que esté en producción) | Recomendada |
    | `WHATSAPP_ACCESS_TOKEN` | del paso 3 | Cuando esté Meta |
    | `WHATSAPP_PHONE_NUMBER_ID` | del paso 3 | Cuando esté Meta |
-   | `CALLMEBOT_API_KEY` | opcional (aviso interno de comparendos) | Opcional |
+   | `CALLMEBOT_API_KEY` | ya no se usa (el formulario de descuento en comparendos va directo a WhatsApp del cliente, sin servidor de por medio) | Eliminar de Vercel si sigue puesta |
    | `SENTRY_ORG` / `SENTRY_PROJECT` | opcional (monitoreo de errores) | Opcional |
 
 3. Redeploy. El cron de `vercel.json` (reintento de notificaciones, diario 8 a.m. Bogotá)
@@ -106,8 +106,13 @@ Las notificaciones ya están programadas; sin estas credenciales quedan **en col
 
 ## 6. Sentry (monitoreo de errores) — OPCIONAL
 
-Proyecto en [sentry.io](https://sentry.io) → copiar `SENTRY_ORG` y `SENTRY_PROJECT` a Vercel.
-El código ya está instrumentado.
+1. Crea la organización y un proyecto tipo **Next.js** en [sentry.io](https://sentry.io).
+2. Copia a Vercel:
+   - **DSN** del proyecto → `NEXT_PUBLIC_SENTRY_DSN` (sin esto no se capturan errores, aunque
+     pongas lo demás)
+   - **Slug de la organización** (en la URL del dashboard) → `SENTRY_ORG`
+   - **Slug del proyecto** → `SENTRY_PROJECT`
+3. El código ya está instrumentado (`sentry.client/server/edge.config.ts`, `next.config.js`).
 
 ---
 
@@ -121,8 +126,6 @@ En orden de impacto sugerido:
 3. **Documentos adjuntos** por trámite (bucket privado + URLs firmadas). Sin diseñar aún.
 4. **Más guías SEO** (2–3 por mes).
 5. **Paginación server-side del panel** cuando pasen de ~500 trámites.
-6. Eliminar `CALLMEBOT_API_KEY` cuando las notificaciones Cloud API estén activas
-   (migrar el aviso interno de comparendos al mismo canal).
 
 ## Agregar o editar trámites (catálogo único)
 

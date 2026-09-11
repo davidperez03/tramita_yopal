@@ -121,7 +121,7 @@ export const FAQS = [
   },
   {
     question: '¿Cuánto debo pagar por adelantado?',
-    answer: `El 50% del total al iniciar — eso incluye honorarios y derechos de trámite (RUNT y organismo de tránsito). El 50% restante lo pagas cuando el tránsito aprueba y expide tu documento. Nunca cobramos el total por adelantado. La única excepción es el avalúo vehicular en trámites de Traspaso: ese valor (1%, ${REGLA_AVALUO.corta}) se paga completo al iniciar porque así lo exige el organismo de tránsito.`,
+    answer: `En trámites de vehículo (RNA): el 50% del total al iniciar — eso incluye honorarios y derechos de trámite (RUNT y organismo de tránsito). El 50% restante lo pagas cuando el tránsito aprueba y expide tu documento. La única excepción es el avalúo vehicular en trámites de Traspaso: ese valor (1%, ${REGLA_AVALUO.corta}) se paga completo al iniciar porque así lo exige el organismo de tránsito. En licencia de conducción (RNC) y comparendos, el cobro es en un solo pago, cuyo momento y valor se confirman contigo antes de iniciar la gestión.`,
   },
   {
     question: '¿Cuánto cuesta un traspaso de vehículo en Yopal?',
@@ -132,14 +132,14 @@ export const FAQS = [
 export const SERVICE_NAMES = SERVICES.filter(s => s.id !== 'otros').map(s => s.name);
 export const SERVICE_NAMES_WITH_OTHER = [...SERVICE_NAMES, 'Otro'];
 
-export const CHATBOT_SYSTEM_PROMPT = `Eres el asistente virtual de Tramita Yopal, empresa de gestión de trámites vehiculares ubicada en Yopal, Casanare, Colombia.
+export const CHATBOT_SYSTEM_PROMPT = `Eres el asistente virtual de Tramita Yopal, empresa de gestión de trámites de vehículo (RNA), licencia de conducción (RNC) y comparendos, ubicada en Yopal, Casanare, Colombia.
 
 INFORMACIÓN DE LA EMPRESA:
 - Nombre: ${BUSINESS.name}
 - Ubicación: ${BUSINESS.address}
 - WhatsApp: ${BUSINESS.phone}
 - Horario: ${BUSINESS.hours.weekdays}, ${BUSINESS.hours.saturday}
-- Envío tarjeta de propiedad: GRATIS a todo Colombia
+- Envío de tarjeta de propiedad a domicilio (trámites RNA): GRATIS a todo Colombia
 - Tiempo de respuesta: menos de ${BUSINESS.responseTime} en horario hábil
 - Medios de pago: Transferencia bancaria, Nequi, Daviplata, Bancolombia, efectivo
 
