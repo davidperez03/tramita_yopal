@@ -49,6 +49,11 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+// Solo 2 "casos" reales — el curso pedagógico (CIA) no es una alternativa
+// aparte, es un requisito obligatorio DENTRO del pago con descuento (ver
+// cursoPedagogico.description). Mostrarlo como tercera tarjeta paralela
+// generaba confusión ("¿no son lo mismo?"). Su página propia sigue viva
+// para SEO — se enlaza como nota, no como tarjeta de "caso".
 const OPCIONES = [
   {
     titulo: 'Prescripción de comparendos',
@@ -59,16 +64,9 @@ const OPCIONES = [
   },
   {
     titulo: 'Pago con descuento',
-    descripcion: 'Si tu comparendo es reciente, puedes pagarlo con 50% o 25% de descuento según cuántos días hábiles hayan pasado. Calculamos tu plazo exacto.',
+    descripcion: 'Si tu comparendo es reciente, puedes pagarlo con 50% o 25% de descuento según cuántos días hábiles hayan pasado. Incluye el curso pedagógico obligatorio — te lo agendamos dentro del mismo proceso.',
     href: '/descuento-comparendo',
     cta: 'Calcular mi descuento',
-    destacado: null,
-  },
-  {
-    titulo: cursoPedagogico.name,
-    descripcion: cursoPedagogico.description,
-    href: `/tramites/${cursoPedagogico.slug}/${MAIN_CITY.slug}`,
-    cta: 'Ver requisitos',
     destacado: null,
   },
 ];
@@ -186,7 +184,7 @@ export default function ComparendosPage() {
                 ¿Cuál es tu caso?
               </h2>
             </FadeIn>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 gap-6">
               {OPCIONES.map((op, i) => (
                 <OpcionCard
                   key={op.href}
@@ -199,6 +197,14 @@ export default function ComparendosPage() {
                 />
               ))}
             </div>
+            <FadeIn>
+              <p className="text-sm text-slate-500 mt-6">
+                ¿Ya sabes que necesitas el curso pedagógico y solo quieres ver los requisitos?{' '}
+                <Link href={`/tramites/${cursoPedagogico.slug}/${MAIN_CITY.slug}`} className="font-semibold text-brand-600 hover:text-brand-800 hover:underline transition-colors">
+                  Ver requisitos del curso →
+                </Link>
+              </p>
+            </FadeIn>
           </div>
         </section>
 

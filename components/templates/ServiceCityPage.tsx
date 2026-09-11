@@ -120,7 +120,11 @@ export default function ServiceCityPage({ service, city }: Props) {
                 { label: 'Tiempo estimado',   value: service.duration },
                 { label: 'Validación previa', value: 'Incluida, sin costo' },
                 { label: 'Cotización',        value: 'Gratis, sin compromiso' },
-                { label: 'Envío tarjeta',     value: `Gratis a ${city.name}` },
+                // Envío a domicilio solo aplica a RNA (tarjeta de propiedad) —
+                // en RNC y comparendos no hay documento físico que enviemos.
+                ...(service.categoria === 'rna'
+                  ? [{ label: 'Envío tarjeta', value: `Gratis a ${city.name}` }]
+                  : []),
                 { label: 'Horario',           value: `${BUSINESS.hours.weekdays} · ${BUSINESS.hours.saturday}` },
                 { label: 'Tramitamos en',     value: `Tránsito de ${BUSINESS.city}, Casanare` },
               ].map((item) => (
